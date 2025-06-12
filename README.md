@@ -29,7 +29,7 @@ This is a simple Django project that serves as a personal website for Maria Sere
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ErnestoAizenberg/maria-tutor.git
 cd maria-tutor
 ```
 
