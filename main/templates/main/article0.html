@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Как учиться с СДВГ: мой опыт | Мария Серединская</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+        
+        /* Smooth animations */
+        .hover-scale { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .hover-scale:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        
+        /* Gradient text */
+        .text-gradient { background: linear-gradient(90deg, #ec4899 0%, #f43f5e 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        
+        /* Custom bullet points */
+        .custom-list li { position: relative; padding-left: 1.75rem; margin-bottom: 0.5rem; }
+        .custom-list li:before { content: "•"; position: absolute; left: 0; color: #ec4899; font-weight: bold; }
+
+        /* Article content styling */
+        .article-content {
+            line-height: 1.7;
+            color: #374151;
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        .article-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            color: #111827;
+        }
+        .article-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            color: #111827;
+        }
+        .article-content ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .article-content ol {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .article-content blockquote {
+            border-left: 4px solid #ec4899;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #4b5563;
+        }
+        .article-content a {
+            color: #ec4899;
+            text-decoration: underline;
+        }
+        .article-content img {
+            border-radius: 0.5rem;
+            margin: 2rem auto;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/fav-cat/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/fav-cat/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/fav-cat/favicon-16x16.png">
+    <link rel="manifest" href="/static/images/fav-cat/site.webmanifest">
+</head>
+<body class="font-sans antialiased text-gray-800 bg-white">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <span class="text-2xl mr-2 text-rose-500"></span>
+                    <span class="font-serif text-xl font-bold">Мария Серединская</span>
+                </div>
+
+                <!-- Desktop menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-gray-700 hover:text-rose-600 transition">Обо мне</a>
+                    <a href="#science" class="text-gray-700 hover:text-rose-600 transition">Наука</a>
+                    <a href="#lessons" class="text-gray-700 hover:text-rose-600 transition">Уроки</a>
+                    <a href="#blog" class="text-gray-700 hover:text-rose-600 transition">Блог</a>
+                    <a href="#contact" class="bg-rose-600 text-white px-4 py-2 rounded-md hover:bg-rose-700 transition">Контакты</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button class="md:hidden text-gray-700 focus:outline-none" id="mobile-menu-button">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100">Обо мне</a>
+                <a href="#science" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100">Наука</a>
+                <a href="#lessons" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100">Уроки</a>
+                <a href="#blog" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100">Блог</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium bg-rose-600 text-white">Контакты</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Article Header -->
+    <section class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-rose-50 to-white">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-8">
+                <span class="inline-block px-3 py-1 text-sm font-medium bg-rose-100 text-rose-800 rounded-full mb-4">Обучение</span>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold leading-tight mb-6">Как учиться с СДВГ: мой опыт</h1>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Практические методы, которые помогают мне справляться с трудностями концентрации и организации учебного процесса.</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mt-8">
+                <div class="flex items-center">
+                    <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                        <img src="https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000" alt="Мария Серединская" class="h-full w-full object-cover">
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-gray-900">Мария Серединская</p>
+                        <p class="text-xs text-gray-500">12 мая 2025 • 8 мин чтения</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-500 hover:text-rose-600 transition">
+                        <i class="fab fa-telegram text-xl"></i>
+                    </button>
+                    <button class="text-gray-500 hover:text-rose-600 transition">
+                        <i class="fab fa-vk text-xl"></i>
+                    </button>
+                    <button class="text-gray-500 hover:text-rose-600 transition">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-3xl mx-auto">
+            <div class="article-content">
+                <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Учеба с СДВГ" class="w-full h-auto rounded-xl">
+
+                <p>Когда мне впервые поставили диагноз СДВГ во взрослом возрасте, это стало для меня одновременно и облегчением, и вызовом. Облегчением — потому что наконец-то появилось объяснение тем трудностям, с которыми я сталкивалась в обучении с детства. Вызовом — потому что теперь предстояло научиться жить с этой особенностью и найти способы эффективно работать и учиться.</p>
+
+                <p>В этой статье я хочу поделиться методами и стратегиями, которые помогают мне справляться с трудностями концентрации, организации времени и мотивации. Эти подходы я использую как в своей учебе и научной работе, так и в преподавании студентам с похожими особенностями.</p>
+
+                <h2>1. Понимание своих особенностей</h2>
+
+                <p>Первым и самым важным шагом для меня стало глубокое понимание того, как именно СДВГ влияет на мои когнитивные процессы:</p>
+
+                <ul>
+                    <li><strong>Дефицит внимания</strong> — неспособность долго концентрироваться на одном задании, легкость отвлечения</li>
+                    <li><strong>Импульсивность</strong> — склонность переключаться между задачами, не завершая их</li>
+                    <li><strong>Проблемы с исполнительными функциями</strong> — трудности с планированием, организацией, управлением временем</li>
+                    <li><strong>Гиперфокус</strong> — парадоксальная способность глубоко концентрироваться на интересующих темах</li>
+                </ul>
+
+                <blockquote>
+                    "СДВГ — это не недостаток внимания, а его нерегулируемый поток. Наша задача — не бороться с этой особенностью, а научиться направлять ее в продуктивное русло."
+                </blockquote>
+
+                <h2>2. Методы организации учебного процесса</h2>
+
+                <h3>2.1. Работа с временными блоками</h3>
+
+                <p>Традиционные методы тайм-менеджмента часто не работают для людей с СДВГ. Вместо этого я использую технику "Помидора", но с адаптированными временными промежутками:</p>
+
+                <ul>
+                    <li>25 минут работы — 5 минут отдыха (стандартный "Помидор")</li>
+                    <li>15 минут работы — 5 минут отдыха (когда концентрация особенно хромает)</li>
+                    <li>45 минут работы — 15 минут отдыха (когда удается войти в состояние потока)</li>
+                </ul>
+
+                <p>Важно использовать физический таймер — звуковой сигнал помогает вернуться к работе после перерыва.</p>
+
+                <h3>2.2. Визуальное планирование</h3>
+
+                <p>Люди с СДВГ часто лучше воспринимают визуальную информацию. Я использую:</p>
+
+                <ul>
+                    <li>Цветные стикеры для разных типов задач</li>
+                    <li>Доску с колонками "Сделать", "В процессе", "Сделано"</li>
+                    <li>Приложения типа Trello или Notion с визуальным представлением задач</li>
+                </ul>
+
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Визуальное планирование" class="w-full h-auto rounded-xl">
+
+                <h2>3. Стратегии для улучшения концентрации</h2>
+
+                <h3>3.1. Физическая активность перед занятиями</h3>
+
+                <p>15-20 минут физической активности (ходьба, прыжки, растяжка) перед началом работы помогают мне "разогнать" мозг и улучшить концентрацию.</p>
+
+                <h3>3.2. Фоновый шум</h3>
+
+                <p>Полная тишина может быть так же отвлекающая, как и громкие звуки. Я использую:</p>
+
+                <ul>
+                    <li>Белый шум или звуки природы</li>
+                    <li>Инструментальную музыку без слов</li>
+                    <li>Специальные треки для концентрации (например, binaural beats)</li>
+                </ul>
+
+                <h3>3.3. Альтернативные позы для работы</h3>
+
+                <p>Сидение за столом может быть мучительным. Я чередую:</p>
+
+                <ul>
+                    <li>Традиционное сидение за столом</li>
+                    <li>Работа стоя</li>
+                    <li>Лежа на полу с ноутбуком на подставке</li>
+                    <li>Использование балансировочной подушки на стуле</li>
+                </ul>
+
+                <h2>4. Использование гиперфокуса в учебе</h2>
+
+                <p>Гиперфокус — это суперспособность людей с СДВГ глубоко погружаться в интересующие темы. Вот как я его использую:</p>
+
+                <ol>
+                    <li>Определяю наиболее увлекательные аспекты темы</li>
+                    <li>Начинаю изучение с них, а не с "обязательных" скучных частей</li>
+                    <li>Связываю сухие факты с интересными мне концепциями</li>
+                    <li>Создаю проекты или исследования вокруг темы, чтобы поддерживать интерес</li>
+                </ol>
+
+                <h2>5. Поддержание мотивации</h2>
+
+                <p>Люди с СДВГ особенно чувствительны к системе вознаграждений. Вот что работает для меня:</p>
+
+                <ul>
+                    <li>Мелкие немедленные награды за выполнение задач (чашка любимого чая, 5 минут в соцсетях)</li>
+                    <li>Визуальное отслеживание прогресса (графики, чек-листы)</li>
+                    <li>Учеба в компании (друзья, коллеги, даже виртуальные "ученые товарищи")</li>
+                    <li>Связывание материала с личными интересами и целями</li>
+                </ul>
+
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Групповая учеба" class="w-full h-auto rounded-xl">
+
+                <h2>Заключение</h2>
+
+                <p>СДВГ делает процесс обучения более сложным, но не менее продуктивным. Ключ — в понимании своих особенностей и создании персонализированной системы работы. Со временем я научилась воспринимать свой СДВГ не как недостаток, а как особенность мышления, которая дает мне и уникальные преимущества:</p>
+
+                <ul>
+                    <li>Творческий подход к решению проблем</li>
+                    <li>Способность видеть нестандартные связи между концепциями</li>
+                    <li>Энергичность и энтузиазм в интересующих темах</li>
+                    <li>Гибкость мышления и адаптивность</li>
+                </ul>
+
+                <p>Если вы тоже учитесь или работаете с СДВГ, попробуйте разные методы и оставьте те, что работают именно для вас. И помните — ваши трудности с концентрацией не делают вас менее способными, они просто требуют другого подхода к организации процесса обучения.</p>
+            </div>
+
+            <!-- Article Footer -->
+            <div class="mt-16 pt-8 border-t border-gray-200">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+                    <div class="flex items-center">
+                        <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+                            <img src="https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000" alt="Мария Серединская" class="h-full w-full object-cover">
+                        </div>
+                        <div class="ml-4">
+                            <p class="font-medium text-gray-900">Мария Серединская</p>
+                            <p class="text-sm text-gray-500">Репетитор по биологии и химии, нейробиолог</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-500">Поделиться:</span>
+                        <button class="text-gray-500 hover:text-rose-600 transition">
+                            <i class="fab fa-telegram text-xl"></i>
+                        </button>
+                        <button class="text-gray-500 hover:text-rose-600 transition">
+                            <i class="fab fa-vk text-xl"></i>
+                        </button>
+                        <button class="text-gray-500 hover:text-rose-600 transition">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </button>
+                        <button class="text-gray-500 hover:text-rose-600 transition">
+                            <i class="fas fa-link text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Articles -->
+            <div class="mt-20">
+                <h3 class="text-2xl font-serif font-bold mb-8">Читайте также</h3>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Article 1 -->
+                    <a href="#" class="group block bg-white rounded-xl overflow-hidden shadow-sm hover-scale border border-gray-200">
+                        <div class="h-48 bg-gray-200 relative overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                                <i class="fas fa-image fa-3x opacity-30"></i>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <span>28 апреля 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>Наука</span>
+                            </div>
+                            <h3 class="text-xl font-serif font-bold mb-3 group-hover:text-rose-600 transition">Экспедиция к моржам: первые впечатления</h3>
+                            <p class="text-gray-600 mb-4">Как организовать полевые исследования, какие трудности возникают и как их преодолевать на практике.</p>
+                            <div class="text-rose-600 font-medium inline-flex items-center group-hover:underline">
+                                Читать статью <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Article 2 -->
+                    <a href="#" class="group block bg-white rounded-xl overflow-hidden shadow-sm hover-scale border border-gray-200">
+                        <div class="h-48 bg-gray-200 relative overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                                <i class="fas fa-image fa-3x opacity-30"></i>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <span>15 апреля 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>Обучение</span>
+                            </div>
+                            <h3 class="text-xl font-serif font-bold mb-3 group-hover:text-rose-600 transition">Как объяснять сложные темы простыми словами</h3>
+                            <p class="text-gray-600 mb-4">Методики преподавания, которые помогают сделать сложные биологические концепции доступными для понимания.</p>
+                            <div class="text-rose-600 font-medium inline-flex items-center group-hover:underline">
+                                Читать статью <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+         

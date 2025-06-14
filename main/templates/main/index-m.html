@@ -46,8 +46,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/static/images/fav-cat/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/images/fav-cat/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/images/fav-cat/favicon-16x16.png">
-    <link rel="manifest" href="/static/images/fav-cat/site.webmanifest">i
-
+    <link rel="manifest" href="/static/images/fav-cat/site.webmanifest">
 
 </head>
 <body class="font-sans antialiased text-gray-800 bg-white">
@@ -504,72 +503,36 @@
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Article 1 -->
-                <a href="#" class="group block bg-white rounded-xl overflow-hidden shadow-sm hover-scale">
-                    <div class="h-48 bg-gray-200 relative overflow-hidden">
-                        <div class="absolute inset-0 flex items-center justify-center text-gray-400">
-                            <i class="fas fa-image fa-3x opacity-30"></i>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center text-sm text-gray-500 mb-3">
-                            <span>12 мая 2025</span>
-                            <span class="mx-2">•</span>
-                            <span>Обучение</span>
-                        </div>
-                        <h3 class="text-xl font-serif font-bold mb-3 group-hover:text-rose-600 transition">Как учиться с СДВГ: мой опыт</h3>
-                        <p class="text-gray-600 mb-4">Практические методы, которые помогают мне справляться с трудностями концентрации и организации учебного процесса.</p>
-                        <div class="text-rose-600 font-medium inline-flex items-center group-hover:underline">
-                            Читать статью
-                            <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Article 2 -->
-                <a href="#" class="group block bg-white rounded-xl overflow-hidden shadow-sm hover-scale">
-                    <div class="h-48 bg-gray-200 relative overflow-hidden">
-                        <div class="absolute inset-0 flex items-center justify-center text-gray-400">
-                            <i class="fas fa-image fa-3x opacity-30"></i>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center text-sm text-gray-500 mb-3">
-                            <span>28 апреля 2025</span>
-                            <span class="mx-2">•</span>
-                            <span>Наука</span>
-                        </div>
-                        <h3 class="text-xl font-serif font-bold mb-3 group-hover:text-rose-600 transition">Экспедиция к моржам: первые впечатления</h3>
-                        <p class="text-gray-600 mb-4">Как организовать полевые исследования, какие трудности возникают и как их преодолевать на практике.</p>
-                        <div class="text-rose-600 font-medium inline-flex items-center group-hover:underline">
-                            Читать статью
-                            <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Article 3 -->
-                <a href="#" class="group block bg-white rounded-xl overflow-hidden shadow-sm hover-scale">
-                    <div class="h-48 bg-gray-200 relative overflow-hidden">
-                        <div class="absolute inset-0 flex items-center justify-center text-gray-400">
-                            <i class="fas fa-image fa-3x opacity-30"></i>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center text-sm text-gray-500 mb-3">
-                            <span>15 апреля 2025</span>
-                            <span class="mx-2">•</span>
-                            <span>Обучение</span>
-                        </div>
-                        <h3 class="text-xl font-serif font-bold mb-3 group-hover:text-rose-600 transition">Как объяснять сложные темы простыми словами</h3>
-                        <p class="text-gray-600 mb-4">Методики преподавания, которые помогают сделать сложные биологические концепции доступными для понимания.</p>
-                        <div class="text-rose-600 font-medium inline-flex items-center group-hover:underline">
-                            Читать статью
-                            <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                        </div>
-                    </div>
-                </a>
+{% for article in articles|slice:":3" %}
+<article class="aarticle-preview">
+    <a href="{% url 'article' article.slug %}" class="group block bg-white rounded-xl overflow-hidden shadow-sm hover-scale">
+        <div class="h-48 bg-gray-200 relative overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                <i class="fas fa-image fa-3x opacity-30"></i>
             </div>
+        </div>
+        <div class="p-6">
+            <div class="flex items-center text-sm text-gray-500 mb-3">
+                <span><time>{{ article.created_at|date:"j E Y" }}</time></span>
+                <span class="mx-2">•</span>
+                <span>{{ article.category|default:"Обучение" }}</span>
+            </div>
+            <h3 class="text-xl font-serif font-bold mb-3 group-hover:text-rose-600 transition">
+                {{ article.title }}
+            </h3>
+            {% if article.abstract %}
+                <p class="abstract text-gray-600 mb-4">{{ article.abstract }}</p>
+            {% else %}
+                <p class="abstract text-gray-600 mb-4">{{ article.content|truncatewords:30 }}</p>
+            {% endif %}
+            <div class="text-rose-600 font-medium inline-flex items-center group-hover:underline">
+                Читать статью
+                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+            </div>
+        </div>
+    </a>
+</article>
+{% endfor %}
 
             <div class="text-center mt-12">
                 <a href="#" class="inline-flex items-center px-6 py-3 border border-gray-300 rounded-md shadow-sm text-base font-medium text-gray-700 bg-white hover:bg-gray-50">
