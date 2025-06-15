@@ -28,7 +28,8 @@
         .article-content h2 {
             font-family: 'Playfair Display', serif;
             font-size: 1.75rem;
-            font-weight: 700;
+>
+font-weight: 700;
             margin-top: 3rem;
             margin-bottom: 1.5rem;
             color: #111827;
@@ -120,13 +121,15 @@
       {{ article.content|safe }}
     </div>
 
-
 <!-- Article Footer -->
 <div class="mt-16 pt-8 border-t border-gray-200 max-w-3xl mx-auto">
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+        <!-- Author Info (unchanged) -->
         <div class="flex items-center">
             <div class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                <img src="https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000" alt="Мария Серединская" class="h-full w-full object-cover">
+                <img src="https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000"
+                     alt="Мария Серединская"
+                     class="h-full w-full object-cover">
             </div>
             <div class="ml-4">
                 <p class="font-medium text-gray-900">{{ article.author.username }}</p>
@@ -134,51 +137,105 @@
             </div>
         </div>
 
-        <div class="flex items-center space-x-4">
+        <!-- Share Component -->
+        <div class="flex items-center space-x-4 relative">
             <span class="text-sm text-gray-500">Поделиться:</span>
-            <button onclick="shareOnTelegram()" class="text-gray-500 hover:text-rose-600 transition">
-                <i class="fab fa-telegram text-xl"></i>
-            </button>
-            <button onclick="shareOnVK()" class="text-gray-500 hover:text-rose-600 transition">
-                <i class="fab fa-vk text-xl"></i>
-            </button>
-            <button onclick="shareOnTwitter()" class="text-gray-500 hover:text-rose-600 transition">
-                <i class="fab fa-twitter text-xl"></i>
-            </button>
-            <button onclick="copyLink()" class="text-gray-500 hover:text-rose-600 transition">
-                <i class="fas fa-link text-xl"></i>
+
+            <!-- Desktop: Manual Share Buttons -->
+            <div id="social-share-buttons" class="hidden sm:flex items-center space-x-4">
+                <button onclick="shareOnTelegram()" class="text-gray-500 hover:text-rose-600 transition" aria-label="Поделиться в Telegram">
+                    <i class="fab fa-telegram text-xl"></i>
+                </button>
+                <button onclick="shareOnVK()" class="text-gray-500 hover:text-rose-600 transition" aria-label="Поделиться ВКонтакте">
+                    <i class="fab fa-vk text-xl"></i>
+                </button>
+                <button onclick="shareOnTwitter()" class="text-gray-500 hover:text-rose-600 transition" aria-label="Поделиться в Twitter">
+                    <i class="fab fa-twitter text-xl"></i>
+                </button>
+                <button onclick="copyLink(this)" class="text-gray-500 hover:text-rose-600 transition relative" aria-label="Копировать ссылку">
+                    <i class="fas fa-link text-xl"></i>
+                    <span id="tooltip" class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 transition-opacity duration-300">Скопировано!</span>
+                </button>
+            </div>
+
+            <!-- Mobile: Native Share Button -->
+            <button id="native-share-button" onclick="nativeShare()"
+                    class="sm:hidden text-gray-500 hover:text-rose-600 transition"
+                    aria-label="Поделиться">
+                <i class="fas fa-share-alt text-xl"></i>
             </button>
         </div>
     </div>
 </div>
 
 <script>
-    // Get current page URL and title
-    const currentUrl = encodeURIComponent(window.location.href);
-    const currentTitle = encodeURIComponent(document.title);
+// --- Configuration ---
+const SHARE_DATA = {
+    title: document.title,
+    text: 'Посмотрите эту статью',
+    url: window.location.href
+};
 
-    function shareOnTelegram() {
-        window.open(`https://t.me/share/url?url=${currentUrl}&text=${currentTitle}`, '_blank');
+// --- Native Sharing (Mobile) ---
+function nativeShare() {
+    if (navigator.share) {
+        navigator.share(SHARE_DATA)
+            .catch(err => {
+                console.error('Ошибка шаринга:', err);
+                showFallbackButtons();
+            });
+    } else {
+        showFallbackButtons();
     }
+}
 
-    function shareOnVK() {
-        window.open(`https://vk.com/share.php?url=${currentUrl}&title=${currentTitle}`, '_blank', 'width=550,height=400');
-    }
+// --- Manual Sharing (Desktop) ---
+function shareOnTelegram() {
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(SHARE_DATA.url)}&text=${encodeURIComponent(SHARE_DATA.title)}`, '_blank', 'width=550,height=400');
+}
 
-    function shareOnTwitter() {
-        window.open(`https://twitter.com/intent/tweet?url=${currentUrl}&text=${currentTitle}`, '_blank', 'width=550,height=400');
-    }
+function shareOnVK() {
+    window.open(`https://vk.com/share.php?url=${encodeURIComponent(SHARE_DATA.url)}&title=${encodeURIComponent(SHARE_DATA.title)}`, '_blank', 'width=550,height=400');
+}
 
-    function copyLink() {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-            // Show a tooltip or small notification that link was copied
-            alert('Ссылка скопирована в буфер обмена!');
-        }).catch(err => {
-            console.error('Не удалось скопировать ссылку: ', err);
+function shareOnTwitter() {
+    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(SHARE_DATA.url)}&text=${encodeURIComponent(SHARE_DATA.title)}`, '_blank', 'width=550,height=400');
+}
+
+// --- Copy Link with Feedback ---
+function copyLink(button) {
+    navigator.clipboard.writeText(SHARE_DATA.url)
+        .then(() => {
+            const tooltip = button.querySelector('#tooltip');
+            tooltip.classList.add('opacity-100');
+            setTimeout(() => tooltip.classList.remove('opacity-100'), 2000);
+        })
+        .catch(err => {
+            console.error('Ошибка копирования:', err);
+            alert('Не удалось скопировать ссылку');
         });
-    }
-</script>
+}
 
+// --- Fallback Handling ---
+function showFallbackButtons() {
+    const fallbackButtons = document.getElementById('social-share-buttons');
+    const nativeButton = document.getElementById('native-share-button');
+
+    if (fallbackButtons) {
+        fallbackButtons.classList.remove('hidden');
+        nativeButton.classList.add('hidden');
+    }
+}
+
+// --- Initialize ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Hide native button if Web Share API isn't supported
+    if (!navigator.share) {
+        document.getElementById('native-share-button').classList.add('hidden');
+        document.getElementById('social-share-buttons').classList.remove('hidden');
+    }
+});
+</script>
             <!-- Related Articles -->
             <div class="max-w-3xl mx-auto mt-20">
 
