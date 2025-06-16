@@ -349,4 +349,88 @@
                         </div>
                     </a>
                 </div>
-         
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-3xl mx-auto text-center">
+            <h3 class="text-2xl font-serif font-bold mb-4">Подписаться на рассылку</h3>
+            <p class="text-gray-600 mb-8 max-w-xl mx-auto">Получайте новые статьи и полезные материалы по обучению биологии и химии прямо на почту.</p>
+            
+            <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input type="email" placeholder="Ваш email" class="flex-grow px-4 py-3 border border-gray-300 rounded-md focus:ring-rose-500 focus:border-rose-500">
+                <button type="submit" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded-md transition whitespace-nowrap">
+                    Подписаться
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-12">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <span class="text-2xl mr-2 text-rose-500">🌿</span>
+                        <span class="font-serif text-xl font-bold">Мария Серединская</span>
+                    </div>
+                    <p class="text-gray-400"> Репетитор по биологии и химии. Нейробиолог, исследователь поведения животных. </p>
+                </div>
+
+                <div>
+                    <h4 class="font-serif font-bold text-lg mb-6">Навигация</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#about" class="hover:text-white transition">Обо мне</a></li>
+                        <li><a href="#science" class="hover:text-white transition">Научная работа</a></li>
+                        <li><a href="#lessons" class="hover:text-white transition">Уроки</a></li>
+                        <li><a href="#blog" class="hover:text-white transition">Блог</a></li>
+                        <li><a href="#contact" class="hover:text-white transition">Контакты</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-serif font-bold text-lg mb-6">Контакты</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-rose-500"></i> example@email.com
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-telegram mr-3 text-rose-500"></i> @Mickey_Fin
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-serif font-bold text-lg mb-6">Подписаться</h4>
+                    <p class="text-gray-400 mb-4">Получайте уведомления о новых статьях и наборах учеников.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Ваш email" class="px-4 py-2 rounded-l-md w-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-rose-500">
+                        <button type="submit" class="bg-rose-600 hover:bg-rose-700 px-4 py-2 rounded-r-md transition">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0"> © 2025 Мария Серединская. Все права защищены. </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">Политика конфиденциальности</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile menu script -->
+    <script>
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
