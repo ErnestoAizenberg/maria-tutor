@@ -1,0 +1,5 @@
+{% extends 'main/base.html' %}
+{% block title %}{{ "Мои работы" }}{% endblock %}
+{% block content %}
+{% include "main/_article_listing.html" with articles=articles %}
+{% endblock content %}

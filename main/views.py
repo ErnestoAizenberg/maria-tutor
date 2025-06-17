@@ -16,5 +16,14 @@ def article(request, slug):
 
     return render(request, 'main/article.html', {'article': article, 'reading_time': reading_time, "related_articles": related_articles})
 
+def articles(request):
+    list_articles = Article.objects.filter(status='published').order_by('-created_at')
+    return render(
+        request,
+        'main/articles.html',
+        {'articles': list_articles}
+    )
+
+
 def test(request):
     return render(request, 'main/article0.html')
