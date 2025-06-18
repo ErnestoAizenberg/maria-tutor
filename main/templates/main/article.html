@@ -1,4 +1,4 @@
-{% extends 'main/base.html' %}
+{% extends 'main/base2.html' %}
 
 {% block title %}{{ article.title }}{% endblock %}
 
@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="max-w-3xl mx-auto mt-20">
 
                 <h3 class="text-2xl font-serif font-bold mb-8">Читайте также</h3>
-                {% include "main/_article_listing.html" with articles=related_articles %}
+                {% include "main/_article_listing_purple.html" with articles=related_articles %}
                 <div class="grid md:grid-cols-2 gap-8">
 
                 </div>

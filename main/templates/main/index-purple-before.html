@@ -1,0 +1,662 @@
+{% extends 'main/base2.html' %}
+{% block title %} Мария Серединская | Репетитор по биологи    и и химии, нейробиолог {% endblock %}
+{% block content %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мария Серединская | Репетитор по биологии и химии, нейробиолог</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+
+        /* Smooth animations */
+        .hover-scale {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Gradient text */
+        .text-gradient {
+            background: linear-gradient(90deg, #ec4899 0%, #f43f5e 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Custom bullet points */
+        .custom-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .custom-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #ec4899;
+            font-weight: bold;
+        }
+    </style>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/fav-cat/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/fav-cat/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/fav-cat/favicon-16x16.png">
+    <link rel="manifest" href="/static/images/fav-cat/site.webmanifest">
+
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-rose-50 to-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="order-2 md:order-1">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-6">
+                        <span class="text-gradient">Мария Серединская</span><br>
+                        Репетитор по биологии и химии
+                    </h1>
+                    <p class="text-lg text-gray-600 mb-8 max-w-lg">
+                        Преподаватель с 9-летним опытом. Нейробиолог, исследователь поведения животных.
+                        Помогаю ученикам не только освоить предмет, но и полюбить процесс обучения.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#lessons" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded-md text-center transition shadow-md hover-scale">
+                            Записаться на урок
+                        </a>
+                        <a href="#science" class="border border-rose-600 text-rose-600 hover:bg-rose-50 px-6 py-3 rounded-md text-center transition shadow-sm hover-scale">
+                            Научные работы
+                        </a>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 relative">
+                  <div class="relative w-full aspect-square max-w-md mx-auto">
+                    <img src="https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000" alt="Profile Image" class="absolute inset-0 w-full h-full object-cover z-0 rounded-2xl"/>
+                        <!-- Placeholder for profile image with decorative elements -->
+                        <!--
+                        <div class="absolute inset-0 bg-gradient-to-br from-rose-100 to-pink-100 rounded-2xl shadow-xl overflow-hidden">>
+                            <div class="w-full h-full flex items-center justify-center text-gray-400">
+                                <i class="fas fa-user text-8xl opacity-30"></i>
+                            </div>
+                        </div>-->
+                        <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg border border-gray-100">
+                            <div class="text-rose-600 text-3xl">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <p class="font-bold mt-1">СПбГУ</p>
+                            <p class="text-xs text-gray-500">Биологический факультет</p>
+                        </div>
+                        <div class="absolute -top-6 -right-6 bg-white p-4 rounded-lg shadow-lg border border-gray-100">
+                            <div class="text-rose-600 text-3xl">
+                                <i class="fas fa-flask"></i>
+                            </div>
+                            <p class="font-bold mt-1">9 лет</p>
+                            <p class="text-xs text-gray-500">Опыта преподавания</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="inline-block px-3 py-1 text-sm font-medium bg-rose-100 text-rose-800 rounded-full mb-4">Обо мне</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Преподаватель, учёный, исследователь</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                    Сочетаю академические знания с практическим опытом полевых исследований, помогая ученикам увидеть биологию как живую науку.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Teaching -->
+                <div class="bg-white border border-gray-100 rounded-xl p-8 shadow-sm hover-scale">
+                    <div class="text-rose-600 text-4xl mb-6">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold mb-4">Преподавание</h3>
+                    <ul class="custom-list text-gray-600 space-y-2">
+                        <li>9 лет преподавания биологии и химии</li>
+                        <li>Авторские методики для разных типов восприятия</li>
+                        <li>Подготовка к ЕГЭ, олимпиадам, вузовские курсы</li>
+                        <li>Особый подход для студентов с СДВГ</li>
+                    </ul>
+                    <a href="#lessons" class="inline-block mt-6 text-rose-600 hover:text-rose-700 font-medium">
+                        Подробнее о занятиях →
+                    </a>
+                </div>
+
+                <!-- Science -->
+                <div class="bg-white border border-gray-100 rounded-xl p-8 shadow-sm hover-scale">
+                    <div class="text-rose-600 text-4xl mb-6">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold mb-4">Научная работа</h3>
+                    <ul class="custom-list text-gray-600 space-y-2">
+                        <li>Нейробиология поведения</li>
+                        <li>Исследование социальных структур у животных</li>
+                        <li>Полевые исследования моржей и сайгаков</li>
+                        <li>Подготовка к зарубежной аспирантуре</li>
+                    </ul>
+                    <a href="#science" class="inline-block mt-6 text-rose-600 hover:text-rose-700 font-medium">
+                        Научные публикации →
+                    </a>
+                </div>
+
+                <!-- Personal -->
+                <div class="bg-white border border-gray-100 rounded-xl p-8 shadow-sm hover-scale">
+                    <div class="text-rose-600 text-4xl mb-6">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold mb-4">Философия обучения</h3>
+                    <ul class="custom-list text-gray-600 space-y-2">
+                        <li>Учеба должна приносить радость</li>
+                        <li>Бережный подход к себе и ученикам</li>
+                        <li>Адаптация методов под индивидуальные особенности</li>
+                        <li>Опыт жизни с СДВГ и преодоления выгорания</li>
+                    </ul>
+                    <a href="#blog" class="inline-block mt-6 text-rose-600 hover:text-rose-700 font-medium">
+                        Читать блог →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Science Section -->
+    <section id="science" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="inline-block px-3 py-1 text-sm font-medium bg-rose-100 text-rose-800 rounded-full mb-4">Научная работа</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Исследования и публикации</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                    От лабораторных исследований до полевых экспедиций — моя научная карьера охватывает различные аспекты биологии поведения.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Research Areas -->
+                <div>
+                    <h3 class="text-2xl font-serif font-bold mb-8">Направления исследований</h3>
+
+                    <div class="space-y-8">
+                        <!-- Research 1 -->
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-6">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-rose-100 text-rose-600">
+                                    <i class="fas fa-brain text-xl"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">Нейробиология поведения</h4>
+                                <p class="text-gray-600">
+                                    Исследование нейронных механизмов поведения, моделирование психических заболеваний на животных моделях.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Research 2 -->
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-6">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-rose-100 text-rose-600">
+                                    <i class="fas fa-users text-xl"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">Социальные структуры</h4>
+                                <p class="text-gray-600">
+                                    Анализ закономерностей расположения животных в группах (моржи, сайгаки) и их социального поведения.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Research 3 -->
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-6">
+                                <div class="flex items-center justify-center h-12 w-12 rounded-md bg-rose-100 text-rose-600">
+                                    <i class="fas fa-map-marked-alt text-xl"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">Полевые исследования</h4>
+                                <p class="text-gray-600">
+                                    Организация и проведение экспедиций, сбор данных в естественной среде обитания животных.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Publications -->
+                <div>
+                    <h3 class="text-2xl font-serif font-bold mb-8">Последние публикации</h3>
+
+                    <div class="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                        <!-- Publication 1 -->
+                        <div class="p-6 border-b border-gray-200 hover:bg-gray-50 transition">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Социальная структура популяции моржей</h4>
+                                    <p class="text-sm text-gray-500 mb-3">Journal of Marine Biology, 2023</p>
+                                    <p class="text-gray-600 text-sm">Исследование пространственного распределения особей в группах в зависимости от возраста и пола.</p>
+                                </div>
+                                <a href="#" class="text-rose-600 hover:text-rose-700 ml-4 flex-shrink-0">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Publication 2 -->
+                        <div class="p-6 border-b border-gray-200 hover:bg-gray-50 transition">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Модели тревожности у Danio rerio</h4>
+                                    <p class="text-sm text-gray-500 mb-3">Neuroscience Letters, 2022</p>
+                                    <p class="text-gray-600 text-sm">Новые подходы к моделированию тревожных расстройств на рыбках данио.</p>
+                                </div>
+                                <a href="https://pureportal.spbu.ru/ru/projects/---2019---1(a3e999da-aaa5-4406-964b-2a66b5635243).html" class="text-rose-600 hover:text-rose-700 ml-4 flex-shrink-0">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Publication 3 -->
+                        <div class="p-6 hover:bg-gray-50 transition">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4 class="font-bold text-lg mb-1">Методы полевых наблюдений</h4>
+                                    <p class="text-sm text-gray-500 mb-3">Field Biology Methods, 2021</p>
+                                    <p class="text-gray-600 text-sm">Сравнение эффективности различных методов наблюдения за поведением животных в дикой природе.</p>
+                                </div>
+                                <a href="#" class="text-rose-600 hover:text-rose-700 ml-4 flex-shrink-0">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-right">
+                        <a href="articles/" class="text-rose-600 hover:text-rose-700 font-medium inline-flex items-center">
+                            Все публикации
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expedition Gallery -->
+            <div class="mt-20">
+                <h3 class="text-2xl font-serif font-bold mb-8">Экспедиции и полевые исследования</h3>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="rounded-xl overflow-hidden aspect-square bg-gray-200 flex items-center justify-center text-gray-400">
+                        <i class="fas fa-image fa-2x opacity-30"></i>
+                    </div>
+                    <div class="rounded-xl overflow-hidden aspect-square bg-gray-200 flex items-center justify-center text-gray-400">
+                        <i class="fas fa-image fa-2x opacity-30"></i>
+                    </div>
+                    <div class="rounded-xl overflow-hidden aspect-square bg-gray-200 flex items-center justify-center text-gray-400">
+                        <i class="fas fa-image fa-2x opacity-30"></i>
+                    </div>
+                    <div class="rounded-xl overflow-hidden aspect-square bg-gray-200 flex items-center justify-center text-gray-400">
+                        <i class="fas fa-image fa-2x opacity-30"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lessons Section -->
+    <section id="lessons" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="inline-block px-3 py-1 text-sm font-medium bg-rose-100 text-rose-800 rounded-full mb-4">Обучение</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Формат занятий</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                    Индивидуальный подход к каждому ученику с учетом целей, уровня подготовки и особенностей восприятия информации.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <!-- Biology -->
+                <div class="border border-gray-200 rounded-xl p-8 shadow-sm hover-scale">
+                    <div class="text-rose-600 text-4xl mb-6">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold mb-4">Биология</h3>
+                    <ul class="custom-list text-gray-600 space-y-2 mb-6">
+                        <li>Подготовка к ЕГЭ и ОГЭ</li>
+                        <li>Олимпиадная биология</li>
+                        <li>Углубленный школьный курс</li>
+                        <li>Подготовка к вузовским экзаменам</li>
+                    </ul>
+                    <div class="mt-6">
+                        <span class="text-2xl font-bold text-gray-900">2 500 ₽</span>
+                        <span class="text-gray-500">/ 60 мин</span>
+                    </div>
+                </div>
+
+                <!-- Chemistry -->
+                <div class="border border-gray-200 rounded-xl p-8 shadow-sm hover-scale">
+                    <div class="text-rose-600 text-4xl mb-6">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold mb-4">Химия</h3>
+                    <ul class="custom-list text-gray-600 space-y-2 mb-6">
+                        <li>Подготовка к ЕГЭ и ОГЭ</li>
+                        <li>Органическая химия</li>
+                        <li>Решение задач повышенной сложности</li>
+                        <li>Биохимия для биологов</li>
+                    </ul>
+                    <div class="mt-6">
+                        <span class="text-2xl font-bold text-gray-900">2 500 ₽</span>
+                        <span class="text-gray-500">/ 60 мин</span>
+                    </div>
+                </div>
+
+                <!-- Special -->
+                <div class="border-2 border-rose-200 rounded-xl p-8 shadow-sm hover-scale bg-rose-50 relative">
+                    <div class="absolute top-0 right-0 bg-rose-600 text-white px-3 py-1 text-xs font-bold rounded-bl-lg rounded-tr-lg">
+                        ПОПУЛЯРНО
+                    </div>
+                    <div class="text-rose-600 text-4xl mb-6">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-serif font-bold mb-4">Спецкурсы</h3>
+                    <ul class="custom-list text-gray-600 space-y-2 mb-6">
+                        <li>Основы нейробиологии</li>
+                        <li>Эффективные методы обучения</li>
+                        <li>Преодоление прокрастинации</li>
+                        <li>Обучение с СДВГ</li>
+                    </ul>
+                    <div class="mt-6">
+                        <span class="text-2xl font-bold text-gray-900">3 000 ₽</span>
+                        <span class="text-gray-500">/ 60 мин</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Form -->
+            <div class="max-w-3xl mx-auto bg-gray-50 rounded-xl shadow-sm overflow-hidden">
+                <div class="grid md:grid-cols-2">
+                    <div class="bg-rose-600 p-8 text-white">
+                        <h3 class="text-xl font-serif font-bold mb-4">Записаться на занятие</h3>
+                        <p class="mb-6">Оставьте заявку, и я свяжусь с вами для уточнения деталей и согласования расписания.</p>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <div class="mr-3 bg-rose-700 p-2 rounded-full">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-rose-200">Телефон</p>
+                                    <p class="font-medium">+7 (931) 372-65-33</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="mr-3 bg-rose-700 p-2 rounded-full">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-rose-200">Email</p>
+                                    <p class="font-medium">mariseredinskaya@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="mr-3 bg-rose-700 p-2 rounded-full">
+                                    <i class="fab fa-telegram"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-rose-200">Telegram</p>
+                                    <p class="font-medium">@Mickey_Fin</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <form>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Ваше имя</label>
+                                    <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-rose-500 focus:border-rose-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Контакт для связи</label>
+                                    <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-rose-500 focus:border-rose-500">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Предмет</label>
+                                    <select class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-rose-500 focus:border-rose-500">
+                                        <option>Биология</option>
+                                        <option>Химия</option>
+                                        <option>Спецкурс</option>
+                                        <option>Не знаю, нужна консультация</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Цель занятий</label>
+                                    <textarea rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-rose-500 focus:border-rose-500"></textarea>
+                                </div>
+                                <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white py-2 px-4 rounded-md transition">
+                                    Отправить заявку
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="inline-block px-3 py-1 text-sm font-medium bg-rose-100 text-rose-800 rounded-full mb-4">Блог</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Последние статьи</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                    Размышления о преподавании, научные заметки и личный опыт преодоления трудностей в обучении.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+{% for article in articles|slice:":3" %}
+<article class="aarticle-preview">
+    <a href="{% url 'article' article.slug %}" class="group block bg-white rounded-xl overflow-hidden shadow-sm hover-scale">
+        <div class="h-48 bg-gray-200 relative overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+                <i class="fas fa-image fa-3x opacity-30"></i>
+            </div>
+        </div>
+        <div class="p-6">
+            <div class="flex items-center text-sm text-gray-500 mb-3">
+                <span><time>{{ article.created_at|date:"j E Y" }}</time></span>
+                <span class="mx-2">•</span>
+                <span>{{ article.category|default:"Обучение" }}</span>
+            </div>
+            <h3 class="text-xl font-serif font-bold mb-3 group-hover:text-rose-600 transition">
+                {{ article.title }}
+            </h3>
+            {% if article.abstract %}
+                <p class="abstract text-gray-600 mb-4">{{ article.abstract }}</p>
+            {% else %}
+                <p class="abstract text-gray-600 mb-4">{{ article.content|truncatewords:30 }}</p>
+            {% endif %}
+            <div class="text-rose-600 font-medium inline-flex items-center group-hover:underline">
+                Читать статью
+                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+            </div>
+        </div>
+    </a>
+</article>
+{% endfor %}
+
+            <div class="text-center mt-12">
+                <a href="articles/" class="inline-flex items-center px-6 py-3 border border-gray-300 rounded-md shadow-sm text-base font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    Все статьи
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="inline-block px-3 py-1 text-sm font-medium bg-rose-100 text-rose-800 rounded-full mb-4">Отзывы</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Что говорят ученики</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                    Результаты и впечатления тех, кто уже занимался с Марией.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-50 p-8 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold">Анна К.</h4>
+                            <p class="text-sm text-gray-500">ЕГЭ по биологии, 98 баллов</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "Мария объясняет сложные темы так, что они становятся понятными и интересными. Благодаря занятиям я не только сдала ЕГЭ на высокий балл, но и полюбила биологию."
+                    </p>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-50 p-8 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold">Иван П.</h4>
+                            <p class="text-sm text-gray-500">Олимпиада по химии, призер</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "Особенно ценю, что Мария не просто дает знания, но и учит думать, анализировать. Это помогло мне не только в олимпиадах, но и в университете."
+                    </p>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-gray-50 p-8 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold">Елена С.</h4>
+                            <p class="text-sm text-gray-500">Студентка с СДВГ</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "Как человек с СДВГ, я всегда испытывала трудности с обучением. Мария помогла найти подход, который работает именно для меня. Учеба больше не мука!"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 bg-rose-600 text-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="inline-block px-3 py-1 text-sm font-medium bg-white text-rose-800 rounded-full mb-4">Контакты</span>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Свяжитесь со мной</h2>
+                <p class="max-w-3xl mx-auto text-lg text-rose-100">
+                    Если у вас есть вопросы по занятиям, научному сотрудничеству или вы хотите обсудить что-то из моего блога.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div>
+                    <div class="space-y-8">
+                        <!-- Email -->
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-6">
+                                <div class="flex items-center justify-center h-14 w-14 rounded-full bg-rose-700 text-white">
+                                    <i class="fas fa-envelope text-xl"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">Email</h4>
+                                <p class="text-rose-100">mariseredinskaya@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <!-- Telegram -->
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-6">
+                                <div class="flex items-center justify-center h-14 w-14 rounded-full bg-rose-700 text-white">
+                                    <i class="fab fa-telegram text-xl"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">Telegram</h4>
+                                <p class="text-rose-100">@Mickey_Fin</p>
+                            </div>
+                        </div>
+
+                        <!-- Social -->
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-6">
+                                <div class="flex items-center justify-center h-14 w-14 rounded-full bg-rose-700 text-white">
+                                    <i class="fas fa-share-alt text-xl"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-4">Социальные сети</h4>
+                                <div class="flex space-x-4">
+                                    <a href="#" class="h-10 w-10 rounded-full bg-rose-700 flex items-center justify-center hover:bg-rose-800 transition">
+                                        <i class="fab fa-vk"></i>
+                                    </a>
+                                    <a href="#" class="h-10 w-10 rounded-full bg-rose-700 flex items-center justify-center hover:bg-rose-800 transition">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="h-10 w-10 rounded-full bg-rose-700 flex items-center justify-center hover:bg-rose-800 transition">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="#" class="h-10 w-10 rounded-full bg-rose-700 flex items-center justify-center hover:bg-rose-800 transition">
+                                        <i class="fab fa-linkedin"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div>
+                    <form class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-rose-100 mb-1">Ваше имя</label>
+                            <input type="text" class="w-full px-4 py-3 bg-rose-700 border border-rose-500 rounded-md text-white placeholder-rose-300 focus:ring-2 focus:ring-white focus:border-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-rose-100 mb-1">Email</label>
+                            <input type="email" class="w-full px-4 py-3 bg-rose-700 border border-rose-500 rounded-md text-white placeholder-rose-300 focus:ring-2 focus:ring-white focus:border-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-rose-100 mb-1">Сообщение</label>
+                            <textarea rows="4" class="w-full px-4 py-3 bg-rose-700 border border-rose-500 rounded-md text-white placeholder-rose-300 focus:ring-2 focus:ring-white focus:border-white"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-white text-rose-600 py-3 px-4 rounded-md font-medium hover:bg-gray-100 transition">
+                            Отправить сообщение
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

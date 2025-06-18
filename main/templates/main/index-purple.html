@@ -1,0 +1,639 @@
+
+{% extends 'main/base2.html' %}
+{% block title %} Мария Серединская | Репетитор по биологии и химии, нейробиолог {% endblock %}
+
+{% block content %}
+<style>
+    /* Дополнительные стили для главной страницы */
+    .hero-gradient {
+        background: linear-gradient(135deg, rgba(var(--color-primary), 0.1) 0%, rgba(var(--color-bg), 1) 100%);
+    }
+
+    .popular-badge {
+        background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-secondary)) 100%);
+    }
+
+    .testimonial-card {
+        background: rgb(var(--color-bg-card));
+        border: 1px solid rgba(var(--color-border), 0.2);
+    }
+
+    .contact-card {
+        background: rgba(var(--color-primary), 0.2);
+        border: 1px solid rgba(var(--color-primary), 0.3);
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 hero-gradient">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-6">
+                    <span class="text-gradient">Мария Серединская</span><br>
+                    Репетитор по биологии и химии
+                </h1>
+                <p class="text-lg mb-8 max-w-lg" style="color: rgb(var(--color-text-secondary));">
+                    Преподаватель с 9-летним опытом. Нейробиолог, исследователь поведения животных.
+                    Помогаю ученикам не только освоить предмет, но и полюбить процесс обучения.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#lessons" class="btn btn-primary px-6 py-3">
+                        Записаться на урок
+                    </a>
+                    <a href="#science" class="btn btn-outline px-6 py-3">
+                        Научные работы
+                    </a>
+                </div>
+            </div>
+            <div class="order-1 md:order-2 relative">
+                <div class="relative w-full aspect-square max-w-md mx-auto">
+                    <img src="https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000"
+                         alt="Profile Image"
+                         class="absolute inset-0 w-full h-full object-cover z-0 rounded-2xl"
+                         style="border: 1px solid rgba(var(--color-border), 0.3);"/>
+
+                    <div class="absolute -bottom-6 -left-6 p-4 rounded-lg shadow-lg" style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
+                        <div class="text-primary text-3xl">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <p class="font-bold mt-1">СПбГУ</p>
+                        <p class="text-xs" style="color: rgb(var(--color-text-secondary));">Биологический факультет</p>
+                    </div>
+
+                    <div class="absolute -top-6 -right-6 p-4 rounded-lg shadow-lg" style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
+                        <div class="text-primary text-3xl">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <p class="font-bold mt-1">9 лет</p>
+                        <p class="text-xs" style="color: rgb(var(--color-text-secondary));">Опыта преподавания</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-20 px-4 sm:px-6 lg:px-8" style="background-color: rgb(var(--color-bg));">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full mb-4"
+                  style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                Обо мне
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Преподаватель, учёный, исследователь</h2>
+            <p class="max-w-3xl mx-auto text-lg" style="color: rgb(var(--color-text-secondary));">
+                Сочетаю академические знания с практическим опытом полевых исследований, помогая ученикам увидеть биологию как живую науку.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Teaching -->
+            <div class="card p-8">
+                <div class="text-primary text-4xl mb-6">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h3 class="text-xl font-serif font-bold mb-4">Преподавание</h3>
+                <ul class="custom-list space-y-2" style="color: rgb(var(--color-text-secondary));">
+                    <li>9 лет преподавания биологии и химии</li>
+                    <li>Авторские методики для разных типов восприятия</li>
+                    <li>Подготовка к ЕГЭ, олимпиадам, вузовские курсы</li>
+                    <li>Особый подход для студентов с СДВГ</li>
+                </ul>
+                <a href="#lessons" class="inline-block mt-6 font-medium text-primary hover:text-primary-light">
+                    Подробнее о занятиях →
+                </a>
+            </div>
+
+            <!-- Science -->
+            <div class="card p-8">
+                <div class="text-primary text-4xl mb-6">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <h3 class="text-xl font-serif font-bold mb-4">Научная работа</h3>
+                <ul class="custom-list space-y-2" style="color: rgb(var(--color-text-secondary));">
+                    <li>Нейробиология поведения</li>
+                    <li>Исследование социальных структур у животных</li>
+                    <li>Полевые исследования моржей и сайгаков</li>
+                    <li>Подготовка к зарубежной аспирантуре</li>
+                </ul>
+                <a href="#science" class="inline-block mt-6 font-medium text-primary hover:text-primary-light">
+                    Научные публикации →
+                </a>
+            </div>
+
+            <!-- Personal -->
+            <div class="card p-8">
+                <div class="text-primary text-4xl mb-6">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3 class="text-xl font-serif font-bold mb-4">Философия обучения</h3>
+                <ul class="custom-list space-y-2" style="color: rgb(var(--color-text-secondary));">
+                    <li>Учеба должна приносить радость</li>
+                    <li>Бережный подход к себе и ученикам</li>
+                    <li>Адаптация методов под индивидуальные особенности</li>
+                    <li>Опыт жизни с СДВГ и преодоления выгорания</li>
+                </ul>
+                <a href="#blog" class="inline-block mt-6 font-medium text-primary hover:text-primary-light">
+                    Читать блог →
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Science Section -->
+<section id="science" class="py-20 px-4 sm:px-6 lg:px-8" style="background-color: rgb(var(--color-bg-secondary));">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full mb-4"
+                  style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                Научная работа
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Исследования и публикации</h2>
+            <p class="max-w-3xl mx-auto text-lg" style="color: rgb(var(--color-text-secondary));">
+                От лабораторных исследований до полевых экспедиций — моя научная карьера охватывает различные аспекты биологии поведения.
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12">
+            <!-- Research Areas -->
+            <div>
+                <h3 class="text-2xl font-serif font-bold mb-8">Направления исследований</h3>
+
+                <div class="space-y-8">
+                    <!-- Research 1 -->
+                    <div class="flex">
+                        <div class="flex-shrink-0 mr-6">
+                            <div class="flex items-center justify-center h-12 w-12 rounded-md"
+                                 style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                                <i class="fas fa-brain text-xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-2">Нейробиология поведения</h4>
+                            <p style="color: rgb(var(--color-text-secondary));">
+                                Исследование нейронных механизмов поведения, моделирование психических заболеваний на животных моделях.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Research 2 -->
+                    <div class="flex">
+                        <div class="flex-shrink-0 mr-6">
+                            <div class="flex items-center justify-center h-12 w-12 rounded-md"
+                                 style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                                <i class="fas fa-users text-xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-2">Социальные структуры</h4>
+                            <p style="color: rgb(var(--color-text-secondary));">
+                                Анализ закономерностей расположения животных в группах (моржи, сайгаки) и их социального поведения.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Research 3 -->
+                    <div class="flex">
+                        <div class="flex-shrink-0 mr-6">
+                            <div class="flex items-center justify-center h-12 w-12 rounded-md"
+                                 style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                                <i class="fas fa-map-marked-alt text-xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-2">Полевые исследования</h4>
+                            <p style="color: rgb(var(--color-text-secondary));">
+                                Организация и проведение экспедиций, сбор данных в естественной среде обитания животных.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Publications -->
+            <div>
+                <h3 class="text-2xl font-serif font-bold mb-8">Последние публикации</h3>
+
+                <div class="card overflow-hidden">
+                    <!-- Publication 1 -->
+                    <div class="p-6 border-b" style="border-color: rgba(var(--color-border), 0.3);">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">Социальная структура популяции моржей</h4>
+                                <p class="text-sm mb-3" style="color: rgb(var(--color-text-secondary));">Journal of Marine Biology, 2023</p>
+                                <p class="text-sm" style="color: rgb(var(--color-text-secondary));">Исследование пространственного распределения особей в группах в зависимости от возраста и пола.</p>
+                            </div>
+                            <a href="#" class="text-primary hover:text-primary-light ml-4 flex-shrink-0">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Publication 2 -->
+                    <div class="p-6 border-b" style="border-color: rgba(var(--color-border), 0.3);">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">Модели тревожности у Danio rerio</h4>
+                                <p class="text-sm mb-3" style="color: rgb(var(--color-text-secondary));">Neuroscience Letters, 2022</p>
+                                <p class="text-sm" style="color: rgb(var(--color-text-secondary));">Новые подходы к моделированию тревожных расстройств на рыбках данио.</p>
+                            </div>
+                            <a href="https://pureportal.spbu.ru/ru/projects/---2019---1(a3e999da-aaa5-4406-964b-2a66b5635243).html" class="text-primary hover:text-primary-light ml-4 flex-shrink-0">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Publication 3 -->
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h4 class="font-bold text-lg mb-1">Методы полевых наблюдений</h4>
+                                <p class="text-sm mb-3" style="color: rgb(var(--color-text-secondary));">Field Biology Methods, 2021</p>
+                                <p class="text-sm" style="color: rgb(var(--color-text-secondary));">Сравнение эффективности различных методов наблюдения за поведением животных в дикой природе.</p>
+                            </div>
+                            <a href="#" class="text-primary hover:text-primary-light ml-4 flex-shrink-0">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 text-right">
+                    <a href="articles/" class="font-medium inline-flex items-center text-primary hover:text-primary-light">
+                        Все публикации
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expedition Gallery -->
+        <div class="mt-20">
+            <h3 class="text-2xl font-serif font-bold mb-8">Экспедиции и полевые исследования</h3>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {% for i in "1234" %}
+                <div class="rounded-xl overflow-hidden aspect-square flex items-center justify-center"
+                     style="background-color: rgba(var(--color-primary), 0.1); color: rgba(var(--color-primary), 0.5);">
+                    <i class="fas fa-image fa-2x"></i>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lessons Section -->
+<section id="lessons" class="py-20 px-4 sm:px-6 lg:px-8" style="background-color: rgb(var(--color-bg));">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full mb-4"
+                  style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                Обучение
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Формат занятий</h2>
+            <p class="max-w-3xl mx-auto text-lg" style="color: rgb(var(--color-text-secondary));">
+                Индивидуальный подход к каждому ученику с учетом целей, уровня подготовки и особенностей восприятия информации.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <!-- Biology -->
+            <div class="card p-8">
+                <div class="text-primary text-4xl mb-6">
+                    <i class="fas fa-dna"></i>
+                </div>
+                <h3 class="text-xl font-serif font-bold mb-4">Биология</h3>
+                <ul class="custom-list space-y-2 mb-6" style="color: rgb(var(--color-text-secondary));">
+                    <li>Подготовка к ЕГЭ и ОГЭ</li>
+                    <li>Олимпиадная биология</li>
+                    <li>Углубленный школьный курс</li>
+                    <li>Подготовка к вузовским экзаменам</li>
+                </ul>
+                <div class="mt-6">
+                    <span class="text-2xl font-bold">2 500 ₽</span>
+                    <span style="color: rgb(var(--color-text-secondary));">/ 60 мин</span>
+                </div>
+            </div>
+
+            <!-- Chemistry -->
+            <div class="card p-8">
+                <div class="text-primary text-4xl mb-6">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <h3 class="text-xl font-serif font-bold mb-4">Химия</h3>
+                <ul class="custom-list space-y-2 mb-6" style="color: rgb(var(--color-text-secondary));">
+                    <li>Подготовка к ЕГЭ и ОГЭ</li>
+                    <li>Органическая химия</li>
+                    <li>Решение задач повышенной сложности</li>
+                    <li>Биохимия для биологов</li>
+                </ul>
+                <div class="mt-6">
+                    <span class="text-2xl font-bold">2 500 ₽</span>
+                    <span style="color: rgb(var(--color-text-secondary));">/ 60 мин</span>
+                </div>
+            </div>
+
+            <!-- Special -->
+            <div class="card p-8 relative" style="border: 2px solid rgba(var(--color-primary), 0.3); background-color: rgba(var(--color-primary), 0.05);">
+                <div class="absolute top-0 right-0 text-white px-3 py-1 text-xs font-bold rounded-bl-lg rounded-tr-lg popular-badge">
+                    ПОПУЛЯРНО
+                </div>
+                <div class="text-primary text-4xl mb-6">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="text-xl font-serif font-bold mb-4">Спецкурсы</h3>
+                <ul class="custom-list space-y-2 mb-6" style="color: rgb(var(--color-text-secondary));">
+                    <li>Основы нейробиологии</li>
+                    <li>Эффективные методы обучения</li>
+                    <li>Преодоление прокрастинации</li>
+                    <li>Обучение с СДВГ</li>
+                </ul>
+                <div class="mt-6">
+                    <span class="text-2xl font-bold">3 000 ₽</span>
+                    <span style="color: rgb(var(--color-text-secondary));">/ 60 мин</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Form -->
+        <div class="max-w-3xl mx-auto card overflow-hidden">
+            <div class="grid md:grid-cols-2">
+                <div class="p-8" style="background-color: rgb(var(--color-primary)); color: white;">
+                    <h3 class="text-xl font-serif font-bold mb-4">Записаться на занятие</h3>
+                    <p class="mb-6" style="color: rgba(255,255,255,0.8);">Оставьте заявку, и я свяжусь с вами для уточнения деталей и согласования расписания.</p>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="mr-3 p-2 rounded-full" style="background-color: rgba(255,255,255,0.1);">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm" style="color: rgba(255,255,255,0.7);">Телефон</p>
+                                <p class="font-medium">+7 (931) 372-65-33</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="mr-3 p-2 rounded-full" style="background-color: rgba(255,255,255,0.1);">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm" style="color: rgba(255,255,255,0.7);">Email</p>
+                                <p class="font-medium">mariseredinskaya@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="mr-3 p-2 rounded-full" style="background-color: rgba(255,255,255,0.1);">
+                                <i class="fab fa-telegram"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm" style="color: rgba(255,255,255,0.7);">Telegram</p>
+                                <p class="font-medium">@Mickey_Fin</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8">
+                    <form>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Ваше имя</label>
+                                <input type="text" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
+                                       style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Контакт для связи</label>
+                                <input type="text" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
+                                       style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Предмет</label>
+                                <select class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
+                                        style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
+                                    <option>Биология</option>
+                                    <option>Химия</option>
+                                    <option>Спецкурс</option>
+                                    <option>Не знаю, нужна консультация</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Цель занятий</label>
+                                <textarea rows="3" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
+                                          style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);"></textarea>
+                            </div>
+                            <button type="submit" class="w-full btn btn-primary py-2 px-4 rounded-md">
+                                Отправить заявку
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Section -->
+<section id="blog" class="py-20 px-4 sm:px-6 lg:px-8" style="background-color: rgb(var(--color-bg-secondary));">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full mb-4"
+                  style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                Блог
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Последние статьи</h2>
+            <p class="max-w-3xl mx-auto text-lg" style="color: rgb(var(--color-text-secondary));">
+                Размышления о преподавании, научные заметки и личный опыт преодоления трудностей в обучении.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% include 'main/_article_listing_purple.html' with articles=articles %}
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="articles/" class="btn btn-outline px-6 py-3">
+                Все статьи
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-20 px-4 sm:px-6 lg:px-8" style="background-color: rgb(var(--color-bg));">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full mb-4"
+                  style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                Отзывы
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Что говорят ученики</h2>
+            <p class="max-w-3xl mx-auto text-lg" style="color: rgb(var(--color-text-secondary));">
+                Результаты и впечатления тех, кто уже занимался с Марией.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card p-8 rounded-xl">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full flex items-center justify-center"
+                         style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-bold">Анна К.</h4>
+                        <p class="text-sm" style="color: rgb(var(--color-text-secondary));">ЕГЭ по биологии, 98 баллов</p>
+                    </div>
+                </div>
+                <p class="italic" style="color: rgb(var(--color-text-secondary));">
+                    "Мария объясняет сложные темы так, что они становятся понятными и интересными. Благодаря занятиям я не только сдала ЕГЭ на высокий балл, но и полюбила биологию."
+                </p>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card p-8 rounded-xl">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full flex items-center justify-center"
+                         style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-bold">Иван П.</h4>
+                        <p class="text-sm" style="color: rgb(var(--color-text-secondary));">Олимпиада по химии, призер</p>
+                    </div>
+                </div>
+                <p class="italic" style="color: rgb(var(--color-text-secondary));">
+                    "Особенно ценю, что Мария не просто дает знания, но и учит думать, анализировать. Это помогло мне не только в олимпиадах, но и в университете."
+                </p>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card p-8 rounded-xl">
+                <div class="flex items-center mb-4">
+                    <div class="flex-shrink-0 h-12 w-12 rounded-full flex items-center justify-center"
+                         style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-bold">Елена С.</h4>
+                        <p class="text-sm" style="color: rgb(var(--color-text-secondary));">Студентка с СДВГ</p>
+                    </div>
+                </div>
+                <p class="italic" style="color: rgb(var(--color-text-secondary));">
+                    "Как человек с СДВГ, я всегда испытывала трудности с обучением. Мария помогла найти подход, который работает именно для меня. Учеба больше не мука!"
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-20 px-4 sm:px-6 lg:px-8" style="background-color: rgb(var(--color-primary)); color: white;">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full mb-4"
+                  style="background-color: rgba(255,255,255,0.2); color: white;">
+                Контакты
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Свяжитесь со мной</h2>
+            <p class="max-w-3xl mx-auto text-lg" style="color: rgba(255,255,255,0.8);">
+                Если у вас есть вопросы по занятиям, научному сотрудничеству или вы хотите обсудить что-то из моего блога.
+            </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12">
+            <!-- Contact Info -->
+            <div>
+                <div class="space-y-8">
+                    <!-- Email -->
+                    <div class="flex">
+                        <div class="flex-shrink-0 mr-6">
+                            <div class="flex items-center justify-center h-14 w-14 rounded-full"
+                                 style="background-color: rgba(255,255,255,0.1);">
+                                <i class="fas fa-envelope text-xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-2">Email</h4>
+                            <p style="color: rgba(255,255,255,0.8);">mariseredinskaya@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <!-- Telegram -->
+                    <div class="flex">
+                        <div class="flex-shrink-0 mr-6">
+                            <div class="flex items-center justify-center h-14 w-14 rounded-full"
+                                 style="background-color: rgba(255,255,255,0.1);">
+                                <i class="fab fa-telegram text-xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-2">Telegram</h4>
+                            <p style="color: rgba(255,255,255,0.8);">@Mickey_Fin</p>
+                        </div>
+                    </div>
+
+                    <!-- Social -->
+                    <div class="flex">
+                        <div class="flex-shrink-0 mr-6">
+                            <div class="flex items-center justify-center h-14 w-14 rounded-full"
+                                 style="background-color: rgba(255,255,255,0.1);">
+                                <i class="fas fa-share-alt text-xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-4">Социальные сети</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="h-10 w-10 rounded-full flex items-center justify-center hover:bg-white hover:bg-opacity-20 transition"
+                                   style="background-color: rgba(255,255,255,0.1);">
+                                    <i class="fab fa-vk"></i>
+                                </a>
+                                <a href="#" class="h-10 w-10 rounded-full flex items-center justify-center hover:bg-white hover:bg-opacity-20 transition"
+                                   style="background-color: rgba(255,255,255,0.1);">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="h-10 w-10 rounded-full flex items-center justify-center hover:bg-white hover:bg-opacity-20 transition"
+                                   style="background-color: rgba(255,255,255,0.1);">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="h-10 w-10 rounded-full flex items-center justify-center hover:bg-white hover:bg-opacity-20 transition"
+                                   style="background-color: rgba(255,255,255,0.1);">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div>
+                <form class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-1" style="color: rgba(255,255,255,0.8);">Ваше имя</label>
+                        <input type="text" class="w-full px-4 py-3 rounded-md placeholder-white placeholder-opacity-50 focus:ring-2 focus:ring-white"
+                               style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1" style="color: rgba(255,255,255,0.8);">Email</label>
+                        <input type="email" class="w-full px-4 py-3 rounded-md placeholder-white placeholder-opacity-50 focus:ring-2 focus:ring-white"
+                               style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1" style="color: rgba(255,255,255,0.8);">Сообщение</label>
+                        <textarea rows="4" class="w-full px-4 py-3 rounded-md placeholder-white placeholder-opacity-50 focus:ring-2 focus:ring-white"
+                                  style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3 px-4 rounded-md font-medium hover:bg-opacity-90 transition"
+                            style="background-color: white; color: rgb(var(--color-primary));">
+                        Отправить сообщение
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

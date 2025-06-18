@@ -4,7 +4,7 @@ from .models import Article
 
 def index(request):
     articles = Article.objects.filter(status='published').order_by('-created_at')
-    return render(request, 'main/index-m.html', {'articles': articles})
+    return render(request, 'main/index-purple.html', {'articles': articles})
 
 def article(request, slug):
     article = get_object_or_404(Article, slug=slug, status='published')

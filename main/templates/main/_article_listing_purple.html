@@ -1,0 +1,38 @@
+{% for article in articles|slice:":3" %}
+<article class="article-preview group">
+    <a href="{% url 'article' article.slug %}" class="block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 bg-card hover:bg-opacity-90 border" style="border-color: rgba(var(--color-border), 0.3);">
+        <div class="h-48 relative overflow-hidden" style="background-color: rgba(var(--color-primary), 0.1);">
+            {% if article.image %}
+                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            {% else %}
+                <div class="absolute inset-0 flex items-center justify-center" style="color: rgba(var(--color-primary), 0.5);">
+                    <i class="fas fa-newspaper fa-3x"></i>
+                </div>
+            {% endif %}
+        </div>
+        <div class="p-6">
+            <div class="flex items-center text-sm mb-3 space-x-2" style="color: rgb(var(--color-text-secondary));">
+                <time datetime="{{ article.created_at|date:'Y-m-d' }}">{{ article.created_at|date:"j E Y" }}</time>
+                <span aria-hidden="true">•</span>
+                <span class="px-2 py-1 rounded-full text-xs" style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                    {{ article.category|default:"Обучение" }}
+                </span>
+            </div>
+            <h3 class="text-xl font-serif font-bold mb-3 group-hover:text-primary transition-colors duration-200">
+                {{ article.title }}
+            </h3>
+            <div class="mb-4" style="color: rgb(var(--color-text-secondary));">
+                {% if article.abstract %}
+                    <p class="abstract">{{ article.abstract }}</p>
+                {% else %}
+                    <p class="abstract">{{ article.content|striptags|truncatewords:30 }}</p>
+                {% endif %}
+            </div>
+            <div class="text-primary font-medium inline-flex items-center group-hover:text-primary-light transition-colors duration-200">
+                Читать статью
+                <i class="fas fa-arrow-right ml-2 transition-transform duration-300 group-hover:translate-x-1"></i>
+            </div>
+        </div>
+    </a>
+</article>
+{% endfor %}
