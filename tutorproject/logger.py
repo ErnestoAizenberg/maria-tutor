@@ -1,7 +1,7 @@
 import logging
 import sys
 from logging.handlers import RotatingFileHandler
-from typing import Dict, Any
+from typing import Any, Dict
 
 # Color codes
 COLORS: Dict[str, str] = {

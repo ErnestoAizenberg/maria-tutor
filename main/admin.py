@@ -2,10 +2,12 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.utils.html import format_html
-from .models import Application, Article, ConnectMessage
+
 from .custom_admin import custom_admin_site
+from .models import Application, Article, ConnectMessage
 
 User = get_user_model()
+
 
 class ApplicationAdmin(admin.ModelAdmin):
     list_display = (
@@ -48,9 +50,8 @@ class ApplicationAdmin(admin.ModelAdmin):
     process_actions.short_description = "Actions"
 
     class Media:
-        css = {
-            'all': ('admin/css/custom.css',)
-        }
+        css = {"all": ("admin/css/custom.css",)}
+
 
 class ConnectMessageAdmin(admin.ModelAdmin):
     list_display = (
@@ -92,9 +93,8 @@ class ConnectMessageAdmin(admin.ModelAdmin):
     message_actions.short_description = "Actions"
 
     class Media:
-        css = {
-            'all': ('admin/css/custom.css',)
-        }
+        css = {"all": ("admin/css/custom.css",)}
+
 
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ("title", "author", "status", "created_at", "updated_at")
@@ -107,6 +107,7 @@ class ArticleAdmin(admin.ModelAdmin):
         ("Content", {"fields": ("abstract", "content")}),
         ("Dates", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
     )
+
 
 # Регистрация моделей в кастомной админке
 custom_admin_site.register(User)

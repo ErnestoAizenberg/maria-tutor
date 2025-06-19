@@ -2,33 +2,59 @@
 Personal website for biology/chemistry tutor Maria Seredinskaya
 """
 
+import json
+
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.shortcuts import get_object_or_404, redirect, render
+
 from tutorproject.logger import setup_logger
 
 from .forms import ApplicationForm
 from .models import Application, Article
 
-logger = setup_logger(log_file="app.log")
+logger = setup_logger(log_file="app.log", level="DEBUG")
 
 
 def index(request):
-    """Display the homepage with published articles"""
+    """Display the homepage with published articles and application form."""
     logger.info("Rendering homepage")
+
     try:
+        # Get published articles ordered by creation date (newest first)
         articles = Article.objects.filter(status="published").order_by("-created_at")
-        form = ApplicationForm(request.POST)
+
+        # Initialize form with session data if exists, otherwise create empty form
+        if "application_form_data" in request.session:
+            form = ApplicationForm(request.session["application_form_data"])
+
+            # Add form errors from session if they exist
+            if errors_json := request.session.get("application_form_errors"):
+                errors_dict = json.loads(errors_json)
+                for field, error_list in errors_dict.items():
+                    for error in errors_dict:
+                        form.add_error(field, error)
+
+            # Clean up session data
+            request.session.pop("application_form_data", None)
+            request.session.pop("application_form_errors", None)
+        else:
+            form = ApplicationForm()
+
         context = {
             "articles": articles,
             "application_form": form,
         }
+        logger.debug(f"form.erros: {form.errors}")
         logger.debug(f"Loaded {len(articles)} published articles for homepage")
         return render(request, "main/index-purple.html", context)
+
     except Exception as e:
         logger.error(f"Error rendering homepage: {str(e)}", exc_info=True)
         messages.error(request, "An error occurred while loading the page")
+
+        # Return empty context in case of error
         return render(
             request,
             "main/index-purple.html",
@@ -95,14 +121,17 @@ def application_submit(request):
     if request.method != "POST":
         logger.warning("Application submission attempted with non-POST method")
         form = ApplicationForm()
-        return render(request, "index-purple.html", {"application_form": form})
+        return render(request, "main/index-purple.html", {"application_form": form})
 
     form = ApplicationForm(request.POST)
     if not form.is_valid():
         logger.warning(
             "Invalid application form submission", extra={"errors": form.errors}
         )
-        return render(request, "index-purple.html", {"application_form": form})
+        request.session["application_form_data"] = request.POST
+        request.session["application_form_errors"] = form.errors.as_json()
+
+        return redirect("/#application-form")
 
     try:
         name = form.cleaned_data.get("name", "").strip()
@@ -111,13 +140,6 @@ def application_submit(request):
         goal = form.cleaned_data.get("goal", "").strip()
 
         logger.info(f"Processing application from {name} <{email}> for {subject}")
-
-        if not name or not email:
-            logger.warning("Missing required fields in application")
-            messages.error(request, "Please fill all required fields")
-            return redirect("index")
-
-        validate_email(email)
 
         application = Application(name=name, email=email, subject=subject, goal=goal)
         application.save()
