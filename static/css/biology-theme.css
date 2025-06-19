@@ -1,0 +1,135 @@
+/* biology-cool-styles.css */
+/* Scientific Borders */
+.bio-border {
+  border: 1px solid #e0e7ff;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bio-border::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+}
+
+.bio-border-thick {
+  border: 2px solid #e0f2fe;
+  border-radius: 12px;
+  border-image: linear-gradient(135deg, #60a5fa, #a78bfa) 1;
+}
+
+/* Microscope Slide Background */
+.slide-bg {
+  background-color: #f0f9ff;
+  background-image:
+    linear-gradient(rgba(191, 219, 254, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(191, 219, 254, 0.3) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* DNA Helix Pattern */
+.dna-bg {
+  background-color: #f8fafc;
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(147, 197, 253, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(253, 164, 175, 0.1) 0%, transparent 20%),
+    linear-gradient(135deg, transparent 49%, rgba(147, 197, 253, 0.2) 50%, transparent 51%),
+    linear-gradient(45deg, transparent 49%, rgba(253, 164, 175, 0.2) 50%, transparent 51%);
+  background-size: 60px 60px;
+}
+
+/* Petri Dish Effect */
+.petri-bg {
+  background: radial-gradient(circle at center, #f0fdf4 0%, #e0f2fe 100%);
+  border-radius: 50%;
+  box-shadow: inset 0 0 30px rgba(59, 130, 246, 0.2);
+}
+
+/* Cell Membrane Border */
+.cell-border {
+  border: 3px double #93c5fd;
+  border-radius: 15px;
+  position: relative;
+}
+
+.cell-border::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: 1px dashed #93c5fd;
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+/* Scientific Section Divider */
+.lab-divider {
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(59, 130, 246, 0.5) 20%,
+    rgba(139, 92, 246, 0.7) 50%,
+    rgba(59, 130, 246, 0.5) 80%,
+    transparent 100%);
+  margin: 2rem 0;
+}
+
+/* Microarray Dot Pattern */
+.microarray-bg {
+  background-color: #f8fafc;
+  background-image: radial-gradient(circle, #bfdbfe 1px, transparent 1px);
+  background-size: 15px 15px;
+}
+
+/* Blueprint Background */
+.blueprint-bg {
+  background-color: #f0f9ff;
+  background-image:
+    linear-gradient(rgba(147, 197, 253, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(147, 197, 253, 0.2) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* Frozen Crystal Effect */
+.crystal-bg {
+  background-color: #f0f9ff;
+  background-image:
+    linear-gradient(135deg, rgba(191, 219, 254, 0.3) 25%, transparent 25%),
+    linear-gradient(225deg, rgba(191, 219, 254, 0.3) 25%, transparent 25%),
+    linear-gradient(315deg, rgba(191, 219, 254, 0.3) 25%, transparent 25%),
+    linear-gradient(45deg, rgba(191, 219, 254, 0.3) 25%, transparent 25%);
+  background-size: 20px 20px;
+}
+
+/* Scientific Card */
+.lab-card {
+  background: white;
+  border: 1px solid #e0e7ff;
+  border-top: 4px solid #60a5fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.lab-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2);
+  border-top-color: #3b82f6;
+}
+
+/* DNA Strand Animation */
+@keyframes dna-float {
+  0% { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+
+.dna-animated {
+  animation: dna-float 10s linear infinite;
+}
