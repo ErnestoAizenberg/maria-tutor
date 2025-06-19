@@ -1,6 +1,5 @@
 # maria-tutor
-Personal website for Maria Seredinskaya.
-
+Personal website for biology/chemistry tutor Maria Seredinskaya
 ---
 
 ## Overview
