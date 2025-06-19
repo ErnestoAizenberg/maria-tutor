@@ -1,8 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.text import slugify
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
 
 class Article(models.Model):
     # Basic fields
@@ -10,7 +11,7 @@ class Article(models.Model):
     abstract = models.CharField(
         max_length=300,
         blank=True,
-        help_text="Brief summary (appears in article listings)"
+        help_text="Brief summary (appears in article listings)",
     )
     content = models.TextField()
 
@@ -24,10 +25,10 @@ class Article(models.Model):
 
     # Status
     STATUS_CHOICES = [
-        ('draft', 'Draft'),
-        ('published', 'Published'),
+        ("draft", "Draft"),
+        ("published", "Published"),
     ]
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="draft")
 
     def __str__(self):
         return self.title
@@ -36,8 +37,10 @@ class Article(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         if not self.abstract and self.content:  # Auto-generate abstract if empty
-            self.abstract = self.content[:297] + '...' if len(self.content) > 300 else self.content
+            self.abstract = (
+                self.content[:297] + "..." if len(self.content) > 300 else self.content
+            )
         super().save(*args, **kwargs)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
