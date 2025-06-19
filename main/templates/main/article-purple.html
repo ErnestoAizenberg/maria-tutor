@@ -271,10 +271,11 @@
             Получайте новые статьи и полезные материалы по обучению биологии и химии прямо на почту.
         </p>
 
-        <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+        <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" action="/subscribe_email/" method="POST">
+            {% csrf_token %}
             <input type="email" placeholder="Ваш email"
                    class="flex-grow px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                   style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
+                   style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" name="email">
             <button type="submit" class="btn btn-primary px-6 py-3 whitespace-nowrap">
                 Подписаться
             </button>
