@@ -321,8 +321,9 @@
                 <div>
                     <h4 class="font-serif font-bold text-lg mb-6">Подписаться</h4>
                     <p class="mb-4">Получайте уведомления о новых статьях и наборах учеников.</p>
-                    <form class="flex">
-                        <input type="email" placeholder="Ваш email" class="px-4 py-2 rounded-l-md w-full focus:outline-none focus:ring-2 focus:ring-primary" style="background-color: rgb(var(--color-bg-card)); color: rgb(var(--color-text));">
+                    <form class="flex" action="/subscribe_email/" method="POST">
+                      {% csrf_token %}
+                      <input type="email" placeholder="Ваш email" class="px-4 py-2 rounded-l-md w-full focus:outline-none focus:ring-2 focus:ring-primary" style="background-color: rgb(var(--color-bg-card)); color: rgb(var(--color-text));">
                         <button type="submit" class="btn-primary px-4 py-2 rounded-r-md">
                             <i class="fas fa-paper-plane"></i>
                         </button>

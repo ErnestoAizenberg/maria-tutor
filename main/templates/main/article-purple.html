@@ -1,0 +1,329 @@
+{% extends 'main/base2.html' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+<style>
+    /* Стили для контента статьи */
+    .article-content {
+        line-height: 1.7;
+        color: rgb(var(--color-text));
+    }
+
+    .article-content p {
+        margin-bottom: 1.5rem;
+    }
+
+    .article-content h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+        color: rgb(var(--color-text));
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+
+    .article-content h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: rgb(var(--color-primary));
+    }
+
+    .article-content h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 2.5rem;
+        margin-bottom: 1.25rem;
+        color: rgb(var(--color-text));
+    }
+
+    .article-content ul,
+    .article-content ol {
+        margin-bottom: 1.5rem;
+        padding-left: 2rem;
+    }
+
+    .article-content ul {
+        list-style-type: disc;
+    }
+
+    .article-content ol {
+        list-style-type: decimal;
+    }
+
+    .article-content li {
+        margin-bottom: 0.5rem;
+    }
+
+    .article-content blockquote {
+        border-left: 4px solid rgb(var(--color-primary));
+        padding-left: 1.5rem;
+        margin: 2rem 0;
+        font-style: italic;
+        color: rgb(var(--color-text-secondary));
+    }
+
+    .article-content img {
+        border-radius: var(--radius-md);
+        margin: 2rem auto;
+        max-width: 100%;
+        height: auto;
+        box-shadow: var(--shadow-md);
+    }
+
+    .article-content .image-caption {
+        text-align: center;
+        font-size: 0.875rem;
+        color: rgb(var(--color-text-secondary));
+        margin-top: -1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .article-content table {
+        width: 100%;
+        margin: 2rem 0;
+        border-collapse: collapse;
+    }
+
+    .article-content th,
+    .article-content td {
+        padding: 0.75rem;
+        border: 1px solid rgba(var(--color-border), 0.3);
+    }
+
+    .article-content th {
+        background-color: rgba(var(--color-primary), 0.1);
+        text-align: left;
+    }
+
+    /* Стили для шапки статьи */
+    .article-header {
+        background: linear-gradient(135deg, rgba(var(--color-primary), 0.05) 0%, rgba(var(--color-bg), 1) 100%);
+        padding: 4rem 1rem;
+    }
+
+    .article-category {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background-color: rgba(var(--color-primary), 0.1);
+        color: rgb(var(--color-primary));
+        border-radius: var(--radius-full);
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+
+    /* Стили для автора */
+    .author-card {
+        display: flex;
+        align-items: center;
+        padding: 1.5rem;
+        border-radius: var(--radius-md);
+        background-color: rgb(var(--color-bg-card));
+        border: 1px solid rgba(var(--color-border), 0.2);
+    }
+
+    .author-avatar {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 1rem;
+    }
+
+    /* Стили для кнопок поделиться */
+    .share-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        background-color: rgb(var(--color-bg-card));
+        color: rgb(var(--color-text));
+        border: 1px solid rgba(var(--color-border), 0.3);
+        transition: all var(--transition-fast);
+    }
+
+    .share-button:hover {
+        background-color: rgba(var(--color-primary), 0.1);
+        color: rgb(var(--color-primary));
+        transform: translateY(-2px);
+    }
+
+    /* Стили для подписки */
+    .newsletter-section {
+        background-color: rgb(var(--color-bg-secondary));
+        padding: 4rem 1rem;
+    }
+</style>
+
+<!-- Шапка статьи -->
+<section class="article-header">
+    <div class="max-w-3xl mx-auto text-center">
+        <span class="article-category">{{ article.category|default:"Обучение" }}</span>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold leading-tight mb-6">{{ article.title }}</h1>
+        {% if article.abstract %}
+        <p class="text-lg max-w-2xl mx-auto" style="color: rgb(var(--color-text-secondary));">
+            {{ article.abstract }}
+        </p>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Мета-информация -->
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-12">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="author-card">
+            <img src="https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000"
+                 alt="Мария Серединская"
+                 class="author-avatar">
+            <div>
+                <p class="font-medium">Мария Серединская</p>
+                <p class="text-sm" style="color: rgb(var(--color-text-secondary));">
+                    {{ article.created_at|date:"j E Y" }} • {{ reading_time }}
+                </p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <a href="https://t.me/Mickey_Fin" target="_blank" rel="noopener noreferrer"
+               class="share-button" aria-label="Telegram автора">
+                <i class="fab fa-telegram"></i>
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer"
+               class="share-button" aria-label="VK автора">
+                <i class="fab fa-vk"></i>
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer"
+               class="share-button" aria-label="Twitter автора">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Основной контент статьи -->
+<article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+    <div class="article-content">
+        {{ article.content|safe }}
+    </div>
+
+    <!-- Теги статьи -->
+    {% if article.tags.all %}
+    <div class="mt-12 pt-8 border-t" style="border-color: rgba(var(--color-border), 0.3);">
+        <div class="flex flex-wrap gap-2">
+            {% for tag in article.tags.all %}
+            <span class="px-3 py-1 text-sm rounded-full"
+                  style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                {{ tag.name }}
+            </span>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</article>
+
+<!-- Блок "Поделиться" -->
+<section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+    <div class="p-6 rounded-xl" style="background-color: rgba(var(--color-primary), 0.05); border: 1px solid rgba(var(--color-primary), 0.1);">
+        <h3 class="text-xl font-serif font-bold mb-4">Понравилась статья? Поделитесь!</h3>
+        <div class="flex items-center space-x-4">
+            <button onclick="shareOnTelegram()" class="share-button" aria-label="Поделиться в Telegram">
+                <i class="fab fa-telegram"></i>
+            </button>
+            <button onclick="shareOnVK()" class="share-button" aria-label="Поделиться ВКонтакте">
+                <i class="fab fa-vk"></i>
+            </button>
+            <button onclick="shareOnTwitter()" class="share-button" aria-label="Поделиться в Twitter">
+                <i class="fab fa-twitter"></i>
+            </button>
+            <button onclick="copyLink()" class="share-button" aria-label="Копировать ссылку">
+                <i class="fas fa-link"></i>
+            </button>
+            <span id="copy-notification" class="text-sm ml-2 opacity-0 transition-opacity" style="color: rgb(var(--color-primary));">
+                Ссылка скопирована!
+            </span>
+        </div>
+    </div>
+</section>
+
+<!-- Рекомендуемые статьи -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+    <h3 class="text-2xl font-serif font-bold mb-8 text-center">Читайте также</h3>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% include "main/_article_listing_purple.html" with articles=related_articles %}
+    </div>
+</section>
+
+<!-- Подписка на рассылку -->
+<section class="newsletter-section">
+    <div class="max-w-3xl mx-auto text-center">
+        <h3 class="text-2xl font-serif font-bold mb-4">Подписаться на рассылку</h3>
+        <p class="mb-8 max-w-xl mx-auto" style="color: rgb(var(--color-text-secondary));">
+            Получайте новые статьи и полезные материалы по обучению биологии и химии прямо на почту.
+        </p>
+
+        <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <input type="email" placeholder="Ваш email"
+                   class="flex-grow px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                   style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
+            <button type="submit" class="btn btn-primary px-6 py-3 whitespace-nowrap">
+                Подписаться
+            </button>
+        </form>
+    </div>
+</section>
+
+<script>
+// Функции для кнопок "Поделиться"
+function shareOnTelegram() {
+    const url = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`;
+    window.open(url, '_blank', 'width=550,height=400');
+}
+
+function shareOnVK() {
+    const url = `https://vk.com/share.php?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(document.title)}`;
+    window.open(url, '_blank', 'width=550,height=400');
+}
+
+function shareOnTwitter() {
+    const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(document.title)}`;
+    window.open(url, '_blank', 'width=550,height=400');
+}
+
+function copyLink() {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        const notification = document.getElementById('copy-notification');
+        notification.classList.add('opacity-100');
+        setTimeout(() => notification.classList.remove('opacity-100'), 2000);
+    });
+}
+
+// Нативный шаринг для мобильных устройств
+if (navigator.share) {
+    document.addEventListener('DOMContentLoaded', () => {
+        const shareButtons = document.querySelectorAll('.share-button');
+        shareButtons.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                try {
+                    await navigator.share({
+                        title: document.title,
+                        url: window.location.href
+                    });
+                } catch (err) {
+                    console.log('Пользователь отменил шаринг', err);
+                }
+            });
+        });
+    });
+}
+</script>
+{% endblock %}

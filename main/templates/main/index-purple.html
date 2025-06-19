@@ -396,22 +396,23 @@
                     </div>
                 </div>
                 <div class="p-8">
-                    <form>
+                     <form action="{% url 'application_submit' %}" method="POST">
+                       {% csrf_token %}
                         <div class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Ваше имя</label>
                                 <input type="text" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
-                                       style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
+                                       style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" name="name">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Контакт для связи</label>
                                 <input type="text" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
-                                       style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
+                                       style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" name="email">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Предмет</label>
                                 <select class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
-                                        style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
+                                        style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" name="subject">>
                                     <option>Биология</option>
                                     <option>Химия</option>
                                     <option>Спецкурс</option>
@@ -421,7 +422,7 @@
                             <div>
                                 <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Цель занятий</label>
                                 <textarea rows="3" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
-                                          style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);"></textarea>
+                                          style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" name="goal"></textarea>
                             </div>
                             <button type="submit" class="w-full btn btn-primary py-2 px-4 rounded-md">
                                 Отправить заявку
@@ -611,21 +612,22 @@
 
             <!-- Contact Form -->
             <div>
-                <form class="space-y-6">
+              <form class="space-y-6" action="/connect_request/", method="POST">
+                    {% csrf_token %}
                     <div>
                         <label class="block text-sm font-medium mb-1" style="color: rgba(255,255,255,0.8);">Ваше имя</label>
                         <input type="text" class="w-full px-4 py-3 rounded-md placeholder-white placeholder-opacity-50 focus:ring-2 focus:ring-white"
-                               style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);">
+                               style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" name="name">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1" style="color: rgba(255,255,255,0.8);">Email</label>
                         <input type="email" class="w-full px-4 py-3 rounded-md placeholder-white placeholder-opacity-50 focus:ring-2 focus:ring-white"
-                               style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);">
+                               style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" name="email">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1" style="color: rgba(255,255,255,0.8);">Сообщение</label>
                         <textarea rows="4" class="w-full px-4 py-3 rounded-md placeholder-white placeholder-opacity-50 focus:ring-2 focus:ring-white"
-                                  style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);"></textarea>
+                                  style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" name="message"></textarea>
                     </div>
                     <button type="submit" class="w-full py-3 px-4 rounded-md font-medium hover:bg-opacity-90 transition"
                             style="background-color: white; color: rgb(var(--color-primary));">
