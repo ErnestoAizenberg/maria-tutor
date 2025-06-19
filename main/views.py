@@ -1,145 +1,208 @@
-from django.contrib import messages
-from django.core.exceptions import ValidationError
-from django.core.validators import validate_email
-from django.shortcuts import get_object_or_404, redirect, render
-
-from .models import Article
-
 """
 Personal website for biology/chemistry tutor Maria Seredinskaya
 """
 
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.shortcuts import get_object_or_404, redirect, render
+from tutorproject.logger import setup_logger
+
+from .forms import ApplicationForm
+from .models import Application, Article
+
+logger = setup_logger(log_file="app.log")
+
 
 def index(request):
     """Display the homepage with published articles"""
-    articles = Article.objects.filter(status="published").order_by("-created_at")
-    return render(request, "main/index-purple.html", {"articles": articles})
+    logger.info("Rendering homepage")
+    try:
+        articles = Article.objects.filter(status="published").order_by("-created_at")
+        form = ApplicationForm(request.POST)
+        context = {
+            "articles": articles,
+            "application_form": form,
+        }
+        logger.debug(f"Loaded {len(articles)} published articles for homepage")
+        return render(request, "main/index-purple.html", context)
+    except Exception as e:
+        logger.error(f"Error rendering homepage: {str(e)}", exc_info=True)
+        messages.error(request, "An error occurred while loading the page")
+        return render(
+            request,
+            "main/index-purple.html",
+            {"articles": [], "application_form": ApplicationForm()},
+        )
 
 
 def article(request, slug):
     """Display a single article with reading time and related articles"""
-    article = get_object_or_404(Article, slug=slug, status="published")
+    logger.info(f"Attempting to load article with slug: {slug}")
+    try:
+        article = get_object_or_404(Article, slug=slug, status="published")
+        logger.debug(f"Found article: {article.title}")
 
-    # Calculate reading time
-    READING_SPEED = 200  # words per minute
-    word_count = len(article.content.split())
-    reading_time_minutes = max(1, round(word_count / READING_SPEED))
-    reading_time = f"{reading_time_minutes} мин чтения"
+        # Calculate reading time
+        READING_SPEED = 200  # words per minute
+        word_count = len(article.content.split())
+        reading_time_minutes = max(1, round(word_count / READING_SPEED))
+        reading_time = f"{reading_time_minutes} мин чтения"
 
-    # Get related articles (excluding current article)
-    related_articles = (
-        Article.objects.filter(status="published")
-        .exclude(id=article.id)
-        .order_by("-created_at")[:5]
-    )  # Limit to 5 most recent
+        # Get related articles
+        related_articles = (
+            Article.objects.filter(status="published")
+            .exclude(id=article.id)
+            .order_by("-created_at")[:5]
+        )
+        logger.debug(f"Found {len(related_articles)} related articles")
 
-    context = {
-        "article": article,
-        "reading_time": reading_time,
-        "related_articles": related_articles,
-    }
-    return render(request, "main/article-purple.html", context)
+        context = {
+            "article": article,
+            "reading_time": reading_time,
+            "related_articles": related_articles,
+        }
+        return render(request, "main/article-purple.html", context)
+    except Exception as e:
+        logger.error(f"Error loading article {slug}: {str(e)}", exc_info=True)
+        messages.error(request, "Article could not be loaded")
+        return redirect("index")
 
 
 def articles(request):
     """Display a list of all published articles"""
-    list_articles = Article.objects.filter(status="published").order_by("-created_at")
-    return render(request, "main/articles.html", {"articles": list_articles})
+    logger.info("Loading all published articles")
+    try:
+        list_articles = Article.objects.filter(status="published").order_by(
+            "-created_at"
+        )
+        logger.debug(f"Found {len(list_articles)} published articles")
+        return render(request, "main/articles.html", {"articles": list_articles})
+    except Exception as e:
+        logger.error(f"Error loading articles list: {str(e)}", exc_info=True)
+        messages.error(request, "Could not load articles")
+        return render(request, "main/articles.html", {"articles": []})
 
 
 def test(request):
     """Route for testing templates"""
+    logger.debug("Test route accessed")
     return render(request, "main/article0.html")
 
 
-# Application Form Handling
 def application_submit(request):
     """Handle tutoring application submissions"""
     if request.method != "POST":
-        return redirect("index")
+        logger.warning("Application submission attempted with non-POST method")
+        form = ApplicationForm()
+        return render(request, "index-purple.html", {"application_form": form})
 
-    name = request.POST.get("name", "").strip()
-    email = request.POST.get("email", "").strip()
-    subject = request.POST.get("subject", "").strip()
-    goal = request.POST.get("goal", "").strip()
-
-    # Basic validation
-    if not name or not email:
-        messages.error(request, "Пожалуйста заполните все обязательные поля")
-        return redirect("index")
+    form = ApplicationForm(request.POST)
+    if not form.is_valid():
+        logger.warning(
+            "Invalid application form submission", extra={"errors": form.errors}
+        )
+        return render(request, "index-purple.html", {"application_form": form})
 
     try:
+        name = form.cleaned_data.get("name", "").strip()
+        email = form.cleaned_data.get("email", "").strip()
+        subject = form.cleaned_data.get("subject", "").strip()
+        goal = form.cleaned_data.get("goal", "").strip()
+
+        logger.info(f"Processing application from {name} <{email}> for {subject}")
+
+        if not name or not email:
+            logger.warning("Missing required fields in application")
+            messages.error(request, "Please fill all required fields")
+            return redirect("index")
+
         validate_email(email)
+
+        application = Application(name=name, email=email, subject=subject, goal=goal)
+        application.save()
+        logger.info(f"Application saved successfully (ID: {application.id})")
+
+        return redirect("apply_success")
+
     except ValidationError:
-        messages.error(request, "Пожалуйста введите корректный email адрес")
+        logger.warning(f"Invalid email address provided: {email}")
+        messages.error(request, "Please enter a valid email address")
         return redirect("index")
-
-    # Here you would typically save the application to a database
-    # and/or send an email notification
-
-    return redirect("apply_success")
+    except Exception as e:
+        logger.error(f"Error processing application: {str(e)}", exc_info=True)
+        messages.error(request, "An error occurred while processing your application")
+        return redirect("index")
 
 
 def apply_success(request):
     """Display success page after application submission"""
+    logger.info("Application success page accessed")
     return render(request, "main/apply_success.html")
 
 
-# Contact Form Handling
 def connect_request(request):
     """Handle contact form submissions"""
     if request.method != "POST":
+        logger.warning("Contact form submission attempted with non-POST method")
         return redirect("index")
 
     name = request.POST.get("name", "").strip()
     email = request.POST.get("email", "").strip()
     message = request.POST.get("message", "").strip()
 
-    # Basic validation
+    logger.info(f"Contact request from {name} <{email}>")
+
     if not all([name, email, message]):
-        messages.error(request, "Пожалуйста заполните все поля формы")
+        logger.warning("Incomplete contact form submission")
+        messages.error(request, "Please fill all form fields")
         return redirect("index")
 
     try:
         validate_email(email)
     except ValidationError:
-        messages.error(request, "Пожалуйста введите корректный email адрес")
+        logger.warning(f"Invalid email in contact form: {email}")
+        messages.error(request, "Please enter a valid email address")
         return redirect("index")
 
-    # Here you would typically save the message to a database
-    # and/or send an email notification
-
+    # Here you would typically save the message or send email
+    logger.info("Contact form processed successfully")
     return redirect("connect_success")
 
 
 def connect_success(request):
     """Display success page after contact form submission"""
+    logger.debug("Contact success page accessed")
     return render(request, "main/connect_success.html")
 
 
-# Email Subscription Handling
 def subscribe_email(request):
     """Handle email newsletter subscriptions"""
     if request.method != "POST":
+        logger.warning("Email subscription attempted with non-POST method")
         return redirect("index")
 
     email = request.POST.get("email", "").strip()
+    logger.info(f"Email subscription attempt for: {email}")
 
     if not email:
-        messages.error(request, "Пожалуйста введите email адрес")
+        logger.warning("Empty email submission")
+        messages.error(request, "Please enter an email address")
         return redirect("index")
 
     try:
         validate_email(email)
     except ValidationError:
-        messages.error(request, "Пожалуйста введите корректный email адрес")
+        logger.warning(f"Invalid email in subscription: {email}")
+        messages.error(request, "Please enter a valid email address")
         return redirect("index")
 
-    # Here you would typically add the email to your mailing list
-
+    # Here you would typically add to mailing list
+    logger.info(f"Email subscription successful for: {email}")
     return redirect("email_subscribe_success")
 
 
 def email_subscribe_success(request):
     """Display success page after email subscription"""
+    logger.debug("Email subscription success page accessed")
     return render(request, "main/email_subscribe_success.html")
