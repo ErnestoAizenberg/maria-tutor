@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.shortcuts import get_object_or_404, redirect, render
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 
 from tutorproject.logger import setup_logger
 
@@ -136,11 +136,23 @@ def application_submit(request):
 
     try:
         name = form.cleaned_data.get("name", "").strip()
-        email = form.cleaned_data.get("email", "").strip()
+        user_email = form.cleaned_data.get("email", "").strip()
         subject = form.cleaned_data.get("subject", "").strip()
         goal = form.cleaned_data.get("goal", "").strip()
 
-        logger.info(f"Processing application from {name} <{email}> for {subject}")
+        logger.info(f"Processing application from {name} <{user_email}> for {subject}")
+
+        subject = f'Запрос на обучение по <{subject}> от {name}',
+        message = goal
+
+        email = EmailMessage(
+            subject=subject,
+            body=message,
+            from_email='noreply@yourdomain.com',  # Your verified sender
+            to=['sereernest@gmail.com'],          # Recipient list
+            reply_to=[user_email],                # Replies go to applicant
+        )
+        email.send(fail_silently=False)
 
         application = Application(name=name, email=email, subject=subject, goal=goal)
         application.save()
@@ -188,6 +200,17 @@ def connect_request(request):
         messages.error(request, "Please enter a valid email address")
         return redirect("index")
 
+
+    subject = f'Вопрос от {name}'
+    email = EmailMessage(
+        subject=subject,
+        body=message,
+        from_email='noreply@yourdomain.com',  # Your verified sender
+        to=['sereernest@gmail.com'],          # Recipient list
+        reply_to=[email],                # Replies go to applicant
+    )
+    email.send(fail_silently=False)
+
     # Here you would typically save the message or send email
     logger.info("Contact form processed successfully")
     return redirect("connect_success")
@@ -221,8 +244,6 @@ def subscribe_email(request):
         return redirect("index")
 
     # Here you would typically add to mailing list
-
-    from django.core.mail import send_mail
 
     send_mail(
         'Subscription on Maria Tutor',
