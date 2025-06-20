@@ -496,7 +496,7 @@
         </div>
 
         <div class="grid md:grid-cols-3 gap-8">
-            <!-- Testimonial 1 -->
+          {% for review in reviews %}
             <div class="testimonial-card p-8 rounded-xl">
                 <div class="flex items-center mb-4">
                     <div class="flex-shrink-0 h-12 w-12 rounded-full flex items-center justify-center"
@@ -505,47 +505,14 @@
                     </div>
                     <div class="ml-4">
                         <h4 class="font-bold">Анна К.</h4>
-                        <p class="text-sm" style="color: rgb(var(--color-text-secondary));">ЕГЭ по биологии, 98 баллов</p>
+                        <p class="text-sm" style="color: rgb(var(--color-text-secondary));">{{ review.achievement }}</p>
                     </div>
                 </div>
                 <p class="italic" style="color: rgb(var(--color-text-secondary));">
-                    "Мария объясняет сложные темы так, что они становятся понятными и интересными. Благодаря занятиям я не только сдала ЕГЭ на высокий балл, но и полюбила биологию."
+                "{{ review.content }}"
                 </p>
             </div>
-
-            <!-- Testimonial 2 -->
-            <div class="testimonial-card p-8 rounded-xl">
-                <div class="flex items-center mb-4">
-                    <div class="flex-shrink-0 h-12 w-12 rounded-full flex items-center justify-center"
-                         style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="ml-4">
-                        <h4 class="font-bold">Иван П.</h4>
-                        <p class="text-sm" style="color: rgb(var(--color-text-secondary));">Олимпиада по химии, призер</p>
-                    </div>
-                </div>
-                <p class="italic" style="color: rgb(var(--color-text-secondary));">
-                    "Особенно ценю, что Мария не просто дает знания, но и учит думать, анализировать. Это помогло мне не только в олимпиадах, но и в университете."
-                </p>
-            </div>
-
-            <!-- Testimonial 3 -->
-            <div class="testimonial-card p-8 rounded-xl">
-                <div class="flex items-center mb-4">
-                    <div class="flex-shrink-0 h-12 w-12 rounded-full flex items-center justify-center"
-                         style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="ml-4">
-                        <h4 class="font-bold">Елена С.</h4>
-                        <p class="text-sm" style="color: rgb(var(--color-text-secondary));">Студентка с СДВГ</p>
-                    </div>
-                </div>
-                <p class="italic" style="color: rgb(var(--color-text-secondary));">
-                    "Как человек с СДВГ, я всегда испытывала трудности с обучением. Мария помогла найти подход, который работает именно для меня. Учеба больше не мука!"
-                </p>
-            </div>
+          {% endfor %}
         </div>
     </div>
 </section>
