@@ -6,14 +6,14 @@ import json
 
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django.core.mail import EmailMessage, send_mail
 from django.core.validators import validate_email
 from django.shortcuts import get_object_or_404, redirect, render
-from django.core.mail import send_mail, EmailMessage
 
 from tutorproject.logger import setup_logger
 
 from .forms import ApplicationForm
-from .models import Application, Article
+from .models import Application, Article, Review
 
 logger = setup_logger(log_file="app.log", level="DEBUG")
 
@@ -25,6 +25,7 @@ def index(request):
     try:
         # Get published articles ordered by creation date (newest first)
         articles = Article.objects.filter(status="published").order_by("-created_at")
+        reviews = Review.objects.filter(is_published=True).order_by("-created_at")
 
         # Initialize form with session data if exists, otherwise create empty form
         if "application_form_data" in request.session:
@@ -45,6 +46,7 @@ def index(request):
 
         context = {
             "articles": articles,
+            "reviews": reviews,
             "application_form": form,
         }
         logger.debug(f"form.erros: {form.errors}")
@@ -116,6 +118,16 @@ def test(request):
     logger.debug("Test route accessed")
     return render(request, "main/article0.html")
 
+def reviews(request):
+    """Display a list of all published articles"""
+    reviews = Review.objects.filter(is_published=True).order_by("-created_at")
+    context = {
+        "reviews": reviews,
+        #"review_form": form,
+    }
+    logger.debug(f"Loaded {len(reviews)} published reviews for reviews page")
+    return render(request, "main/reviews.html", context)
+
 
 def application_submit(request):
     """Handle tutoring application submissions"""
@@ -142,15 +154,15 @@ def application_submit(request):
 
         logger.info(f"Processing application from {name} <{user_email}> for {subject}")
 
-        subject = f'Запрос на обучение по <{subject}> от {name}',
+        subject = (f"Запрос на обучение по <{subject}> от {name}",)
         message = goal
 
         email = EmailMessage(
             subject=subject,
             body=message,
-            from_email='noreply@yourdomain.com',  # Your verified sender
-            to=['sereernest@gmail.com'],          # Recipient list
-            reply_to=[user_email],                # Replies go to applicant
+            from_email="noreply@yourdomain.com",  # Your verified sender
+            to=["sereernest@gmail.com"],  # Recipient list
+            reply_to=[user_email],  # Replies go to applicant
         )
         email.send(fail_silently=False)
 
@@ -200,14 +212,13 @@ def connect_request(request):
         messages.error(request, "Please enter a valid email address")
         return redirect("index")
 
-
-    subject = f'Вопрос от {name}'
+    subject = f"Вопрос от {name}"
     email = EmailMessage(
         subject=subject,
         body=message,
-        from_email='noreply@yourdomain.com',  # Your verified sender
-        to=['sereernest@gmail.com'],          # Recipient list
-        reply_to=[email],                # Replies go to applicant
+        from_email="noreply@yourdomain.com",  # Your verified sender
+        to=["sereernest@gmail.com"],  # Recipient list
+        reply_to=[email],  # Replies go to applicant
     )
     email.send(fail_silently=False)
 
@@ -246,9 +257,9 @@ def subscribe_email(request):
     # Here you would typically add to mailing list
 
     send_mail(
-        'Subscription on Maria Tutor',
-        'You have been subscribed.',
-        'sereernest@gmail.com',
+        "Subscription on Maria Tutor",
+        "You have been subscribed.",
+        "sereernest@gmail.com",
         [email],
         fail_silently=False,
     )

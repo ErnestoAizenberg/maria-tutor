@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.utils.html import format_html
 
 from .custom_admin import custom_admin_site
-from .models import Application, Article, ConnectMessage
+from .models import Application, Article, ConnectMessage, Review
 
 User = get_user_model()
 
@@ -114,6 +114,7 @@ custom_admin_site.register(User)
 custom_admin_site.register(Application, ApplicationAdmin)
 custom_admin_site.register(ConnectMessage, ConnectMessageAdmin)
 custom_admin_site.register(Article, ArticleAdmin)
+custom_admin_site.register(Review)
 
 # Настройки заголовков
 custom_admin_site.site_header = "Your Site Administration"

@@ -504,7 +504,7 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <div class="ml-4">
-                        <h4 class="font-bold">Анна К.</h4>
+                      <h4 class="font-bold">{{ review.author_name }}</h4>
                         <p class="text-sm" style="color: rgb(var(--color-text-secondary));">{{ review.achievement }}</p>
                     </div>
                 </div>
@@ -513,6 +513,15 @@
                 </p>
             </div>
           {% endfor %}
+
+
+        <div class="text-center mt-12">
+            <a href="reviews/" class="btn btn-outline px-6 py-3">
+                Все отзовы
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
         </div>
     </div>
 </section>

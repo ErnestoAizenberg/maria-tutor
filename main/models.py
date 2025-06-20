@@ -1,9 +1,93 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import EmailValidator
+from django.core.validators import (EmailValidator, MaxValueValidator,
+                                    MinValueValidator)
 from django.db import models
+from django.utils import timezone
 from django.utils.text import slugify
 
 User = get_user_model()
+
+
+class Review(models.Model):
+    # Основная информация об авторе отзыва
+    author_name = models.CharField(
+        max_length=100,
+        verbose_name="Имя автора",
+        help_text="Как представиться автору отзыва (например: Анна К.)",
+    )
+
+    # Информация о достижениях/результатах (для подтверждения отзыва)
+    achievement = models.CharField(
+        max_length=200,
+        verbose_name="Достижение/результат",
+        help_text="Например: ЕГЭ по биологии, 98 баллов",
+        blank=True,
+        null=True,
+    )
+
+    # Основной текст отзыва
+    content = models.TextField(
+        verbose_name="Текст отзыва", help_text="Содержание отзыва"
+    )
+
+    # Оценка (если нужна рейтинговая система)
+    """rating = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        verbose_name="Оценка",
+        help_text="Оценка от 1 до 5",
+        blank=True,
+        null=True,
+    )"""
+
+    # Дата отзыва (автоматически устанавливается при создании)
+    created_at = models.DateTimeField(
+        default=timezone.now, verbose_name="Дата создания"
+    )
+
+    # Статус отзыва (чтобы скрывать непроверенные отзывы)
+    is_published = models.BooleanField(
+        default=False,
+        verbose_name="Опубликовано",
+        help_text="Отображать ли отзыв на сайте",
+    )
+
+    # Дополнительные поля для SEO и админки
+    slug = models.SlugField(
+        max_length=100,
+        unique=True,
+        verbose_name="URL-идентификатор",
+        help_text="Уникальная часть URL для этого отзыва",
+        blank=True,
+    )
+
+    # Сортировка (если нужно управлять порядком отзывов)
+    order = models.PositiveIntegerField(
+        default=0,
+        verbose_name="Порядок сортировки",
+        help_text="Чем больше число, тем выше отзыв в списке",
+    )
+
+    author_photo = models.ImageField(
+        upload_to='reviews/avatars/',
+        blank=True,
+        null=True,
+        verbose_name="Фото автора"
+    )
+
+    class Meta:
+        verbose_name = "Отзыв"
+        verbose_name_plural = "Отзывы"
+        ordering = ["-order", "-created_at"]
+
+    def __str__(self):
+        return f"Отзыв от {self.author_name} ({self.created_at.date()})"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            # Создаем slug из имени и даты, если он не задан
+            base_slug = f"{self.author_name}-{self.created_at.date()}"
+            self.slug = slugify(base_slug)
+        super().save(*args, **kwargs)
 
 
 class Application(models.Model):

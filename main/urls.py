@@ -6,6 +6,7 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("article/<slug:slug>/", views.article, name="article"),  # SEO-friendly URL
     path("articles/", views.articles, name="articles"),
+    path("reviews/", views.reviews, name="reviews"),
     path("test1/", views.test, name="test"),
     path("success/", views.apply_success, name="apply_success"),
     path("apply/", views.application_submit, name="application_submit"),
