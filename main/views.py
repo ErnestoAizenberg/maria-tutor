@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.shortcuts import get_object_or_404, redirect, render
+from django.core.mail import send_mail
 
 from tutorproject.logger import setup_logger
 
@@ -220,6 +221,16 @@ def subscribe_email(request):
         return redirect("index")
 
     # Here you would typically add to mailing list
+
+    from django.core.mail import send_mail
+
+    send_mail(
+        'Subscription on Maria Tutor',
+        'You have been subscribed.',
+        'sereernest@gmail.com',
+        [email],
+        fail_silently=False,
+    )
     logger.info(f"Email subscription successful for: {email}")
     return redirect("email_subscribe_success")
 
