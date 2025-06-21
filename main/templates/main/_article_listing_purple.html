@@ -2,8 +2,8 @@
 <article class="article-preview group">
     <a href="{% url 'article' article.slug %}" class="block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 bg-card hover:bg-opacity-90 border" style="border-color: rgba(var(--color-border), 0.3);">
         <div class="h-48 relative overflow-hidden" style="background-color: rgba(var(--color-primary), 0.1);">
-            {% if article.image %}
-                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            {% if article.image_preview %}
+                <img src="{{ article.image_preview.url }}" alt="{{ article.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
             {% else %}
                 <div class="absolute inset-0 flex items-center justify-center" style="color: rgba(var(--color-primary), 0.5);">
                     <i class="fas fa-newspaper fa-3x"></i>

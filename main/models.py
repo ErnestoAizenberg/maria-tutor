@@ -1,6 +1,10 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import (EmailValidator, MaxValueValidator,
-                                    MinValueValidator)
+from django.core.validators import (
+    EmailValidator,
+    MaxValueValidator,
+    MinValueValidator,
+    FileExtensionValidator,
+)
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
@@ -185,6 +189,11 @@ class ConnectMessage(models.Model):
 
 
 class Article(models.Model):
+
+    def upload_preview(self, filename):
+        ext = filename.split(".")[-1]
+        return f"articles/previews/{self.slug}.{ext}"
+
     # Basic fields
     title = models.CharField(max_length=200)
     abstract = models.CharField(
@@ -193,6 +202,15 @@ class Article(models.Model):
         help_text="Brief summary (appears in article listings)",
     )
     content = models.TextField()
+
+    image_preview = models.ImageField(
+        upload_to=upload_preview,
+        blank=True,
+        null=True,
+        verbose_name="Превью статьи",
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'webp'])],
+        help_text="Изображение должно быть в формате JPG, PNG или WEBP.",
+    )
 
     # Auto-generated fields
     created_at = models.DateTimeField(auto_now_add=True)

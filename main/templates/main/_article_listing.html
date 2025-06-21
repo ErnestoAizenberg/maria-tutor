@@ -3,11 +3,11 @@
     <a href="{% url 'article' article.slug %}" class="block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
         <div class="h-48 bg-gray-100 relative overflow-hidden">
             {% if article.image %}
-                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                <img src="{{ article.image_preview.url }}" alt="{{ article.title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
             {% else %}
-                <div class="absolute inset-0 flex items-center justify-center text-gray-300 bg-gradient-to-br from-gray-50 to-gray-100">
+               <div class="absolute inset-0 flex items-center justify-center text-gray-300 bg-gradient-to-br from-gray-50 to-gray-100">
                     <i class="fas fa-newspaper fa-3x opacity-50"></i>
-                </div>
+            </div>
             {% endif %}
         </div>
         <div class="p-6">

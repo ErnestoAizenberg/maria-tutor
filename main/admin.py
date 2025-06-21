@@ -97,16 +97,24 @@ class ConnectMessageAdmin(admin.ModelAdmin):
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ("title", "author", "status", "created_at", "updated_at")
+    list_display = ("title", "author", "status", "created_at", "updated_at", "image_preview_display")
     list_filter = ("status", "created_at", "author")
     search_fields = ("title", "abstract", "content")
     prepopulated_fields = {"slug": ("title",)}
-    readonly_fields = ("created_at", "updated_at")
+    readonly_fields = ("created_at", "updated_at", "image_preview_display")
     fieldsets = (
         (None, {"fields": ("title", "slug", "status", "author")}),
-        ("Content", {"fields": ("abstract", "content")}),
+        ("Content", {"fields": ("abstract", "content", "image_preview")}),
         ("Dates", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
     )
+
+    def image_preview_display(self, obj):
+        if obj.image_preview:
+            return format_html('<img src="{}" style=""/>', obj.image_preview.url)
+        return "-"
+
+    image_preview_display.short_description = "Preview"
+
 
 
 # Регистрация моделей в кастомной админке
