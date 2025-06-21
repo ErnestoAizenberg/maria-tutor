@@ -422,12 +422,12 @@
      <div>
                                 <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Ваше имя</label>
                                 <input type="text" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
-                                                   style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" value="{{ application_form.name.value|default_if_none:""}}" name="name">
+                                                   style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" value="{{ application_form.name.value|default_if_none:""}}" name="name" required>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Контакт для связи</label>
                                 <input type="text" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
-                                       style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" value="{{ application_form.email.value|default_if_none:"" }}" name="email">
+                                       style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" value="{{ application_form.email.value|default_if_none:"" }}" name="email" required>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Предмет</label>
@@ -441,7 +441,7 @@
                             <div>
                                 <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Цель занятий</label>
                                 <textarea rows="3" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
-                                          style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" name="goal">{{ application_form.goal.value|default_if_none:"" }}</textarea>
+                                          style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" name="goal" required>{{ application_form.goal.value|default_if_none:"" }}</textarea>
                             </div>
                             <button type="submit" class="w-full btn btn-primary py-2 px-4 rounded-md">
                                 Отправить заявку
@@ -612,17 +612,17 @@
                     <div>
                         <label class="block text-sm font-medium mb-1" style="color: rgba(255,255,255,0.8);">Ваше имя</label>
                         <input type="text" class="w-full px-4 py-3 rounded-md placeholder-white placeholder-opacity-50 focus:ring-2 focus:ring-white"
-                               style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" name="name">
+                               style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" name="name" required>
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1" style="color: rgba(255,255,255,0.8);">Email</label>
                         <input type="email" class="w-full px-4 py-3 rounded-md placeholder-white placeholder-opacity-50 focus:ring-2 focus:ring-white"
-                               style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" name="email">
+                               style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" name="email" required>
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1" style="color: rgba(255,255,255,0.8);">Сообщение</label>
                         <textarea rows="4" class="w-full px-4 py-3 rounded-md placeholder-white placeholder-opacity-50 focus:ring-2 focus:ring-white"
-                                  style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" name="message"></textarea>
+                                  style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" name="message" required></textarea>
                     </div>
                     <button type="submit" class="w-full py-3 px-4 rounded-md font-medium hover:bg-opacity-90 transition"
                             style="background-color: white; color: rgb(var(--color-primary));">
