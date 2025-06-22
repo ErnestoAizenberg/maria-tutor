@@ -1,5 +1,9 @@
 {% extends 'main/base2.html' %}
 {% block title %}{{ "Мои работы" }}{% endblock %}
 {% block content %}
-{% include "main/_article_listing_purple.html" with articles=articles %}
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% include 'main/_article_listing_purple.html' with articles=articles %}
+        </div>
+
 {% endblock content %}
