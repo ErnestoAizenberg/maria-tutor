@@ -262,7 +262,7 @@
                 </div>
 
                 <div class="mt-6 text-right">
-                    <a href="articles/" class="font-medium inline-flex items-center text-primary hover:text-primary-light">
+                    <a href="science/" class="font-medium inline-flex items-center text-primary hover:text-primary-light">
                         Все публикации
                         <i class="fas fa-arrow-right ml-2"></i>
                     </a>
@@ -410,10 +410,12 @@
     <ul class="text-red-700 text-sm space-y-1">
         {% for field in application_form %}
             {% for error in field.errors %}
+                {% if error|length  > 8 %}
                 <li class="flex items-start">
                     <span class="mr-1">•</span>
                     <span><strong>{{ field.label }}:</strong> {{ error }}</span>
                 </li>
+                {% endif %}
             {% endfor %}
         {% endfor %}
     </ul>
@@ -425,8 +427,8 @@
                                                    style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" value="{{ application_form.name.value|default_if_none:""}}" name="name" required>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Контакт для связи</label>
-                                <input type="text" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
+                                <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">E-mail для связи</label>
+                                <input type="email" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
                                        style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" value="{{ application_form.email.value|default_if_none:"" }}" name="email" required>
                             </div>
                             <div>
