@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /test1/
+Disallow: /apply/
+Disallow: /connect_request/
+Disallow: /subscribe_email/
+Sitemap: https://mariaseredinskaya.pythonanywhere.com/sitemap.xml
