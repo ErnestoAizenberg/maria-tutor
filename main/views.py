@@ -64,6 +64,29 @@ def index(request):
             {"articles": [], "application_form": ApplicationForm()},
         )
 
+def lessons(request):
+    """Display lessons page"""
+    logger.info("Rendering lessons page")
+    context = {}
+
+    return render(request, "main/lessons.html", context)
+
+
+def about_me(request):
+    """Display about me page"""
+    logger.info("Rendering about me page")
+    context = {}
+
+    return render(request, "main/about_me.html", context)
+
+
+def science(request):
+    """Display science page"""
+    logger.info("Rendering science page")
+    context = {}
+
+    return render(request, "main/science.html", context)
+
 
 def article(request, slug):
     """Display a single article with reading time and related articles"""
