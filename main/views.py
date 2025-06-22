@@ -26,7 +26,7 @@ def robots_txt(request):
     Allow: /science/
     Disallow: /admin/
     Disallow: /static/
-    Sitemap: http://localhost:8000/sitemap.xml"""
+    Sitemap: https://mariaseredinskaya.pythonanywhere.com/sitemap.xml"""
     return HttpResponse(content, content_type="text/plain")
 
 def index(request):

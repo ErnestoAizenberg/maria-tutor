@@ -1,4 +1,11 @@
 from django.urls import path
+from django.contrib.sitemaps.views import sitemap
+from main.sitemaps import StaticSitemap, ArticleSitemap
+
+sitemaps = {
+    'static': StaticSitemap,
+    'articles': ArticleSitemap,
+}
 
 from . import views
 
@@ -23,4 +30,6 @@ urlpatterns = [
     path("lessons2/", views.lessons2, name="lessons2"),
     path("about_me/", views.about_me, name="about_me"),
     path("science/", views.science, name="science"),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
 ]
