@@ -1,7 +1,8 @@
 {% extends 'main/base2.html' %}
 
 {% block title %}{{ article.title }}{% endblock %}
-
+{% block og_image %}article.preview_image.url{% endblock %}
+{% block content_type %}article{% endblock %}
 {% block content %}
 <style>
     /* Стили для контента статьи */
