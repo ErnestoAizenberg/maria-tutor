@@ -90,11 +90,27 @@ class Review(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            # Создаем slug из имени и даты, если он не задан
-            base_slug = f"{self.author_name}-{self.created_at.date()}"
-            self.slug = slugify(base_slug)
-        super().save(*args, **kwargs)
+            if not self.author_name:
+                raise ValueError("Cannot generate slug: author_name is required")
 
+            base_slug = slugify(f"{self.author_name}-{self.created_at.date()}")
+            self.slug = base_slug
+
+            # Get all similar slugs at once
+            similar_slugs = set(
+                self.__class__.objects
+                .filter(slug__startswith=base_slug)
+                .exclude(pk=self.pk)
+                .values_list('slug', flat=True)
+            )
+
+            if self.slug in similar_slugs:
+                counter = 1
+                while f"{base_slug}-{counter}" in similar_slugs:
+                    counter += 1
+                self.slug = f"{base_slug}-{counter}"
+
+        super().save(*args, **kwargs)
 
 class Application(models.Model):
     SUBJECT_CHOICES = [
