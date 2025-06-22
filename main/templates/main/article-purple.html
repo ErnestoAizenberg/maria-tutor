@@ -1,7 +1,24 @@
 {% extends 'main/base2.html' %}
 
 {% block title %}{{ article.title }}{% endblock %}
-{% block og_image %}article.preview_image.url{% endblock %}
+
+{% block meta_description %}
+    Мария Серединская — репетитор по биологии и химии с 9-летним опытом. Авторские методики, подготовка к ЕГЭ, олимпиадам, вузовские курсы. Нейробиолог, исследователь поведения животных.
+{% endblock %}
+
+{% block meta_keywords %}
+    репетитор по биологии, репетитор по химии, подготовка к ЕГЭ по биологии, Мария Серединская, нейробиолог, олимпиады по биологии, репетитор для студентов с СДВГ
+{% endblock %}
+
+{% block og_title %}
+    Мария Серединская | Репетитор по биологии и химии
+    {{ article.title }}
+{% endblock %}
+
+{% block og_description %} {{ article.abstract }}{% endblock %}
+
+
+{% block og_image %}{{article.preview_image.url}}{% endblock %}
 {% block content_type %}article{% endblock %}
 {% block content %}
 <style>
