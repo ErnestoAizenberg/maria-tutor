@@ -16,7 +16,18 @@ from .forms import ApplicationForm
 from .models import Application, Article, Review
 
 logger = setup_logger(log_file="app.log", level="DEBUG")
+from django.http import HttpResponse
 
+def robots_txt(request):
+    content = """User-agent: *
+    Allow: /$
+    Allow: /about_me/
+    Allow: /lessons/
+    Allow: /science/
+    Disallow: /admin/
+    Disallow: /static/
+    Sitemap: http://localhost:8000/sitemap.xml"""
+    return HttpResponse(content, content_type="text/plain")
 
 def index(request):
     """Display the homepage with published articles and application form."""
@@ -70,6 +81,14 @@ def lessons(request):
     context = {}
 
     return render(request, "main/lessons.html", context)
+
+
+def lessons2(request):
+    """Display lessons page"""
+    logger.info("Rendering lessons page")
+    context = {}
+
+    return render(request, "main/lessons1.html", context)
 
 
 def about_me(request):
