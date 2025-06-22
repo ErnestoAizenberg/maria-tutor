@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth import get_user_model
 from django.core.validators import (
     EmailValidator,
@@ -231,6 +233,12 @@ class Article(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
+        if self.pk:
+            old_article = Article.objects.get(pk=self.pk)
+            if old_article.image_preview and old_article.image_preview != self.image_preview:
+                if os.path.isfile(old_article.image_preview.path):
+                    os.remove(old_article.image_preview.path)
+
         if not self.slug:
             self.slug = slugify(self.title)
         if not self.abstract and self.content:  # Auto-generate abstract if empty
@@ -238,6 +246,12 @@ class Article(models.Model):
                 self.content[:297] + "..." if len(self.content) > 300 else self.content
             )
         super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        if self.image_preview:
+            if os.path.isfile(self.image_preview.path):
+                os.remove(self.image_preview.path)
+        super().delete(*args, **kwargs)
 
     class Meta:
         ordering = ["-created_at"]
