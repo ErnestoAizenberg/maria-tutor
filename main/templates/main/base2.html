@@ -4,32 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    {% load static %}
-    <meta name="description" content="{% block meta_description %}{% endblock %}">
-    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<!-- seo.html -->
+{% load static %}  <!-- Добавьте эту строку в начале файла! -->
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-    <meta property="og:site_name" content="{% block og_site_name %}Репетитор по биологии и химии | Мария Серединская{% endblock %}">
-    <meta property="og:title" content="{% block og_title %}{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}{% endblock %}">
-    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
-    <meta property="og:image" content="{% block og_image %}{% endblock %}">
-    <meta property="og:image:alt" content="{% block og_image_alt %}{% endblock %}">
-    <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}">
-    <meta property="og:image:height" content="{% block og_image_height %}630{% endblock %}">
-    <meta property="og:locale" content="{% block og_locale %}ru_RU{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta property="og:title" content="{% block og_title %}{% endblock %}">
+<meta property="og:description" content="{% block og_description %}{% endblock %}">
+<meta property="og:type" content="{% block content_type %}website{% endblock %}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:image" content="{% block og_image %}{% static 'img/maria-seredinskaya-social.jpg' %}{% endblock %}">
+<meta property="og:site_name" content="Мария Серединская | Репетитор по биологии и химии">
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="{% block twitter_card %}summary_large_image{% endblock %}">
-    <meta name="twitter:title" content="{% block twitter_title %}{% endblock %}">
-    <meta name="twitter:description" content="{% block twitter_description %}{% endblock %}">
-    <meta name="twitter:image" content="{% block twitter_image %}{% endblock %}">
+<!-- Twitter Card (для Twitter, иногда Telegram) -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Мария Серединская | Репетитор по биологии и химии">
+<meta name="twitter:description" content="Подготовка к ЕГЭ и ОГЭ по биологии и химии. Индивидуальные занятия с опытным репетитором.">
+<meta name="twitter:image" content="https://ваш-сайт.ru/static/img/maria-seredinskaya-social.jpg">
+<meta name="twitter:site" content="@ваш-twitter-аккаунт">  <!-- если есть -->
 
-    <!-- Дополнительные мета-теги -->
-    <meta name="author" content="Мария Серединская">
 
-    {% block extra_meta %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
