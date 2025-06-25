@@ -11,7 +11,6 @@ Personal website for biology/chemistry tutor Maria Seredinskaya
     <img src="https://img.shields.io/badge/||_‎_‎_‎_‎_OPEN_WEBSITE_‎_‎_‎_‎||-0969DA?style=for-the-badge&logoColor=white" alt="Open Maria-tutor">
   </a>
 </div>
----
 
 ## Overview
 
