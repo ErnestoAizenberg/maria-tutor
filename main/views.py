@@ -29,6 +29,14 @@ def robots_txt(request):
     Sitemap: https://mariaseredinskaya.pythonanywhere.com/sitemap.xml"""
     return HttpResponse(content, content_type="text/plain")
 
+def terms(request):
+    context = {}
+    return render(request, 'main/terms.html', context)
+
+def policy(request):
+    context = {}
+    return render(request, 'main/policy.html', context)
+
 def index(request):
     """Display the homepage with published articles and application form."""
     logger.info("Rendering homepage")
@@ -358,3 +366,4 @@ def application(request):
         "application_form": form,
     }
     return render(request, 'main/application.html', context)
+

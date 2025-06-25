@@ -38,6 +38,11 @@ urlpatterns = [
 urlpatterns += [
     path('lessons-details/', views.lesson_details, name='lessons_details')
 ]
+urlpatterns += [
+    path('policy/', views.policy, name='policy'),
+    path('terms/', views.terms, name='terms'),
+
+]
 
 urlpatterns += [
     path('programs/async/', views.async_program, name='async-program'),
