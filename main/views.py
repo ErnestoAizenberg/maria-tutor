@@ -13,7 +13,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from tutorproject.logger import setup_logger
 
 from .forms import ApplicationForm
-from .models import Application, Article, Review
+from .models import Application, Article, Review, Publication
 
 logger = setup_logger(log_file="app.log", level="DEBUG")
 from django.http import HttpResponse
@@ -45,6 +45,7 @@ def index(request):
         # Get published articles ordered by creation date (newest first)
         articles = Article.objects.filter(status="published").order_by("-created_at")
         reviews = Review.objects.filter(is_published=True).order_by("-created_at")
+        publications = Publication.objects.all()
 
         # Initialize form with session data if exists, otherwise create empty form
         if "application_form_data" in request.session:
@@ -67,6 +68,7 @@ def index(request):
             "articles": articles,
             "reviews": reviews,
             "application_form": form,
+            "publications": publications,
         }
         logger.debug(f"form.erros: {form.errors}")
         logger.debug(f"Loaded {len(articles)} published articles for homepage")
@@ -110,7 +112,10 @@ def about_me(request):
 def science(request):
     """Display science page"""
     logger.info("Rendering science page")
-    context = {}
+    publications = Publication.objects.all()
+    context = {
+        "publications": publications
+    }
 
     return render(request, "main/science.html", context)
 

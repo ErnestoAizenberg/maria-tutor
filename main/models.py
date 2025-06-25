@@ -6,8 +6,10 @@ from django.core.validators import (
     MaxValueValidator,
     MinValueValidator,
     FileExtensionValidator,
+    URLValidator,
 )
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 
@@ -204,6 +206,188 @@ class ConnectMessage(models.Model):
         return (
             f"Message from {self.name} at {self.created_at.strftime('%Y-%m-%d %H:%M')}"
         )
+
+class Publication(models.Model):
+    title = models.CharField(
+        max_length=700,
+        verbose_name="Publication Title",
+        help_text="The full title of the publication"
+    )
+
+    slug = models.SlugField(
+        max_length=700,
+        unique=True,
+        blank=True,
+        help_text="A URL-friendly version of the title (auto-generated)"
+    )
+
+    authors = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name="Authors",
+        help_text="List of authors separated by commas"
+    )
+
+    description = models.TextField(
+        max_length=2000,
+        blank=True,
+        verbose_name="Abstract/Description",
+        help_text="Brief summary or abstract of the publication"
+    )
+
+    url = models.URLField(
+        max_length=500,
+        validators=[URLValidator()],
+        verbose_name="Publication URL",
+        help_text="Link to the full publication"
+    )
+
+    journal = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name="Journal/Conference",
+        help_text="Name of the journal or conference where published"
+    )
+
+    doi = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name="DOI",
+        help_text="Digital Object Identifier if available"
+    )
+
+    publication_date = models.DateField(
+        verbose_name="Publication Date",
+        help_text="Date when the publication was released"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Created At"
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Last Updated"
+    )
+
+    is_featured = models.BooleanField(
+        default=False,
+        verbose_name="Featured Publication",
+        help_text="Mark as featured to highlight this publication"
+    )
+
+    class Meta:
+        verbose_name = "Publication"
+        verbose_name_plural = "Publications"
+        ordering = ['-publication_date']
+        indexes = [
+            models.Index(fields=['slug']),
+            models.Index(fields=['publication_date']),
+            models.Index(fields=['is_featured']),
+        ]
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)[:700]
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('publication_detail', kwargs={'slug': self.slug})
+
+class Publication(models.Model):
+    title = models.CharField(
+        max_length=700,
+        verbose_name="Publication Title",
+        help_text="The full title of the publication"
+    )
+
+    slug = models.SlugField(
+        max_length=700,
+        unique=True,
+        blank=True,
+        help_text="A URL-friendly version of the title (auto-generated)"
+    )
+
+    authors = models.CharField(
+        max_length=500,
+        blank=True,
+        verbose_name="Authors",
+        help_text="List of authors separated by commas"
+    )
+
+    description = models.TextField(
+        max_length=2000,
+        blank=True,
+        verbose_name="Abstract/Description",
+        help_text="Brief summary or abstract of the publication"
+    )
+
+    url = models.URLField(
+        max_length=500,
+        validators=[URLValidator()],
+        verbose_name="Publication URL",
+        help_text="Link to the full publication"
+    )
+
+    journal = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name="Journal/Conference",
+        help_text="Name of the journal or conference where published"
+    )
+
+    doi = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name="DOI",
+        help_text="Digital Object Identifier if available"
+    )
+
+    publication_date = models.DateField(
+        verbose_name="Publication Date",
+        help_text="Date when the publication was released"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Created At"
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Last Updated"
+    )
+
+    is_featured = models.BooleanField(
+        default=False,
+        verbose_name="Featured Publication",
+        help_text="Mark as featured to highlight this publication"
+    )
+
+    class Meta:
+        verbose_name = "Publication"
+        verbose_name_plural = "Publications"
+        ordering = ['-publication_date']
+        indexes = [
+            models.Index(fields=['slug']),
+            models.Index(fields=['publication_date']),
+            models.Index(fields=['is_featured']),
+        ]
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)[:700]
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('publication_detail', kwargs={'slug': self.slug})
 
 
 class Article(models.Model):

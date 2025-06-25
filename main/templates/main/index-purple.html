@@ -183,6 +183,7 @@
                 <h3 class="text-2xl font-serif font-bold mb-8">Направления исследований</h3>
 
                 <div class="space-y-8">
+
                     <!-- Research 1 -->
                     <div class="flex">
                         <div class="flex-shrink-0 mr-6">
@@ -238,7 +239,8 @@
                 <h3 class="text-2xl font-serif font-bold mb-8">Последние публикации</h3>
 
                 <div class="card overflow-hidden">
-                    <!-- Publication 1 -->
+                  {% comment %}
+                  <!-- Publication 1 -->
                     <div class="p-6 border-b" style="border-color: rgba(var(--color-border), 0.3);">
                         <div class="flex justify-between items-start">
                             <div>
@@ -257,7 +259,7 @@
                         <div class="flex justify-between items-start">
                             <div>
                                 <h4 class="font-bold text-lg mb-1">Модели тревожности у Danio rerio</h4>
-                                <p class="text-sm mb-3" style="color: rgb(var(--color-text-secondary));">Neuroscience Letters, 2022</p>
+                                <p class="text-sm mb-3" style="color: rgb(var(--color-text-secondary));">Journal of Neuroscience Research, 2025</p>
                                 <p class="text-sm" style="color: rgb(var(--color-text-secondary));">Новые подходы к моделированию тревожных расстройств на рыбках данио.</p>
                             </div>
                             <a href="https://pureportal.spbu.ru/ru/projects/---2019---1(a3e999da-aaa5-4406-964b-2a66b5635243).html" class="text-primary hover:text-primary-light ml-4 flex-shrink-0">
@@ -279,6 +281,8 @@
                             </a>
                         </div>
                     </div>
+                    {% endcomment %}
+                  {% include 'main/_pub_listing.html' with publications=publications %}
                 </div>
 
                 <div class="mt-6 text-right">

@@ -1,10 +1,12 @@
-# main/admin.py
+from ckeditor.widgets import CKEditorWidget
 from django.contrib import admin
+from django import forms
+from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.html import format_html
 
 from .custom_admin import custom_admin_site
-from .models import Application, Article, ConnectMessage, Review
+from .models import Application, Article, ConnectMessage, Review, Publication
 
 User = get_user_model()
 
@@ -95,8 +97,30 @@ class ConnectMessageAdmin(admin.ModelAdmin):
     class Media:
         css = {"all": ("admin/css/custom.css",)}
 
-from django import forms
-from ckeditor.widgets import CKEditorWidget
+
+@admin.register(Publication)
+class PublicationAdmin(admin.ModelAdmin):
+    list_display = ('title', 'journal', 'publication_date', 'is_featured')
+    list_filter = ('journal', 'publication_date', 'is_featured')
+    search_fields = ('title', 'description', 'authors', 'journal')
+    prepopulated_fields = {'slug': ('title',)}
+    date_hierarchy = 'publication_date'
+
+    formfield_overrides = {
+        models.DateField: {'widget': forms.DateInput(attrs={'type': 'date'})},
+    }
+
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'slug', 'authors', 'description')
+        }),
+        ('Publication Details', {
+            'fields': ('journal', 'publication_date', 'doi', 'url')
+        }),
+        ('Metadata', {
+            'fields': ('is_featured',)
+        }),
+    )
 
 class ArticleAdminForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorWidget(config_name='default'), label="Контент")  # Добавляем CKEditor для поля content
@@ -129,10 +153,11 @@ class ArticleAdmin(admin.ModelAdmin):
 custom_admin_site.register(User)
 custom_admin_site.register(Application, ApplicationAdmin)
 custom_admin_site.register(ConnectMessage, ConnectMessageAdmin)
+custom_admin_site.register(Publication, PublicationAdmin)
 custom_admin_site.register(Article, ArticleAdmin)
 custom_admin_site.register(Review)
 
 # Настройки заголовков
-custom_admin_site.site_header = "Your Site Administration"
-custom_admin_site.site_title = "Your Site Admin Portal"
-custom_admin_site.index_title = "Welcome to Your Site Admin"
+custom_admin_site.site_header = "👾 Site Administration"
+custom_admin_site.site_title = "👾 Site Admin Portal"
+custom_admin_site.index_title = "👾 Site Admin"
