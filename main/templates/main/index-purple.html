@@ -321,6 +321,7 @@
         </div>
 
         <div class="grid md:grid-cols-3 gap-8 mb-16">
+            {% comment %}
             <!-- Biology -->
             <div class="card p-8">
                 <div class="text-primary text-4xl mb-6">
@@ -377,6 +378,8 @@
                     <span style="color: rgb(var(--color-text-secondary));">/ 60 мин</span>
                 </div>
             </div>
+            {% endcomment %}
+            {% include 'main/_ed_formats.html' %}
         </div>
 
         <!-- Booking Form -->
