@@ -1,5 +1,6 @@
 Django
 gunicorn
 django-jazzmin
+django-ckeditor
 python-dotenv
 Pillow

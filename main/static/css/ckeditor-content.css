@@ -1,0 +1,100 @@
+    /* Стили для контента статьи */
+    .article-content {
+        line-height: 1.7;
+        color: rgb(var(--color-text));
+    }
+
+    .article-content p {
+        margin-bottom: 1.5rem;
+    }
+
+    .article-content h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+        color: rgb(var(--color-text));
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+
+    .article-content h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: rgb(var(--color-primary));
+    }
+
+    .article-content h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 2.5rem;
+        margin-bottom: 1.25rem;
+        color: rgb(var(--color-text));
+    }
+
+    .article-content ul,
+    .article-content ol {
+        margin-bottom: 1.5rem;
+        padding-left: 2rem;
+    }
+
+    .article-content ul {
+        list-style-type: disc;
+    }
+
+    .article-content ol {
+        list-style-type: decimal;
+    }
+
+    .article-content li {
+        margin-bottom: 0.5rem;
+    }
+
+    .article-content blockquote {
+        border-left: 4px solid rgb(var(--color-primary));
+        padding-left: 1.5rem;
+        margin: 2rem 0;
+        font-style: italic;
+        color: rgb(var(--color-text-secondary));
+    }
+
+    .article-content img {
+        border-radius: var(--radius-xl);
+        margin: 2rem auto;
+        max-width: 100%;
+        height: auto;
+        box-shadow: var(--shadow-md);
+    }
+
+    .article-content .image-caption {
+        text-align: center;
+        font-size: 0.875rem;
+        color: rgb(var(--color-text-secondary));
+        margin-top: -1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .article-content table {
+        width: 100%;
+        margin: 2rem 0;
+        border-collapse: collapse;
+    }
+
+    .article-content th,
+    .article-content td {
+        padding: 0.75rem;
+        border: 1px solid rgba(var(--color-border), 0.3);
+    }
+
+    .article-content th {
+        background-color: rgba(var(--color-primary), 0.1);
+        text-align: left;
+    }
+
+

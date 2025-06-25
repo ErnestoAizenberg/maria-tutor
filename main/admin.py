@@ -95,8 +95,18 @@ class ConnectMessageAdmin(admin.ModelAdmin):
     class Media:
         css = {"all": ("admin/css/custom.css",)}
 
+from django import forms
+from ckeditor.widgets import CKEditorWidget
+
+class ArticleAdminForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget(config_name='default'), label="Контент")  # Добавляем CKEditor для поля content
+
+    class Meta:
+        model = Article
+        fields = '__all__'
 
 class ArticleAdmin(admin.ModelAdmin):
+    form = ArticleAdminForm  # Используем кастомную форму с CKEditor
     list_display = ("title", "author", "status", "created_at", "updated_at", "image_preview_display")
     list_filter = ("status", "created_at", "author")
     search_fields = ("title", "abstract", "content")
@@ -110,12 +120,10 @@ class ArticleAdmin(admin.ModelAdmin):
 
     def image_preview_display(self, obj):
         if obj.image_preview:
-            return format_html('<img src="{}" style=""/>', obj.image_preview.url)
+            return format_html('<img src="{}" style="max-height: 100px;"/>', obj.image_preview.url)
         return "-"
 
     image_preview_display.short_description = "Preview"
-
-
 
 # Регистрация моделей в кастомной админке
 custom_admin_site.register(User)

@@ -19,5 +19,9 @@
 {% block og_image %}https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000{% endblock %}
 
 {% block content %}
-{% include 'main/_application_form.html' with form=application_form %}
+<section id="form_section" class="py-20 px-4 sm:px-6 lg:px-8" style="background-color: rgb(var(--color-bg));">
+<div class="p-8">
+  {% include 'main/_application_form.html' with form=application_form %}
+</div>
+</section>
 {% endblock %}

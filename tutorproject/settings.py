@@ -40,6 +40,7 @@ ALLOWED_HOSTS = ["mariaseredinskaya.pythonanywhere.com", "localhost", "127.0.0.1
 
 INSTALLED_APPS = [
     "jazzmin",
+    "ckeditor",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -76,6 +77,21 @@ TEMPLATES = [
         },
     },
 ]
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'contentsCss': '/static/css/ckeditor-content.css',
+        'bodyClass': 'article-content',  # Добавляем класс к body редактора
+        'allowedContent': True,  # Разрешаем классы и стили
+        'extraPlugins': 'stylesheetparser',
+        'toolbar_Full': [
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', 'Blockquote'],
+            ['Image', 'Table', 'Link'],
+            ['Source']  # Кнопка просмотра HTML
+        ],
+    },
+}
 
 WSGI_APPLICATION = "tutorproject.wsgi.application"
 
