@@ -313,3 +313,48 @@ def email_subscribe_success(request):
     """Display success page after email subscription"""
     logger.debug("Email subscription success page accessed")
     return render(request, "main/email_subscribe_success.html")
+
+def async_program(request):
+    return render(request, 'main/programs/async.html')
+
+def bio_in_english(request):
+    return render(request, 'main/programs/bio_on_english.html')
+
+def group_programs(request):
+    return render(request, 'main/programs/grops.html')
+
+def olympiad_prep(request):
+    return render(request, 'main/programs/olimp.html')
+
+def one_on_one(request):
+    return render(request, 'main/programs/one_on_one.html')
+
+def subsidized(request):
+    return render(request, 'main/programs/subsized.html')
+
+def lesson_details(request):
+    return render(request, 'main/lessons_details.html')
+
+def application(request):
+    # Initialize form with session data if exists, otherwise create empty form
+    if "application_form_data" in request.session:
+        form = ApplicationForm(request.session["application_form_data"])
+
+        # Add form errors from session if they exist
+        if errors_json := request.session.get("application_form_errors"):
+            errors_dict = json.loads(errors_json)
+            for field, error_list in errors_dict.items():
+                for error in errors_dict:
+                    form.add_error(field, error)
+
+        # Clean up session data
+        request.session.pop("application_form_data", None)
+        request.session.pop("application_form_errors", None)
+    else:
+        form = ApplicationForm()
+
+
+    context = {
+        "application_form": form,
+    }
+    return render(request, 'main/application.html', context)

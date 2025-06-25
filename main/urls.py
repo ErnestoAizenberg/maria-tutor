@@ -17,6 +17,7 @@ urlpatterns = [
     path("reviews/", views.reviews, name="reviews"),
     path("test1/", views.test, name="test"),
     path("success/", views.apply_success, name="apply_success"),
+    path("application/", views.application, name="application"),
     path("apply/", views.application_submit, name="application_submit"),
     path("subscribe_email/", views.subscribe_email, name="subscribe_email"),
     path(
@@ -33,3 +34,18 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
          name='django.contrib.sitemaps.views.sitemap'),
 ]
+
+urlpatterns += [
+    path('lessons-details/', views.lesson_details, name='lessons_details')
+]
+
+urlpatterns += [
+    path('programs/async/', views.async_program, name='async-program'),
+    path('programs/bio-in-english/', views.bio_in_english, name='bio-in-english'),
+    path('programs/groups/', views.group_programs, name='group-programs'),
+    path('programs/olympiad-prep/', views.olympiad_prep, name='olympiad-prep'),
+    path('programs/one-on-one/', views.one_on_one, name='one-on-one'),
+    path('programs/subsized/', views.subsidized, name='subsidized'),
+]
+
+

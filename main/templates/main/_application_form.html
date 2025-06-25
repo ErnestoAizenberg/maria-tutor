@@ -1,0 +1,65 @@
+<form action="{% url 'application_submit' %}" method="POST" id="application-form">
+    {% csrf_token %}
+    <div class="space-y-4">
+        {% if form.errors %}
+            <div class="p-4 mb-6 bg-red-50 border border-red-200 rounded-lg">
+                <h3 class="flex items-center text-red-800 font-medium mb-3">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    Пожалуйста, исправьте ошибки
+                </h3>
+                <ul class="text-red-700 text-sm space-y-1">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            {% if error|length > 8 %}
+                                <li class="flex items-start">
+                                    <span class="mr-1">•</span>
+                                    <span><strong>{{ field.label }}:</strong> {{ error }}</span>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <div>
+            <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Ваше имя</label>
+            <input type="text" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
+                   style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);"
+                   value="{{ form.name.value|default_if_none:"" }}"
+                   name="name" required>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">E-mail для связи</label>
+            <input type="email" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
+                   style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);"
+                   value="{{ form.email.value|default_if_none:"" }}"
+                   name="email" required>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Предмет</label>
+            <select class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
+                    style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);"
+                    name="subject">
+                {% for value, name in form.subject.field.choices %}
+                    <option value="{{ value }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Цель занятий</label>
+            <textarea rows="3" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
+                      style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);"
+                      name="goal" required>{{ form.goal.value|default_if_none:"" }}</textarea>
+        </div>
+
+        <button type="submit" class="w-full btn btn-primary py-2 px-4 rounded-md">
+            Отправить заявку
+        </button>
+    </div>
+</form>
