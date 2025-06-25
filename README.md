@@ -1,11 +1,15 @@
+<div align="center">
 ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 ![Django](https://img.shields.io/badge/Django-092E20?style=flat-square&logo=django&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
-
-# maria-tutor
-
+<h1>maria-tutor</h1>
 Personal website for biology/chemistry tutor Maria Seredinskaya
+  <h3>✨ Check it Out!</h3>
+  <a href="https://mariaseredinskaya.pythonanywhere.com/">
+    <img src="https://img.shields.io/badge/||_‎_‎_‎_‎_OPEN_WEBSITE_‎_‎_‎_‎||-0969DA?style=for-the-badge&logoColor=white" alt="Open Maria-tutor">
+  </a>
+</div>
 ---
 
 ## Overview
