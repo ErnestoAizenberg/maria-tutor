@@ -21,6 +21,39 @@
 {% endblock %}
 {% block og_image %}https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000{% endblock %}
 
+{% block extra_meta %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Мария Серединская",
+  "jobTitle": "Репетитор по биологии и химии",
+  "description": "Профессиональный репетитор с 9 годами опыта. Подготовка к ЕГЭ, ОГЭ, олимпиадам, помощь школьникам и студентам.",
+  "url": "https://mariaseredinskaya.pythonanywhere.com",
+  "image": "https://mariaseredinskaya.pythonanywhere.com/photo.jpg",
+  "sameAs": [
+    "https://vk.com/ваш-профиль",
+    "https://t.me/himbioraz",
+    "https://instagram.com/ваш-аккаунт"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Петербург",
+    "streetAddress": "ул. Крупская, 7",
+    "postalCode": "123456"
+  },
+  "email": "mariseredinskaya@gmail.com",
+  "telephone": "+7 (931) 372-65-33",
+  "offers": {
+    "@type": "Offer",
+    "price": "2000",
+    "priceCurrency": "RUB",
+    "description": "Стоимость индивидуального занятия (60 минут)"
+  }
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <style>
     /* Дополнительные стили для главной страницы */
