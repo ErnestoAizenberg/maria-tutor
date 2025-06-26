@@ -1,0 +1,211 @@
+        :root {
+            /* Основные цвета темы */
+            --color-primary: 109, 40, 217;  /* Фиолетовый */
+            --color-primary-dark: 76, 29, 149;
+            --color-primary-light: 139, 92, 246;
+            --color-secondary: 236, 72, 153; /* Розовый */
+            --color-accent: 59, 130, 246;   /* Синий */
+            --color-text: 229, 229, 229;    /* Почти белый */
+            --color-text-secondary: 180, 180, 180;
+            --color-bg: 15, 15, 25;         /* Темный фон */
+            --color-bg-secondary: 30, 30, 45;
+            --color-bg-card: 40, 40, 60;
+            --color-border: 60, 60, 80;
+
+            /* Эффекты */
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.25), 0 10px 20px rgba(0, 0, 0, 0.2);
+
+            /* Радиусы */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-full: 9999px;
+
+            /* Анимации */
+            --transition-fast: 0.15s ease-in-out;
+            --transition-normal: 0.3s ease-in-out;
+            --transition-slow: 0.5s ease-in-out;
+        }
+
+        /* Светлая тема (можно переключать) */
+        .theme-light {
+            --color-primary: 109, 40, 217;
+            --color-primary-dark: 76, 29, 149;
+            --color-primary-light: 139, 92, 246;
+            --color-secondary: 236, 72, 153;
+            --color-accent: 59, 130, 246;
+            --color-text: 30, 30, 30;
+            --color-text-secondary: 100, 100, 100;
+            --color-bg: 245, 245, 250;
+            --color-bg-secondary: 235, 235, 240;
+            --color-bg-card: 255, 255, 255;
+            --color-border: 220, 220, 230;
+        }
+
+        /* Общие стили */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: rgb(var(--color-bg));
+            color: rgb(var(--color-text));
+            transition: background-color var(--transition-normal), color var(--transition-normal);
+        }
+
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+
+        /* Текст */
+        .text-primary { color: rgb(var(--color-primary)) }
+        .text-secondary { color: rgb(var(--color-secondary)) }
+        .text-accent { color: rgb(var(--color-accent)) }
+
+        /* Фоны */
+        .bg-primary { background-color: rgb(var(--color-primary)) }
+        .bg-secondary { background-color: rgb(var(--color-secondary)) }
+        .bg-accent { background-color: rgb(var(--color-accent)) }
+        .bg-card { background-color: rgb(var(--color-bg-card)) }
+
+        /* Градиентный текст */
+        .text-gradient {
+            background: linear-gradient(90deg, rgb(var(--color-primary)) 0%, rgb(var(--color-secondary)) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: rgb(var(--color-primary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: rgb(var(--color-primary-dark));
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            border: 1px solid rgb(var(--color-primary));
+            color: rgb(var(--color-primary));
+            background-color: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(var(--color-primary), 0.1);
+        }
+
+        /* Карточки */
+        .card {
+            background-color: rgb(var(--color-bg-card));
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-normal);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Навигация */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+            color: rgb(var(--color-text-secondary));
+            transition: color var(--transition-fast);
+        }
+
+        .nav-link:hover {
+            color: rgb(var(--color-text));
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: rgb(var(--color-primary));
+            transition: width var(--transition-fast);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Анимации */
+        .hover-scale {
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+
+        .hover-scale:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Кастомные элементы */
+        .custom-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .custom-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: rgb(var(--color-primary));
+            font-weight: bold;
+        }
+
+        /* Разделитель */
+        .divider {
+            height: 1px;
+            background-color: rgba(var(--color-border), 0.5);
+            margin: 1.5rem 0;
+        }
+
+        /* Переключатель темы */
+        .theme-toggle {
+            width: 2.5rem;
+            height: 1.5rem;
+            border-radius: var(--radius-full);
+            background-color: rgb(var(--color-bg-card));
+            position: relative;
+            cursor: pointer;
+            border: 1px solid rgb(var(--color-border));
+        }
+
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            top: 0.15rem;
+            left: 0.15rem;
+            width: 1.1rem;
+            height: 1.1rem;
+            border-radius: var(--radius-full);
+            background-color: rgb(var(--color-primary));
+            transition: transform var(--transition-fast);
+        }
+
+        .theme-light .theme-toggle::after {
+            transform: translateX(1rem);
+        }
+

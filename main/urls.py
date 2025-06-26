@@ -50,7 +50,7 @@ urlpatterns += [
     path('programs/groups/', views.group_programs, name='group-programs'),
     path('programs/olympiad-prep/', views.olympiad_prep, name='olympiad-prep'),
     path('programs/one-on-one/', views.one_on_one, name='one-on-one'),
-    path('programs/subsized/', views.subsidized, name='subsidized'),
+    path('programs/subsized/', views.subsidized, name='subsized'),
 ]
 
 

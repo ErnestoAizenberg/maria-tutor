@@ -13,9 +13,17 @@ class StaticSitemap(Sitemap):
             'articles',
             'reviews',
             'lessons',
-            'lessons2',
             'about_me',
             'science',
+            'lessons_details',
+            'terms',
+            'policy',
+            'subsized',
+            'olympiad-prep',
+            'subsized',
+            'one-on-one',
+            'group-programs',
+            'async-program',
             # Excluded URLs (form submissions/success pages):
             # 'application_submit',
             # 'apply_success',
@@ -32,10 +40,11 @@ class StaticSitemap(Sitemap):
     # Method to set priority per URL
     def get_priority(self, item):
         priority_map = {
-            'index': 1.0,      # Highest priority for homepage
+            'index': 1.0,
+            'lessons': 0.99,
             'articles': 0.9,
             'about_me': 0.9,
-            'science': 0.85,
+            'reviews': 0.9,
             # Default will use the class's priority (0.8)
         }
         return priority_map.get(item, self.priority)

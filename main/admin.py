@@ -98,7 +98,7 @@ class ConnectMessageAdmin(admin.ModelAdmin):
         css = {"all": ("admin/css/custom.css",)}
 
 
-@admin.register(Publication)
+#@admin.register(Publication)
 class PublicationAdmin(admin.ModelAdmin):
     list_display = ('title', 'journal', 'publication_date', 'is_featured')
     list_filter = ('journal', 'publication_date', 'is_featured')
