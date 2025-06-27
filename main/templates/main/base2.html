@@ -1,8 +1,13 @@
-{% spaceless %}
+{# {% spaceless %} #}
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru" prefix="og: http://ogp.me/ns#">
-<head>
+  <head>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Основные мета-теги -->
@@ -32,12 +37,6 @@
     <meta name="author" content="Мария Серединская">
 
     {% block extra_meta %}{% endblock %}
-    <!-- Preconnect to common CDNs -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -213,4 +212,4 @@
 </script>
 </body>
 </html>
-{% endspaceless %}
+{# {% endspaceless %} #}
