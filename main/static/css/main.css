@@ -209,3 +209,277 @@ width: 2.5rem;
   transform: translateX(1rem);
 }
 
+/* Стили для форм */
+.my-form {
+  max-width: 100%;
+  width: 100%;
+}
+
+.my-form div {
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.my-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(var(--color-text));
+  transition: color var(--transition-fast);
+}
+
+.my-form input:not([type="checkbox"]):not([type="radio"]),
+.my-form textarea,
+.my-form select {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgb(var(--color-text));
+  background-color: rgb(var(--color-bg-card));
+  border: 1px solid rgb(var(--color-border));
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+}
+
+.my-form input:focus:not([type="checkbox"]):not([type="radio"]),
+.my-form textarea:focus,
+.my-form select:focus {
+  outline: none;
+  border-color: rgb(var(--color-primary));
+  box-shadow: 0 0 0 3px rgba(var(--color-primary), 0.2);
+}
+
+.my-form input::placeholder,
+.my-form textarea::placeholder {
+  color: rgb(var(--color-text-secondary));
+  opacity: 0.7;
+}
+
+/* Стили для textarea */
+.my-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Стили для select */
+.my-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23949494'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25rem;
+  padding-right: 2.5rem;
+}
+
+/* Стили для чекбоксов и радиокнопок */
+.my-form input[type="checkbox"],
+.my-form input[type="radio"] {
+  position: absolute;
+  left: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0;
+  margin-left: 0;
+  background-color: rgb(var(--color-bg-card));
+  border: 1px solid rgb(var(--color-border));
+  appearance: none;
+  -webkit-appearance: none;
+  transition: all var(--transition-fast);
+}
+
+.my-form input[type="checkbox"]:checked,
+.my-form input[type="radio"]:checked {
+  background-color: rgb(var(--color-primary));
+  border-color: rgb(var(--color-primary));
+}
+
+.my-form input[type="checkbox"] {
+  border-radius: var(--radius-sm);
+}
+
+.my-form input[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23ffffff'%3E%3Cpath fill-rule='evenodd' d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 0.875rem;
+}
+
+.my-form input[type="radio"] {
+  border-radius: var(--radius-full);
+}
+
+.my-form input[type="radio"]:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23ffffff'%3E%3Ccircle cx='10' cy='10' r='3'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 0.625rem;
+}
+
+/* Контейнеры для чекбоксов/радиокнопок */
+.my-form .checkbox-group,
+.my-form .radio-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 1.75rem;
+  margin-bottom: 0.75rem;
+  min-height: 1.5rem;
+}
+
+.my-form .checkbox-group label,
+.my-form .radio-group label {
+  font-size: 0.9375rem;
+  color: rgb(var(--color-text));
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+/* Стили для переключателей (toggle switches) */
+.my-form .toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 3rem;
+  height: 1.75rem;
+}
+
+.my-form .toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.my-form .toggle-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(var(--color-bg-secondary));
+  border: 1px solid rgb(var(--color-border));
+  transition: all var(--transition-fast);
+  border-radius: var(--radius-full);
+}
+
+.my-form .toggle-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 1.25rem;
+  width: 1.25rem;
+  left: 0.25rem;
+  bottom: 0.2rem;
+  background-color: white;
+  transition: all var(--transition-fast);
+  border-radius: var(--radius-full);
+}
+
+.my-form .toggle-switch input:checked + .toggle-switch-slider {
+  background-color: rgb(var(--color-primary));
+  border-color: rgb(var(--color-primary));
+}
+
+.my-form .toggle-switch input:checked + .toggle-switch-slider:before {
+  transform: translateX(1.25rem);
+}
+
+/* Стили для валидации */
+.my-form input:invalid,
+.my-form textarea:invalid,
+.my-form select:invalid {
+  border-color: rgb(239, 68, 68);
+}
+
+.my-form input:invalid:focus,
+.my-form textarea:invalid:focus,
+.my-form select:invalid:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+.my-form .error-message {
+  display: none;
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  color: rgb(239, 68, 68);
+}
+
+.my-form input:invalid ~ .error-message,
+.my-form textarea:invalid ~ .error-message,
+.my-form select:invalid ~ .error-message {
+  display: block;
+}
+
+/* Анимация для label при фокусе (опционально) */
+.my-form .floating-label-group {
+  position: relative;
+  margin-top: 1.5rem;
+}
+
+.my-form .floating-label-group .floating-label {
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem;
+  font-size: 1rem;
+  color: rgb(var(--color-text-secondary));
+  pointer-events: none;
+  transition: all var(--transition-fast);
+}
+
+.my-form .floating-label-group input:focus + .floating-label,
+.my-form .floating-label-group input:not(:placeholder-shown) + .floating-label,
+.my-form .floating-label-group textarea:focus + .floating-label,
+.my-form .floating-label-group textarea:not(:placeholder-shown) + .floating-label {
+  top: -0.75rem;
+  left: 0.75rem;
+  font-size: 0.75rem;
+  background-color: rgb(var(--color-bg-card));
+  padding: 0 0.25rem;
+  color: rgb(var(--color-primary));
+}
+
+/* Стили для группы input с иконкой */
+.my-form .input-with-icon {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+}
+
+.my-form .input-with-icon .icon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  color: rgb(var(--color-text-secondary));
+  pointer-events: none;
+}
+
+.my-form .input-with-icon input {
+  padding-left: 3rem;
+}
+
+/* Стили для кнопок в форме */
+.my-form .form-buttons {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+/* Адаптивные стили */
+@media (max-width: 640px) {
+  .my-form .form-buttons {
+    flex-direction: column;
+  }
+
+  .my-form .form-buttons button {
+    width: 100%;
+  }
+}
+
