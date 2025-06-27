@@ -55,60 +55,56 @@
     "itemListElement": [
       {
         "@type": "Offer",
-        "name": "Подготовка к ЕГЭ по биологии",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Подготовка к ЕГЭ по биологии",
+          "description": "Индивидуальное занятие (60 минут)",
+          {% if reviews %}
+          "review": [
+            {% for review in reviews %}
+            {
+              "@type": "Review",
+              "author": {
+                "@type": "Person",
+                "name": "{{ review.author_name|default:'Аноним' }}"
+              },
+              "datePublished": "{{ review.created_at|date:'Y-m-d' }}",
+              "reviewBody": "{{ review.content|escape }}",
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "{{ review.rating|default:'5' }}",
+                "bestRating": "5"
+              }
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+          ],
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "24",
+            "bestRating": "5"
+          }
+          {% endif %}
+        },
         "price": "2000",
         "priceCurrency": "RUB",
-        "description": "Индивидуальное занятие (60 минут)",
         "availability": "https://schema.org/InStock"
       },
       {
         "@type": "Offer",
-        "name": "Олимпиадная подготовка",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Олимпиадная подготовка",
+          "description": "Индивидуальные занятия по углубленной программе"
+        },
         "price": "2500",
         "priceCurrency": "RUB",
         "availability": "https://schema.org/InStock"
       }
     ]
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "24",
-    "bestRating": "5"
   }
 }
 </script>
-
-{% if reviews %}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "itemListElement": [
-    {% for review in reviews %}
-    {
-      "@type": "ListItem",
-      "position": {{ loop.index }},
-      "item": {
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": "{{ review.author_name|default:'Аноним' }}"
-        },
-        "datePublished": "{{ review.created_at|date:'Y-m-d' }}",
-        "reviewBody": "{{ review.content }}",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "{{ review.rating|default:'5' }}",
-          "bestRating": "5"
-        }
-      }
-    }{% if not loop.last %},{% endif %}
-    {% endfor %}
-  ]
-}
-</script>
-{% endif %}
 {% endblock %}
 
 {% block content %}
