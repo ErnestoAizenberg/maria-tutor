@@ -2,6 +2,38 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 
+from .models import Review
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['author_name', 'achievement', 'content', 'author_photo']
+        widgets = {
+            'author_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Как вас зовут? (например: Анна К.)'
+            }),
+            'achievement': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ваш результат (например: ЕГЭ по биологии, 98 баллов)'
+            }),
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Текст вашего отзыва',
+                'rows': 5
+            }),
+            'author_photo': forms.FileInput(attrs={
+                'class': 'form-control-file',
+                'accept': 'image/*'
+            })
+        }
+        labels = {
+            'author_name': 'Ваше имя',
+            'achievement': 'Ваш результат',
+            'content': 'Текст отзыва',
+            'author_photo': 'Ваше фото (необязательно)'
+        }
+
 
 class ApplicationForm(forms.Form):
     SUBJECT_CHOICES = [

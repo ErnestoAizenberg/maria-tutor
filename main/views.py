@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from tutorproject.logger import setup_logger
 
-from .forms import ApplicationForm
+from .forms import ApplicationForm, ReviewForm
 from .models import Application, Article, Review, Publication
 
 logger = setup_logger(log_file="app.log", level="DEBUG")
@@ -176,13 +176,31 @@ def test(request):
 def reviews(request):
     """Display a list of all published articles"""
     reviews = Review.objects.filter(is_published=True).order_by("-created_at")
+    form = ReviewForm()
     context = {
         "reviews": reviews,
+        "form": form,
         #"review_form": form,
     }
     logger.debug(f"Loaded {len(reviews)} published reviews for reviews page")
     return render(request, "main/reviews.html", context)
 
+def add_review(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.is_published = False  # Отзыв не будет опубликован сразу
+            review.save()
+            messages.success(request, 'Спасибо за ваш отзыв! Он будет проверен администратором.')
+            return redirect('reviews')  # Перенаправление после успешной отправки
+    else:
+        form = ReviewForm()
+
+    return render(request, 'main/add_review.html', {'form': form})
+
+def review_success(request):
+    return render(request, 'reviews/review_success.html')
 
 def application_submit(request):
     """Handle tutoring application submissions"""
