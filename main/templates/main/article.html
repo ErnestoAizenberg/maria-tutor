@@ -1,6 +1,31 @@
 {% extends 'main/base2.html' %}
 
 {% block title %}{{ article.title }}{% endblock %}
+{% block meta_description %}{{ article.abstract }}{% endblock %}
+
+{% block meta_keywords %}{{ article.abstract }}{% endblock %}
+
+{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_site_name %}Репетитор по биологии и химии | Мария Серединская{% endblock %}
+{% block og_title %}{{ article.title %}{% endblock %}
+{% block og_description %}{{ article.abstract }}{% endblock %}
+{% block og_url %}{{ request.base_url }}{% endblock %}
+{% block og_image %}{{ article.image_preview.url }}{% endblock %}
+{% block og_image_alt %}Превью к статье{% endblock %}
+{% block og_image_width %}1200{% endblock %}
+{% block og_image_height %}630{% endblock %}
+{% block og_locale %}ru_RU{% endblock %}
+
+{% block twitter_card %}summary_large_image{% endblock %}
+{% block twitter_title %}{{ article.title }}{% endblock %}
+{% block twitter_description %}{{ article.abstract }}{% endblock %}
+{% block twitter_image %}{{ article.image_preview.url }}{% endblock %}
+
+{% block extra_meta %}
+<meta property="article:published_time" content="{{ article.created_at }}" />
+<meta property="article:modified_time" content="{{ article.updated_at }}" />
+{% endblock %}
 
 {% block content %}
 
