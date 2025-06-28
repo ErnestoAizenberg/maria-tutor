@@ -1,13 +1,7 @@
 import os
 
 from django.contrib.auth import get_user_model
-from django.core.validators import (
-    EmailValidator,
-    MaxValueValidator,
-    MinValueValidator,
-    FileExtensionValidator,
-    URLValidator,
-)
+from django.core.validators import EmailValidator, FileExtensionValidator, URLValidator
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -76,10 +70,7 @@ class Review(models.Model):
     )
 
     author_photo = models.ImageField(
-        upload_to='reviews/avatars/',
-        blank=True,
-        null=True,
-        verbose_name="Фото автора"
+        upload_to="reviews/avatars/", blank=True, null=True, verbose_name="Фото автора"
     )
 
     class Meta:
@@ -100,10 +91,9 @@ class Review(models.Model):
 
             # Get all similar slugs at once
             similar_slugs = set(
-                self.__class__.objects
-                .filter(slug__startswith=base_slug)
+                self.__class__.objects.filter(slug__startswith=base_slug)
                 .exclude(pk=self.pk)
-                .values_list('slug', flat=True)
+                .values_list("slug", flat=True)
             )
 
             if self.slug in similar_slugs:
@@ -113,6 +103,7 @@ class Review(models.Model):
                 self.slug = f"{base_slug}-{counter}"
 
         super().save(*args, **kwargs)
+
 
 class Application(models.Model):
     SUBJECT_CHOICES = [
@@ -207,84 +198,79 @@ class ConnectMessage(models.Model):
             f"Message from {self.name} at {self.created_at.strftime('%Y-%m-%d %H:%M')}"
         )
 
+
 class Publication(models.Model):
     title = models.CharField(
         max_length=700,
         verbose_name="Publication Title",
-        help_text="The full title of the publication"
+        help_text="The full title of the publication",
     )
 
     slug = models.SlugField(
         max_length=700,
         unique=True,
         blank=True,
-        help_text="A URL-friendly version of the title (auto-generated)"
+        help_text="A URL-friendly version of the title (auto-generated)",
     )
 
     authors = models.CharField(
         max_length=500,
         blank=True,
         verbose_name="Authors",
-        help_text="List of authors separated by commas"
+        help_text="List of authors separated by commas",
     )
 
     description = models.TextField(
         max_length=2000,
         blank=True,
         verbose_name="Abstract/Description",
-        help_text="Brief summary or abstract of the publication"
+        help_text="Brief summary or abstract of the publication",
     )
 
     url = models.URLField(
         max_length=500,
         validators=[URLValidator()],
         verbose_name="Publication URL",
-        help_text="Link to the full publication"
+        help_text="Link to the full publication",
     )
 
     journal = models.CharField(
         max_length=200,
         blank=True,
         verbose_name="Journal/Conference",
-        help_text="Name of the journal or conference where published"
+        help_text="Name of the journal or conference where published",
     )
 
     doi = models.CharField(
         max_length=200,
         blank=True,
         verbose_name="DOI",
-        help_text="Digital Object Identifier if available"
+        help_text="Digital Object Identifier if available",
     )
 
     publication_date = models.DateField(
         verbose_name="Publication Date",
-        help_text="Date when the publication was released"
+        help_text="Date when the publication was released",
     )
 
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name="Created At"
-    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Created At")
 
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        verbose_name="Last Updated"
-    )
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Last Updated")
 
     is_featured = models.BooleanField(
         default=False,
         verbose_name="Featured Publication",
-        help_text="Mark as featured to highlight this publication"
+        help_text="Mark as featured to highlight this publication",
     )
 
     class Meta:
         verbose_name = "Publication"
         verbose_name_plural = "Publications"
-        ordering = ['-publication_date']
+        ordering = ["-publication_date"]
         indexes = [
-            models.Index(fields=['slug']),
-            models.Index(fields=['publication_date']),
-            models.Index(fields=['is_featured']),
+            models.Index(fields=["slug"]),
+            models.Index(fields=["publication_date"]),
+            models.Index(fields=["is_featured"]),
         ]
 
     def __str__(self):
@@ -296,102 +282,10 @@ class Publication(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('publication_detail', kwargs={'slug': self.slug})
-
-class Publication(models.Model):
-    title = models.CharField(
-        max_length=700,
-        verbose_name="Publication Title",
-        help_text="The full title of the publication"
-    )
-
-    slug = models.SlugField(
-        max_length=700,
-        unique=True,
-        blank=True,
-        help_text="A URL-friendly version of the title (auto-generated)"
-    )
-
-    authors = models.CharField(
-        max_length=500,
-        blank=True,
-        verbose_name="Authors",
-        help_text="List of authors separated by commas"
-    )
-
-    description = models.TextField(
-        max_length=2000,
-        blank=True,
-        verbose_name="Abstract/Description",
-        help_text="Brief summary or abstract of the publication"
-    )
-
-    url = models.URLField(
-        max_length=500,
-        validators=[URLValidator()],
-        verbose_name="Publication URL",
-        help_text="Link to the full publication"
-    )
-
-    journal = models.CharField(
-        max_length=200,
-        blank=True,
-        verbose_name="Journal/Conference",
-        help_text="Name of the journal or conference where published"
-    )
-
-    doi = models.CharField(
-        max_length=200,
-        blank=True,
-        verbose_name="DOI",
-        help_text="Digital Object Identifier if available"
-    )
-
-    publication_date = models.DateField(
-        verbose_name="Publication Date",
-        help_text="Date when the publication was released"
-    )
-
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name="Created At"
-    )
-
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        verbose_name="Last Updated"
-    )
-
-    is_featured = models.BooleanField(
-        default=False,
-        verbose_name="Featured Publication",
-        help_text="Mark as featured to highlight this publication"
-    )
-
-    class Meta:
-        verbose_name = "Publication"
-        verbose_name_plural = "Publications"
-        ordering = ['-publication_date']
-        indexes = [
-            models.Index(fields=['slug']),
-            models.Index(fields=['publication_date']),
-            models.Index(fields=['is_featured']),
-        ]
-
-    def __str__(self):
-        return self.title
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)[:700]
-        super().save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        return reverse('publication_detail', kwargs={'slug': self.slug})
+        return reverse("publication_detail", kwargs={"slug": self.slug})
 
 
 class Article(models.Model):
-
     def upload_preview(self, filename):
         ext = filename.split(".")[-1]
         return f"articles/previews/{self.slug}.{ext}"
@@ -410,7 +304,9 @@ class Article(models.Model):
         blank=True,
         null=True,
         verbose_name="Превью статьи",
-        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'webp'])],
+        validators=[
+            FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png", "webp"])
+        ],
         help_text="Изображение должно быть в формате JPG, PNG или WEBP.",
     )
 
@@ -435,7 +331,10 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         if self.pk:
             old_article = Article.objects.get(pk=self.pk)
-            if old_article.image_preview and old_article.image_preview != self.image_preview:
+            if (
+                old_article.image_preview
+                and old_article.image_preview != self.image_preview
+            ):
                 if os.path.isfile(old_article.image_preview.path):
                     os.remove(old_article.image_preview.path)
 

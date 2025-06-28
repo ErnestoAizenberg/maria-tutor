@@ -1,13 +1,14 @@
-from django.urls import path
 from django.contrib.sitemaps.views import sitemap
-from main.sitemaps import StaticSitemap, ArticleSitemap
+from django.urls import path
 
-sitemaps = {
-    'static': StaticSitemap,
-    'articles': ArticleSitemap,
-}
+from main.sitemaps import ArticleSitemap, StaticSitemap
 
 from . import views
+
+sitemaps = {
+    "static": StaticSitemap,
+    "articles": ArticleSitemap,
+}
 
 urlpatterns = [
     path("", views.index, name="index"),
@@ -15,8 +16,8 @@ urlpatterns = [
     path("article/<slug:slug>/", views.article, name="article"),  # SEO-friendly URL
     path("articles/", views.articles, name="articles"),
     path("reviews/", views.reviews, name="reviews"),
-    path('add_review/', views.add_review, name='add_review'),
-    path('review_success/', views.review_success, name='success'),
+    path("add_review/", views.add_review, name="add_review"),
+    path("review_success/", views.review_success, name="success"),
     path("test1/", views.test, name="test"),
     path("success/", views.apply_success, name="apply_success"),
     path("application/", views.application, name="application"),
@@ -33,26 +34,25 @@ urlpatterns = [
     path("lessons2/", views.lessons2, name="lessons2"),
     path("about_me/", views.about_me, name="about_me"),
     path("science/", views.science, name="science"),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
-         name='django.contrib.sitemaps.views.sitemap'),
+    path(
+        "sitemap.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
+]
+
+urlpatterns += [path("lessons-details/", views.lesson_details, name="lessons_details")]
+urlpatterns += [
+    path("policy/", views.policy, name="policy"),
+    path("terms/", views.terms, name="terms"),
 ]
 
 urlpatterns += [
-    path('lessons-details/', views.lesson_details, name='lessons_details')
+    path("programs/async/", views.async_program, name="async-program"),
+    path("programs/bio-in-english/", views.bio_in_english, name="bio-in-english"),
+    path("programs/groups/", views.group_programs, name="group-programs"),
+    path("programs/olympiad-prep/", views.olympiad_prep, name="olympiad-prep"),
+    path("programs/one-on-one/", views.one_on_one, name="one-on-one"),
+    path("programs/subsized/", views.subsidized, name="subsized"),
 ]
-urlpatterns += [
-    path('policy/', views.policy, name='policy'),
-    path('terms/', views.terms, name='terms'),
-
-]
-
-urlpatterns += [
-    path('programs/async/', views.async_program, name='async-program'),
-    path('programs/bio-in-english/', views.bio_in_english, name='bio-in-english'),
-    path('programs/groups/', views.group_programs, name='group-programs'),
-    path('programs/olympiad-prep/', views.olympiad_prep, name='olympiad-prep'),
-    path('programs/one-on-one/', views.one_on_one, name='one-on-one'),
-    path('programs/subsized/', views.subsidized, name='subsized'),
-]
-
-

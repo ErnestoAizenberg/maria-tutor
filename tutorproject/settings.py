@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
-    #"django_minify_html",
+    # "django_minify_html",
     "main",
 ]
 
@@ -50,12 +50,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    #"htmlmin.middleware.HtmlMinifyMiddleware",
-    #"htmlmin.middleware.MarkRequestMiddleware", # (кеширование)
+    # "htmlmin.middleware.HtmlMinifyMiddleware",
+    # "htmlmin.middleware.MarkRequestMiddleware", # (кеширование)
 ]
 
 HTML_MINIFY = True
-EXCLUDE_FROM_MINIFYING = ('/admin/', '/api/')
+EXCLUDE_FROM_MINIFYING = ("/admin/", "/api/")
 KEEP_COMMENTS_ON_MINIFYING = False
 
 ROOT_URLCONF = "tutorproject.urls"
@@ -76,16 +76,16 @@ TEMPLATES = [
 ]
 
 CKEDITOR_CONFIGS = {
-    'default': {
-        'contentsCss': '/static/css/ckeditor-content.css',
-        'bodyClass': 'article-content',  # Добавляем класс к body редактора
-        'allowedContent': True,  # Разрешаем классы и стили
-        'extraPlugins': 'stylesheetparser',
-        'toolbar_Full': [
-            ['Styles', 'Format', 'Bold', 'Italic', 'Underline'],
-            ['NumberedList', 'BulletedList', 'Blockquote'],
-            ['Image', 'Table', 'Link'],
-            ['Source']  # Кнопка просмотра HTML
+    "default": {
+        "contentsCss": "/static/css/ckeditor-content.css",
+        "bodyClass": "article-content",  # Добавляем класс к body редактора
+        "allowedContent": True,  # Разрешаем классы и стили
+        "extraPlugins": "stylesheetparser",
+        "toolbar_Full": [
+            ["Styles", "Format", "Bold", "Italic", "Underline"],
+            ["NumberedList", "BulletedList", "Blockquote"],
+            ["Image", "Table", "Link"],
+            ["Source"],  # Кнопка просмотра HTML
         ],
     },
 }
@@ -119,8 +119,8 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")

@@ -8,15 +8,16 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage, send_mail
 from django.core.validators import validate_email
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from tutorproject.logger import setup_logger
 
 from .forms import ApplicationForm, ReviewForm
-from .models import Application, Article, Review, Publication
+from .models import Application, Article, Publication, Review
 
 logger = setup_logger(log_file="app.log", level="DEBUG")
-from django.http import HttpResponse
+
 
 def robots_txt(request):
     content = """User-agent: *
@@ -29,13 +30,16 @@ def robots_txt(request):
     Sitemap: https://mariaseredinskaya.pythonanywhere.com/sitemap.xml"""
     return HttpResponse(content, content_type="text/plain")
 
+
 def terms(request):
     context = {}
-    return render(request, 'main/terms.html', context)
+    return render(request, "main/terms.html", context)
+
 
 def policy(request):
     context = {}
-    return render(request, 'main/policy.html', context)
+    return render(request, "main/policy.html", context)
+
 
 def index(request):
     """Display the homepage with published articles and application form."""
@@ -85,6 +89,7 @@ def index(request):
             {"articles": [], "application_form": ApplicationForm()},
         )
 
+
 def lessons(request):
     """Display lessons page"""
     logger.info("Rendering lessons page")
@@ -113,9 +118,7 @@ def science(request):
     """Display science page"""
     logger.info("Rendering science page")
     publications = Publication.objects.all()
-    context = {
-        "publications": publications
-    }
+    context = {"publications": publications}
 
     return render(request, "main/science.html", context)
 
@@ -173,6 +176,7 @@ def test(request):
     logger.debug("Test route accessed")
     return render(request, "main/article0.html")
 
+
 def reviews(request):
     """Display a list of all published articles"""
     reviews = Review.objects.filter(is_published=True).order_by("-created_at")
@@ -180,27 +184,32 @@ def reviews(request):
     context = {
         "reviews": reviews,
         "form": form,
-        #"review_form": form,
+        # "review_form": form,
     }
     logger.debug(f"Loaded {len(reviews)} published reviews for reviews page")
     return render(request, "main/reviews.html", context)
 
+
 def add_review(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = ReviewForm(request.POST, request.FILES)
         if form.is_valid():
             review = form.save(commit=False)
             review.is_published = False  # Отзыв не будет опубликован сразу
             review.save()
-            messages.success(request, 'Спасибо за ваш отзыв! Он будет проверен администратором.')
-            return redirect('reviews')  # Перенаправление после успешной отправки
+            messages.success(
+                request, "Спасибо за ваш отзыв! Он будет проверен администратором."
+            )
+            return redirect("reviews")  # Перенаправление после успешной отправки
     else:
         form = ReviewForm()
 
-    return render(request, 'main/add_review.html', {'form': form})
+    return render(request, "main/add_review.html", {"form": form})
+
 
 def review_success(request):
-    return render(request, 'reviews/review_success.html')
+    return render(request, "reviews/review_success.html")
+
 
 def application_submit(request):
     """Handle tutoring application submissions"""
@@ -345,26 +354,34 @@ def email_subscribe_success(request):
     logger.debug("Email subscription success page accessed")
     return render(request, "main/email_subscribe_success.html")
 
+
 def async_program(request):
-    return render(request, 'main/programs/async.html')
+    return render(request, "main/programs/async.html")
+
 
 def bio_in_english(request):
-    return render(request, 'main/programs/bio_on_english.html')
+    return render(request, "main/programs/bio_on_english.html")
+
 
 def group_programs(request):
-    return render(request, 'main/programs/grops.html')
+    return render(request, "main/programs/grops.html")
+
 
 def olympiad_prep(request):
-    return render(request, 'main/programs/olimp.html')
+    return render(request, "main/programs/olimp.html")
+
 
 def one_on_one(request):
-    return render(request, 'main/programs/one_on_one.html')
+    return render(request, "main/programs/one_on_one.html")
+
 
 def subsidized(request):
-    return render(request, 'main/programs/subsized.html')
+    return render(request, "main/programs/subsized.html")
+
 
 def lesson_details(request):
-    return render(request, 'main/lessons_details.html')
+    return render(request, "main/lessons_details.html")
+
 
 def application(request):
     # Initialize form with session data if exists, otherwise create empty form
@@ -384,9 +401,7 @@ def application(request):
     else:
         form = ApplicationForm()
 
-
     context = {
         "application_form": form,
     }
-    return render(request, 'main/application.html', context)
-
+    return render(request, "main/application.html", context)

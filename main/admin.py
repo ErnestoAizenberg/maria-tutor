@@ -1,12 +1,12 @@
 from ckeditor.widgets import CKEditorWidget
-from django.contrib import admin
 from django import forms
-from django.db import models
+from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.db import models
 from django.utils.html import format_html
 
 from .custom_admin import custom_admin_site
-from .models import Application, Article, ConnectMessage, Review, Publication
+from .models import Application, Article, ConnectMessage, Publication, Review
 
 User = get_user_model()
 
@@ -98,40 +98,48 @@ class ConnectMessageAdmin(admin.ModelAdmin):
         css = {"all": ("admin/css/custom.css",)}
 
 
-#@admin.register(Publication)
+# @admin.register(Publication)
 class PublicationAdmin(admin.ModelAdmin):
-    list_display = ('title', 'journal', 'publication_date', 'is_featured')
-    list_filter = ('journal', 'publication_date', 'is_featured')
-    search_fields = ('title', 'description', 'authors', 'journal')
-    prepopulated_fields = {'slug': ('title',)}
-    date_hierarchy = 'publication_date'
+    list_display = ("title", "journal", "publication_date", "is_featured")
+    list_filter = ("journal", "publication_date", "is_featured")
+    search_fields = ("title", "description", "authors", "journal")
+    prepopulated_fields = {"slug": ("title",)}
+    date_hierarchy = "publication_date"
 
     formfield_overrides = {
-        models.DateField: {'widget': forms.DateInput(attrs={'type': 'date'})},
+        models.DateField: {"widget": forms.DateInput(attrs={"type": "date"})},
     }
 
     fieldsets = (
-        (None, {
-            'fields': ('title', 'slug', 'authors', 'description')
-        }),
-        ('Publication Details', {
-            'fields': ('journal', 'publication_date', 'doi', 'url')
-        }),
-        ('Metadata', {
-            'fields': ('is_featured',)
-        }),
+        (None, {"fields": ("title", "slug", "authors", "description")}),
+        (
+            "Publication Details",
+            {"fields": ("journal", "publication_date", "doi", "url")},
+        ),
+        ("Metadata", {"fields": ("is_featured",)}),
     )
 
+
 class ArticleAdminForm(forms.ModelForm):
-    content = forms.CharField(widget=CKEditorWidget(config_name='default'), label="Контент")  # Добавляем CKEditor для поля content
+    content = forms.CharField(
+        widget=CKEditorWidget(config_name="default"), label="Контент"
+    )  # Добавляем CKEditor для поля content
 
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = "__all__"
+
 
 class ArticleAdmin(admin.ModelAdmin):
     form = ArticleAdminForm  # Используем кастомную форму с CKEditor
-    list_display = ("title", "author", "status", "created_at", "updated_at", "image_preview_display")
+    list_display = (
+        "title",
+        "author",
+        "status",
+        "created_at",
+        "updated_at",
+        "image_preview_display",
+    )
     list_filter = ("status", "created_at", "author")
     search_fields = ("title", "abstract", "content")
     prepopulated_fields = {"slug": ("title",)}
@@ -144,10 +152,13 @@ class ArticleAdmin(admin.ModelAdmin):
 
     def image_preview_display(self, obj):
         if obj.image_preview:
-            return format_html('<img src="{}" style="max-height: 100px;"/>', obj.image_preview.url)
+            return format_html(
+                '<img src="{}" style="max-height: 100px;"/>', obj.image_preview.url
+            )
         return "-"
 
     image_preview_display.short_description = "Preview"
+
 
 # Регистрация моделей в кастомной админке
 custom_admin_site.register(User)
