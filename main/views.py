@@ -98,14 +98,6 @@ def lessons(request):
     return render(request, "main/lessons.html", context)
 
 
-def lessons2(request):
-    """Display lessons page"""
-    logger.info("Rendering lessons page")
-    context = {}
-
-    return render(request, "main/lessons1.html", context)
-
-
 def about_me(request):
     """Display about me page"""
     logger.info("Rendering about me page")
@@ -180,7 +172,22 @@ def test(request):
 def reviews(request):
     """Display a list of all published articles"""
     reviews = Review.objects.filter(is_published=True).order_by("-created_at")
-    form = ReviewForm()
+    if "review_form_data" in request.session:
+        form = ReviewForm(request.session["review_form_data"])
+
+        # Add form errors from session if they exist
+        if errors_json := request.session.get("review_form_errors"):
+            errors_dict = json.loads(errors_json)
+            for field, error_list in errors_dict.items():
+                for error in errors_dict:
+                    form.add_error(field, error)
+                    messages.error(request, error)
+        # Clean up session data
+        request.session.pop("review_form_data", None)
+        request.session.pop("review_form_errors", None)
+    else:
+        form = ReviewForm()
+
     context = {
         "reviews": reviews,
         "form": form,
@@ -191,20 +198,30 @@ def reviews(request):
 
 
 def add_review(request):
-    if request.method == "POST":
-        form = ReviewForm(request.POST, request.FILES)
-        if form.is_valid():
-            review = form.save(commit=False)
-            review.is_published = False  # Отзыв не будет опубликован сразу
-            review.save()
-            messages.success(
-                request, "Спасибо за ваш отзыв! Он будет проверен администратором."
-            )
-            return redirect("reviews")  # Перенаправление после успешной отправки
-    else:
-        form = ReviewForm()
+    if request.method != "POST":
+        logger.error(f"Invalid HTTP method recieved in add_review: {request.method}")
 
-    return render(request, "main/add_review.html", {"form": form})
+
+    form = ReviewForm(
+        request.POST,
+        request.FILES,
+    )
+    if not form.is_valid():
+        logger.warning(
+            "Invalid application form submission", extra={"errors": form.errors}
+        )
+        request.session["review_form_data"] = request.POST
+        request.session["review_form_errors"] = form.errors.as_json()
+
+        return redirect("/reviews#review-form")
+
+    review = form.save(commit=False)
+    review.is_published = False  # Отзыв не будет опубликован сразу
+    review.save()
+    messages.success(
+        request, "Спасибо за ваш отзыв! Он будет проверен администратором."
+    )
+    return redirect("/reviews#review-form")
 
 
 def review_success(request):

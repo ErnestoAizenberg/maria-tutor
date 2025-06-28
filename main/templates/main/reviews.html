@@ -70,7 +70,8 @@
 
                 <!-- Рейтинг (если есть) -->
                 {% if review.rating %}
-                <div class="mt-6 flex items-center">
+
+                <div class="mt-6 flex items-center" style="display: none;" id="blue-stars">
                     <div class="flex text-[rgb(var(--color-accent))]">
                         {% for i in "12345" %}
                             {% if forloop.counter <= review.rating %}
@@ -81,6 +82,15 @@
                         {% endfor %}
                     </div>
                     <span class="ml-2 text-sm text-[rgb(var(--color-text-secondary))]">{{ review.rating }}/5</span>
+                </div>
+
+                <div style="display: block;" id="yellow-stars">
+                <div class="mt-6 flex items-center">
+                    <div class="flex text-[rgb(var(--color-accent))]">
+                      {% include 'main/_star_rating.html' with rating=review.rating %}
+                    </div>
+                    <span class="ml-2 text-sm text-[rgb(var(--color-text-secondary))]">{{ review.rating }}/5</span>
+                </div>
                 </div>
                 {% endif %}
             </div>
@@ -104,7 +114,7 @@
                 </div>
             {% endif %}
 
-            <form method="post" enctype="multipart/form-data" action="/add_review/" class="my-form">
+            <form method="post" enctype="multipart/form-data" action="/add_review/" class="my-form" id="review-form">
                 {% csrf_token %}
 
                 <div class="form-group">
@@ -129,21 +139,81 @@
                     {{ form.author_photo }}
                     <div class="error-message text-[rgb(239,68,68)] text-sm mt-1"></div>
                 </div>
+                {% comment %}
+  <div class="form-group">
+    <label class="block mb-2 text-sm font-medium text-[rgb(var(--color-text))]" for="id_rating">
+        Оценка
+    </label>
+    <div class="star-rating flex items-center space-x-1">
+        {% for i in "12345" %}
+            <input
+                type="radio"
+                id="id_rating_{{ i }}"
+                name="rating"
+                value="{{ i }}"
+                class="sr-only"
+                {% if forloop.first %}checked{% endif %}
+            >
+            <label
+                for="id_rating_{{ i }}"
+                class="star cursor-pointer text-[rgb(var(--color-accent))]/30 text-3xl transition-all duration-200 hover:scale-110"
+            >
+                ★
+            </label>
+        {% endfor %}
+    </div>
+</div>
 
-                <div class="form-group">
-                    <label class="block mb-2 text-sm font-medium text-[rgb(var(--color-text))]" for="id_rating">
-                        Оценка
-                    </label>
-                    <div class="flex items-center">
-                        {% for i in "54321" %}
-                            <input type="radio" id="id_rating_{{ i }}" name="rating" value="{{ i }}" class="mr-1" {% if forloop.first %}checked{% endif %}>
-                            <label for="id_rating_{{ i }}" class="mr-3 text-[rgb(var(--color-accent))]">
-                                <i class="fas fa-star"></i>
-                            </label>
-                        {% endfor %}
-                    </div>
-                </div>
+<style>
+    .star-rating:has(input:checked) .star {
+        color: rgb(var(--color-accent))/30;
+    }
+    .star-rating .star:hover,
+    .star-rating .star:hover ~ .star,
+    .star-rating input:checked + .star,
+    .star-rating input:checked ~ .star {
+        color: rgb(var(--color-accent));
+    }
+    .star-rating .star {
+        transition: transform 0.2s ease, color 0.3s ease;
+        display: inline-block;
+    }
+    .star-rating {
+        display: flex;
+        flex-direction: row;
+    }
+</style>
 
+{% endcomment %}
+<div class="rating-wrapper" x-data="{ rating: 0, hoverRating: 0 }">
+  {#<p class="text-sm font-medium text-gray-700 mb-2">Оценка</p>#}
+
+    <div class="flex items-center space-x-1">
+        {% for i in "12345" %}
+        <button type="button"
+                @click="rating = {{ i }}"
+                @mouseover="hoverRating = {{ i }}"
+                @mouseout="hoverRating = 0"
+                class="focus:outline-none"
+                aria-label="Оценка {{ i }} из 5">
+            <svg width="32" height="32" viewBox="0 0 24 24"
+                 :fill="(hoverRating >= {{ i }} || (!hoverRating && rating >= {{ i }})) ? '#f59e0b' : 'none'"
+                 stroke="#f59e0b"
+                 stroke-width="1">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+        </button>
+        {% endfor %}
+    </div>
+
+    <input type="hidden" name="rating" x-model="rating">
+
+    <p class="text-sm text-gray-500 mt-1" x-show="rating > 0">
+        Вы выбрали: <span x-text="rating"></span> <span x-text="rating == 1 ? 'звезда' : rating < 5 ? 'звезды' : 'звёзд'"></span>
+    </p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
                 <button type="submit" class="btn btn-primary w-full py-3 px-6 rounded-lg bg-[rgb(var(--color-primary))] hover:bg-[rgb(var(--color-primary-dark))] text-white font-medium transition-all duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg">
                     Отправить отзыв
                 </button>
@@ -151,4 +221,5 @@
         </div>
     </div>
 </section>
+
 {% endblock %}

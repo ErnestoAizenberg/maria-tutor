@@ -1,7 +1,8 @@
 import os
 
 from django.contrib.auth import get_user_model
-from django.core.validators import EmailValidator, FileExtensionValidator, URLValidator
+from django.core.validators import EmailValidator, FileExtensionValidator, URLValidator, MinValueValidator, MaxValueValidator
+
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -32,14 +33,14 @@ class Review(models.Model):
         verbose_name="Текст отзыва", help_text="Содержание отзыва"
     )
 
-    # Оценка (если нужна рейтинговая система)
-    """rating = models.PositiveSmallIntegerField(
+    # Оценка
+    rating = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         verbose_name="Оценка",
         help_text="Оценка от 1 до 5",
         blank=True,
         null=True,
-    )"""
+    )
 
     # Дата отзыва (автоматически устанавливается при создании)
     created_at = models.DateTimeField(

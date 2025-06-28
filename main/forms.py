@@ -7,7 +7,7 @@ from .models import Review
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ["author_name", "achievement", "content", "author_photo"]
+        fields = ["author_name", "achievement", "content", "author_photo", "rating"]
         widgets = {
             "author_name": forms.TextInput(
                 attrs={
