@@ -33,84 +33,90 @@
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Мария Серединская",
-  "image": "https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg",
-  "url": "{{ request.build_absolute_uri }}",
-  "telephone": "+7 (931) 372-65-33",
-  "email": "mariseredinskaya@gmail.com",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "",
-    "addressLocality": "Санкт-Петербург",
-    "addressRegion": "",
-    "postalCode": "",
-    "addressCountry": "RU"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": "",
-    "longitude": ""
-  },
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday"
-    ],
-    "opens": "09:00",
-    "closes": "21:00"
-  },
+  {#"jobTitle": "Репетитор по биологии и химии",#}
+  "description": "Профессиональный преподаватель с 9-летним опытом. Специализация: подготовка к ЕГЭ/ОГЭ, олимпиадная биология, нейробиология. Работа с студентами с СДВГ.",
   "priceRange": "2000-2500 RUB",
+  "areaServed": "Санкт-Петербург",
+  "url": "{{ request.build_absolute_uri }}",
+  "image": "https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg",
   "sameAs": [
     "https://vk.com/id625218410",
     "https://t.me/himbioraz",
     "https://www.instagram.com/mashaseredynska/"
   ],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Санкт-Петербург",
+    "addressCountry": "RU"
+  },
+  "email": "mariseredinskaya@gmail.com",
+  "telephone": "+7 (931) 372-65-33",
+  "reviews": [
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Александра К."
+      },
+      "datePublished": "2023-05-15",
+      "reviewBody": "Отличный преподаватель! Объясняет сложные темы простым языком.",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      }
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Иван П."
+      },
+      "datePublished": "2023-06-20",
+      "reviewBody": "Помогла подготовиться к ЕГЭ за короткий срок, результат - 92 балла!",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      }
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "24",
+    "bestRating": "5"
+  },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Услуги репетитора",
     "itemListElement": [
       {
         "@type": "Offer",
-        "name": "Подготовка к ЕГЭ по биологии",
-        "description": "Индивидуальное занятие (60 минут)",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Подготовка к ЕГЭ по биологии",
+          "description": "Индивидуальное занятие (60 минут)"
+        },
         "price": "2000",
         "priceCurrency": "RUB",
-        "availability": "https://schema.org/InStock",
-        "seller": {
-          "@type": "Person",
-          "name": "Мария Серединская",
-          "jobTitle": "Репетитор по биологии и химии"
-        }
+        "availability": "https://schema.org/InStock"
       },
       {
         "@type": "Offer",
-        "name": "Олимпиадная подготовка",
-        "description": "Индивидуальные занятия по углубленной программе",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Олимпиадная подготовка",
+          "description": "Индивидуальные занятия по углубленной программе"
+        },
         "price": "2500",
         "priceCurrency": "RUB",
-        "availability": "https://schema.org/InStock",
-        "seller": {
-          "@type": "Person",
-          "name": "Мария Серединская",
-          "jobTitle": "Репетитор по биологии и химии"
-        }
+        "availability": "https://schema.org/InStock"
       }
     ]
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "24",
-    "bestRating": "5"
   }
 }
-</script>
-{% endblock %}
+</script>{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
