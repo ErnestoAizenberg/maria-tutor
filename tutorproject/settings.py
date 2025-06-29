@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     # "django_minify_html",
     "main",
 ]
-
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -50,10 +50,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "main.middleware.CustomErrorMiddleware",
+
     # "htmlmin.middleware.HtmlMinifyMiddleware",
     # "htmlmin.middleware.MarkRequestMiddleware", # (кеширование)
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 HTML_MINIFY = True
 EXCLUDE_FROM_MINIFYING = ("/admin/", "/api/")
 KEEP_COMMENTS_ON_MINIFYING = False
