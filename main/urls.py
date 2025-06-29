@@ -13,6 +13,7 @@ sitemaps = {
 urlpatterns = [
     path("", views.index, name="index"),
     path("robots.txt", views.robots_txt),
+    path('search/', views.search_view, name='search_view'),
     path("article/<slug:slug>/", views.article, name="article"),  # SEO-friendly URL
     path("articles/", views.articles, name="articles"),
     path("reviews/", views.reviews, name="reviews"),

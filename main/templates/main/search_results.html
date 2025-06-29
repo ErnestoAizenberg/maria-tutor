@@ -1,0 +1,99 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+    <h1 class="text-3xl font-serif font-bold mb-6 text-primary">Поиск по сайту</h1>
+
+    <form method="get" action="{% url 'search_view' %}" class="my-form bg-card rounded-xl shadow-md p-6 mb-8">
+        <div class="input-group flex">
+            <input type="text"
+                   name="q"
+                   value="{{ query }}"
+                   class="form-control flex-grow rounded-l-lg px-4 py-3 text-lg border border-border focus:border-primary focus:ring-2 focus:ring-primary-light focus:outline-none transition-all"
+                   placeholder="Введите поисковый запрос...">
+            <button type="submit" class="btn btn-primary rounded-l-none rounded-r-lg px-6 py-3 text-lg flex items-center gap-2 hover:scale-[1.02] transition-transform">
+                <i class="bi bi-search"></i> Найти
+            </button>
+        </div>
+
+        <div class="mt-4 pt-4 border-t border-border">
+            <h5 class="text-lg font-medium mb-3">Искать в:</h5>
+            <div class="flex flex-wrap gap-4">
+                <div class="form-check">
+                    <input class="form-check-input appearance-none w-5 h-5 rounded border border-border checked:bg-primary checked:border-primary focus:outline-none transition-all duration-200 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                           type="checkbox"
+                           name="models"
+                           value="main.Article"
+                           {% if "main.Article" in model_names %}checked{% endif %}>
+                    <label class="form-check-label inline-block text-gray-300 cursor-pointer select-none">Статьи</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input appearance-none w-5 h-5 rounded border border-border checked:bg-primary checked:border-primary focus:outline-none transition-all duration-200 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                           type="checkbox"
+                           name="models"
+                           value="main.Review"
+                           {% if "main.Review" in model_names %}checked{% endif %}>
+                    <label class="form-check-label inline-block text-gray-300 cursor-pointer select-none">Отзывы</label>
+                </div>
+                <!-- Добавьте другие модели по аналогии -->
+            </div>
+        </div>
+    </form>
+
+    {% if query %}
+        <div class="alert bg-primary/20 border border-primary/30 text-primary-dark rounded-lg px-4 py-3 mb-6">
+            Найдено результатов: <span class="font-bold">{{ results_count }}</span>
+        </div>
+
+        {% if page_obj.object_list %}
+            <div class="search-results space-y-4">
+                {% for result in page_obj.object_list %}
+                    <div class="card bg-card rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/20">
+                        <div class="card-body p-6">
+                            <h5 class="card-title text-xl font-serif font-bold mb-2 text-primary">
+                                {% if result.title %}
+                                    {{ result.title }}
+                                {% elif result.name %}
+                                    {{ result.name }}
+                                {% else %}
+                                    {{ result }}
+                                {% endif %}
+                            </h5>
+
+                            <h6 class="card-subtitle mb-3 text-sm font-medium uppercase tracking-wider text-secondary">
+                                {{ result.model_verbose_name|capfirst }}
+                            </h6>
+
+                            <p class="card-text text-gray-300 mb-4 line-clamp-3">
+                                {% if result.description %}
+                                    {{ result.description }}
+                                {% elif result.content %}
+                                    {{ result.content|striptags }}
+                                {% elif result.abstract %}
+                                    {{ result.abstract|striptags }}
+                                {% endif %}
+                            </p>
+
+                            <a href="{{ result.get_absolute_url }}" class="btn btn-outline inline-flex items-center gap-1 px-4 py-2 text-sm rounded-lg border border-primary text-primary hover:bg-primary/10 transition-colors">
+                                Подробнее <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Пагинация -->
+            {% include 'main/_pagination.html' %}
+
+        {% else %}
+            <div class="alert bg-yellow-500/10 border border-yellow-500/30 text-yellow-500 rounded-lg px-4 py-3">
+                По вашему запросу ничего не найдено. Попробуйте изменить параметры поиска.
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="alert bg-gray-700/30 border border-gray-700/30 text-gray-400 rounded-lg px-4 py-3">
+            Введите поисковый запрос в поле выше.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -10,14 +10,15 @@ from django.core.mail import EmailMessage, send_mail
 from django.core.validators import validate_email
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.core.paginator import Paginator
 
 from tutorproject.logger import setup_logger
 
 from .forms import ApplicationForm, ReviewForm
 from .models import Application, Article, Publication, Review
+from .utils import search_models
 
 logger = setup_logger(log_file="app.log", level="DEBUG")
-
 
 def robots_txt(request):
     content = """User-agent: *
@@ -40,6 +41,32 @@ def policy(request):
     context = {}
     return render(request, "main/policy.html", context)
 
+
+def search_view(request):
+    query = request.GET.get('q', '').strip()
+    model_names = request.GET.getlist('models')
+
+    if not model_names:
+        model_names = ['main.Ativle', 'main.Review']
+
+    results = []
+    if query:
+        results = search_models(query, model_names)
+
+    # Пагинация
+    paginator = Paginator(results, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'results': page_obj,
+        'page_obj': page_obj,
+        'query': query,
+        'model_names': model_names,
+        'results_count': len(results),
+    }
+    logger.debug(f"Search page context: {context}")
+    return render(request, 'main/search_results.html', context)
 
 def index(request):
     """Display the homepage with published articles and application form."""

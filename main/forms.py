@@ -3,6 +3,17 @@ from django.core.exceptions import ValidationError
 
 from .models import Review
 
+class SearchForm(forms.Form):
+    query = forms.CharField(
+        label='Поиск',
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Введите поисковый запрос...',
+            'class': 'search-input'
+        }),
+        max_length=100,
+        required=True
+    )
+
 
 class ReviewForm(forms.ModelForm):
     class Meta:

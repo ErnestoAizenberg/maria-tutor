@@ -74,6 +74,10 @@ class Review(models.Model):
         upload_to="reviews/avatars/", blank=True, null=True, verbose_name="Фото автора"
     )
 
+    @property
+    def model_verbose_name(self):
+        return self._meta.verbose_name
+
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
@@ -150,6 +154,10 @@ class Application(models.Model):
         help_text="Whether the application has been processed",
     )
 
+    @property
+    def model_verbose_name(self):
+        return self._meta.verbose_name
+
     class Meta:
         verbose_name = "Application"
         verbose_name_plural = "Applications"
@@ -188,6 +196,10 @@ class ConnectMessage(models.Model):
         verbose_name="Read Status",
         help_text="Whether the message has been read",
     )
+
+    @property
+    def model_verbose_name(self):
+        return self._meta.verbose_name
 
     class Meta:
         verbose_name = "Connection Message"
@@ -263,6 +275,10 @@ class Publication(models.Model):
         verbose_name="Featured Publication",
         help_text="Mark as featured to highlight this publication",
     )
+
+    @property
+    def model_verbose_name(self):
+        return self._meta.verbose_name
 
     class Meta:
         verbose_name = "Publication"
@@ -353,5 +369,15 @@ class Article(models.Model):
                 os.remove(self.image_preview.path)
         super().delete(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse("article", kwargs={"slug": self.slug})
+
+
+    @property
+    def model_verbose_name(self):
+        return self._meta.verbose_name
+
     class Meta:
         ordering = ["-created_at"]
+        verbose_name = "Статья"
+        verbose_name_plural = "Статьи"
