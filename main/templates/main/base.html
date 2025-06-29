@@ -1,0 +1,215 @@
+{% spaceless %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru" prefix="og: http://ogp.me/ns#">
+  <head>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Основные мета-теги -->
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:site_name" content="{% block og_site_name %}Репетитор по биологии и химии | Мария Серединская{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}https://mariaseredinskaya.pythonanywhere.com{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% endblock %}">
+    <meta property="og:image:alt" content="{% block og_image_alt %}{% endblock %}">
+    <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}">
+    <meta property="og:image:height" content="{% block og_image_height %}630{% endblock %}">
+    <meta property="og:locale" content="{% block og_locale %}ru_RU{% endblock %}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="{% block twitter_card %}summary_large_image{% endblock %}">
+    <meta name="twitter:title" content="{% block twitter_title %}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{% endblock %}">
+
+    <!-- Дополнительные мета-теги -->
+    <meta name="author" content="Мария Серединская">
+
+    {% block extra_meta %}{% endblock %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/fav-cat/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/fav-cat/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/fav-cat/favicon-16x16.png">
+    <link rel="manifest" href="/static/images/fav-cat/site.webmanifest">
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-opacity-90 backdrop-blur-md z-50 shadow-sm" style="background-color: rgba(var(--color-bg-card), 0.9);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <span class="text-2xl mr-2 text-primary"><i class="fas fa-atom"></i></span>
+                        <span class="font-serif text-xl font-bold">Мария Серединская</span>
+                    </a>
+                </div>
+
+                <!-- Desktop menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/about_me" class="nav-link">Обо мне</a>
+                    <a href="/science" class="nav-link">Наука</a>
+                    <a href="/lessons" class="nav-link">Уроки</a>
+                    <a href="/articles" class="nav-link">Блог</a>
+                    <a href="/#contact" class="btn btn-primary">Контакты</a>
+                    <button class="theme-toggle" id="theme-toggle"></button>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="flex items-center md:hidden space-x-4">
+                    <button class="theme-toggle mr-2" id="theme-toggle-mobile"></button>
+                    <button class="text-current focus:outline-none" id="mobile-menu-button">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden shadow-lg" id="mobile-menu" style="background-color: rgb(var(--color-bg-card));">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/about_me" class="block px-3 py-2 rounded-md hover:bg-opacity-10 hover:bg-white">Обо мне</a>
+                <a href="/science" class="block px-3 py-2 rounded-md hover:bg-opacity-10 hover:bg-white">Наука</a>
+                <a href="/lessons" class="block px-3 py-2 rounded-md hover:bg-opacity-10 hover:bg-white">Уроки</a>
+                <a href="/articles" class="block px-3 py-2 rounded-md hover:bg-opacity-10 hover:bg-white">Блог</a>
+                <a href="/#contact" class="block px-3 py-2 rounded-md btn-primary text-center">Контакты</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            {% block content %}
+            <!-- default main content -->
+            {% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 sm:px-6 lg:px-8" style="background-color: rgb(var(--color-bg-secondary));">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-12">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <span class="text-2xl mr-2 text-primary"><i class="fas fa-atom"></i></span>
+                        <span class="font-serif text-xl font-bold">Мария Серединская</span>
+                    </div>
+                    <p class="text-secondary">
+                        Репетитор по биологии и химии. Нейробиолог, исследователь поведения животных.
+                    </p>
+                </div>
+
+                {% comment %}
+                <div>
+                    <h4 class="font-serif font-bold text-lg mb-6">Навигация</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="hover:text-primary transition">Обо мне</a></li>
+                        <li><a href="#science" class="hover:text-primary transition">Научная работа</a></li>
+                        <li><a href="#lessons" class="hover:text-primary transition">Уроки</a></li>
+                        <li><a href="#blog" class="hover:text-primary transition">Блог</a></li>
+                        <li><a href="#contact" class="hover:text-primary transition">Контакты</a></li>
+                    </ul>
+                </div>
+                {% endcomment %}
+
+                <div>
+                    <h4 class="font-serif font-bold text-lg mb-6">Контакты</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-primary"></i>
+                            mariseredinskaya@gmail.com
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-telegram mr-3 text-primary"></i>
+                            @Mickey_Fin
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-serif font-bold text-lg mb-6">Подписаться</h4>
+                    <p class="mb-4">Получайте уведомления о новых статьях и наборах учеников.</p>
+                    <form class="flex" action="/subscribe_email/" method="POST">
+                      {% csrf_token %}
+                      <input type="email" placeholder="Ваш email" class="px-4 py-2 rounded-l-md w-full focus:outline-none focus:ring-2 focus:ring-primary" style="background-color: rgb(var(--color-bg-card)); color: rgb(var(--color-text));" name="email" required>
+                        <button type="submit" class="btn-primary px-4 py-2 rounded-r-md">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t mt-12 pt-8 flex flex-col md:flex-row justify-between items-center" style="border-color: rgba(var(--color-border), 0.5);">
+                <p class="mb-4 md:mb-0">
+                    © 2025 Мария Серединская. Все права защищены.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="/policy" class="hover:text-primary transition">Политика конфиденциальности</a>
+                    <a href="/terms" class="hover:text-primary transition">Условия использования</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('theme-light');
+            localStorage.setItem('theme', document.documentElement.classList.contains('theme-light') ? 'light' : 'dark');
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+        themeToggleMobile.addEventListener('click', toggleTheme);
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.add('theme-light');
+        }
+    </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[href*="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+
+        const targetElement = document.querySelector(targetId);
+        if (!targetElement) return;
+
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      });
+    });
+  });
+</script>
+</body>
+</html>
+{% endspaceless %}
