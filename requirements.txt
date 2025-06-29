@@ -4,3 +4,4 @@ django-jazzmin
 django-ckeditor
 python-dotenv
 Pillow
+whitenoise
