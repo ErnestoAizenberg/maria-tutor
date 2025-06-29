@@ -1,14 +1,14 @@
     /* Стили для контента статьи */
-    * {
+    .article-content {
         line-height: 1.7;
         color: rgb(var(--color-text));
     }
 
-      p {
+    .article-content p {
         margin-bottom: 1.5rem;
     }
 
-      h2 {
+    .article-content h2 {
         font-family: 'Playfair Display', serif;
         font-size: 1.75rem;
         font-weight: 700;
@@ -19,7 +19,7 @@
         padding-bottom: 0.5rem;
     }
 
-      h2::after {
+    .article-content h2::after {
         content: '';
         position: absolute;
         bottom: 0;
@@ -29,7 +29,7 @@
         background: rgb(var(--color-primary));
     }
 
-      h3 {
+    .article-content h3 {
         font-family: 'Playfair Display', serif;
         font-size: 1.5rem;
         font-weight: 600;
@@ -38,25 +38,25 @@
         color: rgb(var(--color-text));
     }
 
-      ul,
-      ol {
+    .article-content ul,
+    .article-content ol {
         margin-bottom: 1.5rem;
         padding-left: 2rem;
     }
 
-      ul {
+    .article-content ul {
         list-style-type: disc;
     }
 
-      ol {
+    .article-content ol {
         list-style-type: decimal;
     }
 
-      li {
+    .article-content li {
         margin-bottom: 0.5rem;
     }
 
-      blockquote {
+    .article-content blockquote {
         border-left: 4px solid rgb(var(--color-primary));
         padding-left: 1.5rem;
         margin: 2rem 0;
@@ -64,7 +64,7 @@
         color: rgb(var(--color-text-secondary));
     }
 
-      img {
+    .article-content img {
         border-radius: var(--radius-xl);
         margin: 2rem auto;
         max-width: 100%;
@@ -72,7 +72,7 @@
         box-shadow: var(--shadow-md);
     }
 
-      .image-caption {
+    .article-content .image-caption {
         text-align: center;
         font-size: 0.875rem;
         color: rgb(var(--color-text-secondary));
@@ -80,20 +80,21 @@
         margin-bottom: 2rem;
     }
 
-      table {
+    .article-content table {
         width: 100%;
         margin: 2rem 0;
         border-collapse: collapse;
     }
 
-      th,
-      td {
+    .article-content th,
+    .article-content td {
         padding: 0.75rem;
         border: 1px solid rgba(var(--color-border), 0.3);
     }
 
-      th {
+    .article-content th {
         background-color: rgba(var(--color-primary), 0.1);
         text-align: left;
     }
+
 

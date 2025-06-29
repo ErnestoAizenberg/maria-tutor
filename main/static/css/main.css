@@ -52,6 +52,7 @@ body {
   background-color: rgb(var(--color-bg));
   color: rgb(var(--color-text));
   transition: background-color var(--transition-normal), color var(--transition-normal);
+  min-height: 100vh;
 }
 
 .font-serif { font-family: 'Playfair Display', serif; }
