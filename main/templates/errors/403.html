@@ -1,0 +1,7 @@
+{% extends 'errors/base_error.html' %}
+
+{% block content %}
+    {% with error_code="403" error_title="Доступ запрещен" error_description="У вас нет прав для просмотра этой страницы." error_icon="fas fa-ban" %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 hero-gradient">
+    <div class="max-w-md w-full space-y-8 text-center">
+        <!-- Код ошибки -->
+        <div class="relative">
+            <h1 class="text-9xl font-bold text-gradient opacity-90 mb-4 tracking-tighter">{{ error_code }}</h1>
+            <div class="absolute -inset-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur-md opacity-20"></div>
+        </div>
+
+        <!-- Заголовок и текст -->
+        <div class="space-y-4">
+            <h2 class="text-3xl font-bold text-white font-serif">{{ error_title }}</h2>
+            <p class="text-lg text-text-secondary">
+                {{ error_description }}
+            </p>
+        </div>
+
+        <!-- Иконка ошибки -->
+        <div class="py-6 text-6xl text-primary/80">
+            <i class="{{ error_icon }} transition-all duration-1000 hover:rotate-6 hover:scale-110"></i>
+        </div>
+
+        <!-- Кнопка возврата -->
+        <div class="pt-6">
+            <a href="/" class="btn btn-primary px-8 py-3 text-lg group transition-all duration-300">
+                <i class="fas fa-home mr-2 transition-transform duration-300 group-hover:scale-110"></i>
+                Вернуться на главную
+                <i class="fas fa-chevron-right ml-2 opacity-70 group-hover:opacity-100 group-hover:ml-3 transition-all duration-300"></i>
+            </a>
+        </div>
+
+        <!-- Дополнительные ссылки -->
+        <div class="pt-8 text-sm text-text-secondary/80">
+            <div class="flex justify-center space-x-4 pt-2">
+              <a href="/search" class="hover:text-primary transition-colors duration-300 flex items-center">
+                    <i class="fas fa-search mr-2 text-xs"></i> Поиск по сайту
+                </a>
+                <span class="text-border">•</span>
+                <a href="/help" class="hover:text-primary transition-colors duration-300 flex items-center">
+                    <i class="fas fa-question-circle mr-2 text-xs"></i> Помощь
+                </a>
+                <span class="text-border">•</span>
+                <a href="/contact" class="hover:text-primary transition-colors duration-300 flex items-center">
+                    <i class="fas fa-envelope mr-2 text-xs"></i> Контакты
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .text-gradient {
+        background: linear-gradient(135deg,
+            rgba(var(--color-primary), 0.9) 0%,
+            rgba(var(--color-primary), 0.7) 50%,
+            rgba(var(--color-secondary), 0.5) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        background-size: 200% 200%;
+        animation: gradient-shift 12s ease infinite;
+    }
+
+    @keyframes gradient-shift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+</style>
+{% endblock %}

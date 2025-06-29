@@ -1,0 +1,7 @@
+{% extends 'errors/base_error.html' %}
+
+{% block content %}
+    {% with error_code="502" error_title="Плохой шлюз" error_description="Сервер получил недопустимый ответ от вышестоящего сервера." error_icon="fas fa-route" %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}

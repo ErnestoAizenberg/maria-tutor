@@ -1,0 +1,7 @@
+{% extends 'errors/base_error.html' %}
+
+{% block content %}
+    {% with error_code="401" error_title="Не авторизован" error_description="Для доступа к этой странице требуется аутентификация." error_icon="fas fa-user-lock" %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}

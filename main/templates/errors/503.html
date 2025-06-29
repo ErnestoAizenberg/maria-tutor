@@ -1,0 +1,7 @@
+{% extends 'errors/base_error.html' %}
+
+{% block content %}
+    {% with error_code="503" error_title="Сервис недоступен" error_description="Сервер временно не может обрабатывать запросы. Ведутся технические работы." error_icon="fas fa-tools" %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}

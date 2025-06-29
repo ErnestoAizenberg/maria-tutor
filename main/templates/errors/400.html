@@ -1,0 +1,7 @@
+{% extends 'errors/base_error.html' %}
+
+{% block content %}
+    {% with error_code="400" error_title="Неверный запрос" error_description="Сервер не может обработать ваш запрос из-за некорректного синтаксиса." error_icon="fas fa-exclamation-triangle" %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}

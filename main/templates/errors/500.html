@@ -1,0 +1,7 @@
+{% extends 'errors/base_error.html' %}
+
+{% block content %}
+    {% with error_code="500" error_title="Ошибка сервера" error_description="На сервере произошла внутренняя ошибка. Пожалуйста, попробуйте позже." error_icon="fas fa-server" %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}

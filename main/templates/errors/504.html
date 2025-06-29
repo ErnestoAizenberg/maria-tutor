@@ -1,0 +1,7 @@
+{% extends 'errors/base_error.html' %}
+
+{% block content %}
+    {% with error_code="504" error_title="Таймаут шлюза" error_description="Сервер не получил своевременный ответ от вышестоящего сервера." error_icon="fas fa-clock" %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends 'errors/base_error.html' %}
+
+{% block content %}
+    {% with error_code="405" error_title="Метод не разрешен" error_description="Используемый метод HTTP не поддерживается для этого ресурса." error_icon="fas fa-exchange-alt" %}
+        {{ block.super }}
+    {% endwith %}
+{% endblock %}
