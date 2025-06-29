@@ -185,19 +185,15 @@
 </style>
 
 {% endcomment %}
-<div class="rating-wrapper" x-data="{ rating: 0, hoverRating: 0 }">
-  {#<p class="text-sm font-medium text-gray-700 mb-2">Оценка</p>#}
-
+<div class="rating-wrapper" id="rating-wrapper">
     <div class="flex items-center space-x-1">
         {% for i in "12345" %}
         <button type="button"
-                @click="rating = {{ i }}"
-                @mouseover="hoverRating = {{ i }}"
-                @mouseout="hoverRating = 0"
-                class="focus:outline-none"
+                class="star-button focus:outline-none"
+                data-value="{{ i }}"
                 aria-label="Оценка {{ i }} из 5">
             <svg width="32" height="32" viewBox="0 0 24 24"
-                 :fill="(hoverRating >= {{ i }} || (!hoverRating && rating >= {{ i }})) ? '#f59e0b' : 'none'"
+                 fill="none"
                  stroke="#f59e0b"
                  stroke-width="1">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
@@ -206,14 +202,78 @@
         {% endfor %}
     </div>
 
-    <input type="hidden" name="rating" x-model="rating">
+    <input type="hidden" name="rating" id="rating-input">
 
-    <p class="text-sm text-gray-500 mt-1" x-show="rating > 0">
-        Вы выбрали: <span x-text="rating"></span> <span x-text="rating == 1 ? 'звезда' : rating < 5 ? 'звезды' : 'звёзд'"></span>
+    <p class="text-sm text-gray-500 mt-1" id="rating-text" style="display: none;">
+        Вы выбрали: <span id="rating-value"></span> <span id="rating-label"></span>
     </p>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const wrapper = document.getElementById('rating-wrapper');
+    const buttons = wrapper.querySelectorAll('.star-button');
+    const hiddenInput = document.getElementById('rating-input');
+    const ratingText = document.getElementById('rating-text');
+    const ratingValue = document.getElementById('rating-value');
+    const ratingLabel = document.getElementById('rating-label');
+
+    let currentRating = 0;
+    let hoverRating = 0;
+
+    function updateStars() {
+        buttons.forEach(button => {
+            const value = parseInt(button.getAttribute('data-value'));
+            const svg = button.querySelector('svg');
+
+            if (hoverRating >= value || (hoverRating === 0 && currentRating >= value)) {
+                svg.setAttribute('fill', '#f59e0b');
+            } else {
+                svg.setAttribute('fill', 'none');
+            }
+        });
+    }
+
+    function updateRatingText() {
+        if (currentRating > 0) {
+            ratingValue.textContent = currentRating;
+
+            if (currentRating === 1) {
+                ratingLabel.textContent = 'звезда';
+            } else if (currentRating < 5) {
+                ratingLabel.textContent = 'звезды';
+            } else {
+                ratingLabel.textContent = 'звёзд';
+            }
+
+            ratingText.style.display = 'block';
+        } else {
+            ratingText.style.display = 'none';
+        }
+    }
+
+    buttons.forEach(button => {
+        const value = parseInt(button.getAttribute('data-value'));
+
+        button.addEventListener('click', () => {
+            currentRating = value;
+            hiddenInput.value = currentRating;
+            updateStars();
+            updateRatingText();
+        });
+
+        button.addEventListener('mouseover', () => {
+            hoverRating = value;
+            updateStars();
+        });
+
+        button.addEventListener('mouseout', () => {
+            hoverRating = 0;
+            updateStars();
+        });
+    });
+});
+</script>
                 <button type="submit" class="btn btn-primary w-full py-3 px-6 rounded-lg bg-[rgb(var(--color-primary))] hover:bg-[rgb(var(--color-primary-dark))] text-white font-medium transition-all duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg">
                     Отправить отзыв
                 </button>

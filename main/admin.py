@@ -10,6 +10,51 @@ from .models import Application, Article, ConnectMessage, Publication, Review
 
 User = get_user_model()
 
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('author_name', 'truncated_content', 'rating', 'is_published', 'created_at', 'order', 'preview_photo')
+    list_editable = ('created_at', 'rating', 'is_published', 'order')
+    list_filter = ('is_published', 'rating', 'created_at')
+    search_fields = ('author_name', 'content', 'achievement')
+    actions = ['publish_selected', 'unpublish_selected']
+    save_on_top = True
+
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('author_name', 'author_photo', 'achievement', 'content', 'rating', 'created_at')
+        }),
+        ('Настройки публикации', {
+            'fields': ('is_published', 'order', 'slug'),
+            'classes': ('collapse',)
+        }),
+    )
+
+    def truncated_content(self, obj):
+        return obj.content[:100] + '...' if len(obj.content) > 100 else obj.content
+    truncated_content.short_description = 'Текст отзыва'
+
+    def preview_photo(self, obj):
+        if obj.author_photo:
+            return format_html('<img src="{}" style="max-height: 50px; max-width: 50px;" />', obj.author_photo.url)
+        return "-"
+    preview_photo.short_description = 'Фото'
+
+    def publish_selected(self, request, queryset):
+        queryset.update(is_published=True)
+    publish_selected.short_description = "Опубликовать выбранные отзывы"
+
+    def unpublish_selected(self, request, queryset):
+        queryset.update(is_published=False)
+    unpublish_selected.short_description = "Снять с публикации выбранные отзывы"
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj:  # при редактировании
+            return ('created_at', 'slug')
+        return ()
+
+    class Media:
+        css = {
+            'all': ('css/admin_reviews.css',)
+        }
 
 class ApplicationAdmin(admin.ModelAdmin):
     list_display = (
@@ -166,7 +211,7 @@ custom_admin_site.register(Application, ApplicationAdmin)
 custom_admin_site.register(ConnectMessage, ConnectMessageAdmin)
 custom_admin_site.register(Publication, PublicationAdmin)
 custom_admin_site.register(Article, ArticleAdmin)
-custom_admin_site.register(Review)
+custom_admin_site.register(Review, ReviewAdmin)
 
 # Настройки заголовков
 custom_admin_site.site_header = "👾 Site Administration"
