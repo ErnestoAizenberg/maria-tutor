@@ -196,6 +196,11 @@ def test(request):
     return render(request, "main/article0.html")
 
 
+def contacts(request):
+    context = {}
+    return render(request, "main/contacts.html", context)
+
+
 def reviews(request):
     """Display a list of all published articles"""
     reviews = Review.objects.filter(is_published=True).order_by("-created_at")

@@ -33,6 +33,7 @@ urlpatterns = [
     path("connect_success/", views.connect_success, name="connect_success"),
     path("lessons/", views.lessons, name="lessons"),
     path("about_me/", views.about_me, name="about_me"),
+    path("contacts/", views.contacts, name="contacts"),
     path("science/", views.science, name="science"),
     path(
         "sitemap.xml",

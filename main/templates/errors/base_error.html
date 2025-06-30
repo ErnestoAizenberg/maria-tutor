@@ -1,4 +1,11 @@
 {% extends 'main/base.html' %}
+{% block title %}
+   {% if error_title %}
+     {{ error_title }}
+    {% else %}
+     {{ error_description }}
+   {% endif %}
+{% endblock title %}
 
 {% block content %}
 <div class="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 hero-gradient">

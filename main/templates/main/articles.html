@@ -1,9 +1,76 @@
-{% extends 'main/base2.html' %}
-{% block title %}{{ "Мои работы" }}{% endblock %}
+{% extends 'main/base.html' %}
+
+{% block title %}
+Блог репетитора по биологии и химии | Мария Серединская
+{% endblock %}
+
+{% block meta_description %}
+Полезные статьи и материалы по биологии, химии, подготовке к ЕГЭ и олимпиадам. Советы по эффективному обучению и научные обзоры от профессионального репетитора.
+{% endblock %}
+
+{% block meta_keywords %}
+блог репетитора биология, статьи по химии, подготовка к ЕГЭ биология, олимпиадные задачи, научные статьи биология, как учить биологию, советы репетитора, методики обучения, разбор заданий ЕГЭ, новости биологии 2025
+{% endblock %}
+
+{% block og_type %}website{% endblock %}
+{% block og_site_name %}Блог репетитора по биологии и химии{% endblock %}
+{% block og_title %}Полезные материалы по биологии и химии | Блог Марии Серединской{% endblock %}
+{% block og_description %}Статьи, разборы задач и советы по эффективному изучению биологии и химии от профессионального репетитора с 9-летним опытом.{% endblock %}
+{% block og_url %}{{ request.base_url }}{% endblock %}
+{% block og_image %}https://example.com/path-to-your-blog-preview-image.jpg{% endblock %}
+{% block og_image_alt %}Блог репетитора по биологии и химии с полезными материалами{% endblock %}
+{% block og_image_width %}1200{% endblock %}
+{% block og_image_height %}630{% endblock %}
+{% block og_locale %}ru_RU{% endblock %}
+
+{% block twitter_card %}summary_large_image{% endblock %}
+{% block twitter_title %}📚 Блог репетитора: полезные материалы по биологии и химии{% endblock %}
+{% block twitter_description %}Разборы сложных тем, советы по подготовке и научные обзоры от профессионального преподавателя.{% endblock %}
+{% block twitter_image %}https://example.com/path-to-your-blog-preview-image.jpg{% endblock %}
+
 {% block content %}
+<div class="container mx-auto px-4 py-12 max-w-7xl">
+    <!-- Blog Header -->
+    <section class="text-center mb-16">
+        <h1 class="text-4xl font-bold mb-4">Блог репетитора по биологии и химии</h1>
+        <p class="text-xl text-secondary max-w-3xl mx-auto">
+            Полезные материалы, разборы сложных тем и советы по эффективной подготовке
+        </p>
+    </section>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {% include 'main/_article_listing_purple.html' with articles=articles %}
-        </div>
+    <!-- Categories Navigation -->
+    <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <a href="#" class="px-4 py-2 bg-card rounded-full font-medium hover:bg-primary hover:text-white transition">Все статьи</a>
+        <a href="#" class="px-4 py-2 bg-card rounded-full font-medium hover:bg-primary hover:text-white transition">ЕГЭ/ОГЭ</a>
+        <a href="#" class="px-4 py-2 bg-card rounded-full font-medium hover:bg-primary hover:text-white transition">Олимпиады</a>
+        <a href="#" class="px-4 py-2 bg-card rounded-full font-medium hover:bg-primary hover:text-white transition">Научные обзоры</a>
+        <a href="#" class="px-4 py-2 bg-card rounded-full font-medium hover:bg-primary hover:text-white transition">Методики обучения</a>
+    </div>
 
+    <!-- Articles Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% include 'main/_article_listing_purple.html' with articles=articles %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-16 flex justify-center">
+        <nav class="flex items-center gap-2">
+            <a href="#" class="px-4 py-2 bg-card rounded-lg font-medium">&laquo; Назад</a>
+            <a href="#" class="px-4 py-2 bg-primary text-white rounded-lg font-medium">1</a>
+            <a href="#" class="px-4 py-2 bg-card rounded-lg font-medium hover:bg-primary hover:text-white">2</a>
+            <a href="#" class="px-4 py-2 bg-card rounded-lg font-medium hover:bg-primary hover:text-white">3</a>
+            <a href="#" class="px-4 py-2 bg-card rounded-lg font-medium">Вперед &raquo;</a>
+        </nav>
+    </div>
+
+    <!-- Subscription -->
+    <section class="mt-20 bg-card p-8 rounded-2xl text-center">
+        <h2 class="text-2xl font-bold mb-4">Получайте новые статьи первыми</h2>
+        <p class="mb-6 max-w-2xl mx-auto">Подпишитесь на рассылку, чтобы получать уведомления о новых материалах и полезные советы по подготовке</p>
+        <form class="max-w-md mx-auto flex">
+            <input type="email" placeholder="Ваш email" class="flex-grow px-4 py-3 rounded-l-lg border-0 focus:ring-2 focus:ring-primary">
+            <button type="submit" class="bg-primary text-white px-6 py-3 rounded-r-lg font-medium">Подписаться</button>
+        </form>
+    </section>
+</div>
 {% endblock content %}
