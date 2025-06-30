@@ -2,29 +2,14 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-
 from .logger import setup_logger
 
 logger = setup_logger(log_file="settings.log")
-
-# Load environment variables from .env file
 load_dotenv()
 
-DEBUG = os.getenv("DEBUG", "True") == "True"
-
-logger.info(f"Debug is {DEBUG}")
-
-# Email configuration
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.getenv("EMAIL_HOST", "")
-EMAIL_PORT = 587
-EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", True)
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
-DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+DEBUG = os.getenv("DEBUG", "True") == "True"
 SECRET_KEY = "django-insecure-ojp6ewm9ue68@xmo*gau5fka4o*1o8p91n)9!8wxjm@tue=yly"
 ALLOWED_HOSTS = ["mariaseredinskaya.pythonanywhere.com", "localhost", "127.0.0.1", "*"]
 
@@ -38,9 +23,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
-    # "django_minify_html",
     "main",
 ]
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -51,15 +36,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "main.middleware.CustomErrorMiddleware",
-
-    # "htmlmin.middleware.HtmlMinifyMiddleware",
-    # "htmlmin.middleware.MarkRequestMiddleware", # (кеширование)
 ]
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-HTML_MINIFY = True
-EXCLUDE_FROM_MINIFYING = ("/admin/", "/api/")
-KEEP_COMMENTS_ON_MINIFYING = False
 
 ROOT_URLCONF = "tutorproject.urls"
 
@@ -77,21 +54,6 @@ TEMPLATES = [
         },
     },
 ]
-
-CKEDITOR_CONFIGS = {
-    "default": {
-        "contentsCss": "/static/css/ckeditor-content.css",
-        "bodyClass": "article-content",  # Добавляем класс к body редактора
-        "allowedContent": True,  # Разрешаем классы и стили
-        "extraPlugins": "stylesheetparser",
-        "toolbar_Full": [
-            ["Styles", "Format", "Bold", "Italic", "Underline"],
-            ["NumberedList", "BulletedList", "Blockquote"],
-            ["Image", "Table", "Link"],
-            ["Source"],  # Кнопка просмотра HTML
-        ],
-    },
-}
 
 WSGI_APPLICATION = "tutorproject.wsgi.application"
 
@@ -122,10 +84,40 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.getenv("EMAIL_HOST", "")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", True)
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
+
+CKEDITOR_CONFIGS = {
+    "default": {
+        "contentsCss": "/static/css/ckeditor-content.css",
+        "bodyClass": "article-content",
+        "allowedContent": True,
+        "extraPlugins": "stylesheetparser",
+        "toolbar_Full": [
+            ["Styles", "Format", "Bold", "Italic", "Underline"],
+            ["NumberedList", "BulletedList", "Blockquote"],
+            ["Image", "Table", "Link"],
+            ["Source"],
+        ],
+    },
+}
+
+HTML_MINIFY = True
+EXCLUDE_FROM_MINIFYING = ("/admin/", "/api/")
+KEEP_COMMENTS_ON_MINIFYING = False
+
+logger.info(f"Debug is {DEBUG}")
