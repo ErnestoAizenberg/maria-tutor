@@ -40,15 +40,10 @@ urlpatterns = [
         {"sitemaps": sitemaps},
         name="django.contrib.sitemaps.views.sitemap",
     ),
-]
-
-urlpatterns += [path("lessons-details/", views.lesson_details, name="lessons_details")]
+    path("lessons-details/", views.lesson_details, name="lessons_details")]
 urlpatterns += [
     path("policy/", views.policy, name="policy"),
     path("terms/", views.terms, name="terms"),
-]
-
-urlpatterns += [
     path("programs/async/", views.async_program, name="async-program"),
     path("programs/bio-in-english/", views.bio_in_english, name="bio-in-english"),
     path("programs/groups/", views.group_programs, name="group-programs"),
