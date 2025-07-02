@@ -47,8 +47,8 @@
                 <!-- Заголовок отзыва -->
                 <div class="flex items-center mb-6">
                     <div class="flex-shrink-0 h-14 w-14 rounded-full flex items-center justify-center bg-gradient-to-br from-[rgba(var(--color-primary),0.1)] to-[rgba(var(--color-accent),0.1)] text-[rgb(var(--color-primary))] dark:from-[rgba(var(--color-primary),0.2)] dark:to-[rgba(var(--color-accent),0.2)] dark:text-[rgba(var(--color-primary),0.8)] shadow-inner">
-                        {% if review.author_photo %}
-                            <img src="{{ review.author_photo.url }}" alt="{{ review.author_name }}" class="h-full w-full rounded-full object-cover">
+                        {% if review.author_photo_url %}
+                            <img src="{{ review.author_photo_url }}" alt="{{ review.author_name }}" class="h-full w-full rounded-full object-cover">
                         {% else %}
                             <i class="fas fa-user text-xl"></i>
                         {% endif %}
@@ -134,9 +134,9 @@
 
                 <div class="form-group">
                     <label class="block mb-2 text-sm font-medium text-[rgb(var(--color-text))]" for="id_author_photo">
-                        Фото (необязательно)
+                        Ссылка на фото (необязательно)
                     </label>
-                    {{ form.author_photo }}
+                    {{ form.author_photo_url }}
                     <div class="error-message text-[rgb(239,68,68)] text-sm mt-1"></div>
                 </div>
                 {% comment %}

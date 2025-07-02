@@ -1,9 +1,14 @@
+import os
+import requests
+
 from ckeditor.widgets import CKEditorWidget
 from django import forms
 from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.html import format_html
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 from .custom_admin import custom_admin_site
 from .models import Application, Article, ConnectMessage, Publication, Review
@@ -11,16 +16,23 @@ from .models import Application, Article, ConnectMessage, Publication, Review
 User = get_user_model()
 
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('author_name', 'truncated_content', 'rating', 'is_published', 'created_at', 'order', 'preview_photo')
-    list_editable = ('created_at', 'rating', 'is_published', 'order')
-    list_filter = ('is_published', 'rating', 'created_at')
+    list_display = ('author_name', 'truncated_content', 'rating', 'source', 'author_photo_url', 'is_published', 'created_at', 'order', 'preview_photo')
+    list_editable = ('rating', 'is_published', 'order', 'author_photo_url', 'created_at')
+    list_filter = ('is_published', 'rating', 'created_at', 'source')
     search_fields = ('author_name', 'content', 'achievement')
-    actions = ['publish_selected', 'unpublish_selected']
+    actions = [
+        'publish_selected',
+        'unpublish_selected',
+        'set_source_avito',
+        'set_source_profi',
+        'set_source_repetitor_ru',
+        ]
+
     save_on_top = True
 
     fieldsets = (
         ('Основная информация', {
-            'fields': ('author_name', 'author_photo', 'achievement', 'content', 'rating', 'created_at')
+            'fields': ('author_name', 'author_photo_url', 'source', 'source_url', 'achievement', 'content', 'rating', 'created_at')
         }),
         ('Настройки публикации', {
             'fields': ('is_published', 'order', 'slug'),
@@ -33,8 +45,8 @@ class ReviewAdmin(admin.ModelAdmin):
     truncated_content.short_description = 'Текст отзыва'
 
     def preview_photo(self, obj):
-        if obj.author_photo:
-            return format_html('<img src="{}" style="max-height: 50px; max-width: 50px;" />', obj.author_photo.url)
+        if obj.author_photo_url:
+            return format_html('<img src="{}" style="max-height: 50px;" />', obj.author_photo_url)
         return "-"
     preview_photo.short_description = 'Фото'
 
@@ -47,14 +59,30 @@ class ReviewAdmin(admin.ModelAdmin):
     unpublish_selected.short_description = "Снять с публикации выбранные отзывы"
 
     def get_readonly_fields(self, request, obj=None):
-        if obj:  # при редактировании
+        if obj:
             return ('created_at', 'slug')
         return ()
 
+
+    def set_source_profi(self, request, queryset):
+        queryset.update(source='profi_ru')
+    set_source_profi.short_description = "Установить Profi.ru"
+
+    def set_source_avito(self, request, queryset):
+        queryset.update(source='avito')
+    set_source_avito.short_description = "Установить Авито"
+
+    def set_source_repetitor_ru(self, request, queryset):
+        queryset.update(source='repetitor_ru')
+
+    set_source_repetitor_ru.short_description = "Установить Repetitor.ru"
+
+
     class Media:
         css = {
-            'all': ('css/admin_reviews.css',)
+            'all': ('css/admin_reviews.css',) if os.path.exists('static/css/admin_reviews.css') else {}
         }
+
 
 class ApplicationAdmin(admin.ModelAdmin):
     list_display = (

@@ -12,7 +12,54 @@ User = get_user_model()
 
 
 class Review(models.Model):
+    SOURCE_UNKNOWN = "unknown"
+    SOURCE_NATIVE = "native"  # Оставлен напрямую на сайте
+    SOURCE_PROFI_RU = "profi_ru"
+    SOURCE_REPETITOR_RU = "repetitor_ru"
+    SOURCE_GOOGLE = "google"
+    SOURCE_YANDEX = "yandex"
+    SOURCE_SOCIAL = "social"  # Соцсети (VK, Telegram и т.д.)
+    SOURCE_OTHER = "other"  # Другой источник (свободный ввод)
+    SOURCE_AVITO = "avito"
+
+    SOURCE_CHOICES = [
+        (SOURCE_UNKNOWN, "Неизвестно"),
+        (SOURCE_NATIVE, "Нативный (с вашего сайта)"),
+        (SOURCE_PROFI_RU, "Profi.ru"),
+        (SOURCE_AVITO, "Авито"),
+        (SOURCE_REPETITOR_RU, "Ваш репетитор"),
+        (SOURCE_GOOGLE, "Google Отзывы"),
+        (SOURCE_YANDEX, "Яндекс Услуги"),
+        (SOURCE_SOCIAL, "Социальные сети"),
+        (SOURCE_OTHER, "Другое"),
+    ]
+
+    source = models.CharField(
+        max_length=20,
+        choices=SOURCE_CHOICES,
+        default=SOURCE_UNKNOWN,
+        verbose_name="Источник отзыва",
+        help_text="Откуда взят этот отзыв?",
+    )
+
+    # Если источник "other" — можно уточнить вручную
+    source_custom = models.CharField(
+        max_length=300,
+        blank=True,
+        null=True,
+        verbose_name="Уточнение источника",
+        help_text="Например: Instagram, рекомендация друга и т.д.",
+    )
+    source_url = models.URLField(blank=True, null=True, verbose_name="Ссылка на отзыв")
+
     # Основная информация об авторе отзыва
+    author_photo_url = models.URLField(
+        max_length=500,
+        blank=True,
+        null=True,
+        verbose_name="Ссылка на фото автора",
+        help_text="URL аватара (Например с Google, VK, Profi.ru и т.д.)",
+    )
     author_name = models.CharField(
         max_length=100,
         verbose_name="Имя автора",
@@ -70,9 +117,6 @@ class Review(models.Model):
         help_text="Чем больше число, тем выше отзыв в списке",
     )
 
-    author_photo = models.ImageField(
-        upload_to="reviews/avatars/", blank=True, null=True, verbose_name="Фото автора"
-    )
 
     @property
     def model_verbose_name(self):
@@ -85,6 +129,11 @@ class Review(models.Model):
 
     def __str__(self):
         return f"Отзыв от {self.author_name} ({self.created_at.date()})"
+
+    def get_source_display(self):
+        if self.source == self.SOURCE_OTHER and self.source_custom:
+            return self.source_custom
+        return dict(self.SOURCE_CHOICES).get(self.source, "Неизвестно")
 
     def save(self, *args, **kwargs):
         if not self.slug:

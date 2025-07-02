@@ -18,7 +18,7 @@ class SearchForm(forms.Form):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ["author_name", "achievement", "content", "author_photo", "rating"]
+        fields = ["author_name", "achievement", "content", "author_photo_url", "rating"]
         widgets = {
             "author_name": forms.TextInput(
                 attrs={
@@ -39,15 +39,15 @@ class ReviewForm(forms.ModelForm):
                     "rows": 5,
                 }
             ),
-            "author_photo": forms.FileInput(
-                attrs={"class": "form-control-file", "accept": "image/*"}
+            "author_photo_url": forms.URLInput(
+                attrs={"class": "url-field"}
             ),
         }
         labels = {
             "author_name": "Ваше имя",
             "achievement": "Ваш результат",
             "content": "Текст отзыва",
-            "author_photo": "Ваше фото (необязательно)",
+            "author_photo_url": "Ссылка на Ваше фото (необязательно)",
         }
 
 
