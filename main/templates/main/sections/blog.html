@@ -1,0 +1,26 @@
+<section id="blog" class="py-20 px-4 sm:px-6 lg:px-8" style="background-color: rgb(var(--color-bg-secondary));">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full mb-4"
+                  style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                Блог
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Последние статьи</h2>
+            <p class="max-w-3xl mx-auto text-lg" style="color: rgb(var(--color-text-secondary));">
+                Размышления о преподавании, научные заметки и личный опыт преодоления трудностей в обучении.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% include 'main/_article_listing_purple.html' with articles=articles %}
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="articles/" class="btn btn-outline px-6 py-3">
+                Все статьи
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+

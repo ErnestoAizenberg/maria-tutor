@@ -1,0 +1,70 @@
+<section class="py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[rgba(var(--color-bg-card),0.3)] to-transparent">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-4 text-[rgb(var(--color-text))]">Что говорят ученики</h2>
+            <p class="max-w-3xl mx-auto text-lg" style="color: rgb(var(--color-text-secondary));">
+                Результаты и впечатления тех, кто уже занимался с Марией.
+            </p>
+        </div>
+
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {% for review in reviews %}
+            <div class="relative group overflow-hidden p-6 rounded-xl bg-[rgb(var(--color-bg-card))] shadow-lg hover:shadow-xl transition-all duration-300 border border-[rgb(var(--color-border))] hover:-translate-y-1">
+                <!-- Декоративный элемент -->
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[rgb(var(--color-primary))] to-[rgb(var(--color-accent))]"></div>
+
+                <!-- Заголовок отзыва -->
+                <div class="flex items-center mb-6">
+                    <div class="flex-shrink-0 h-14 w-14 rounded-full flex items-center justify-center bg-gradient-to-br from-[rgba(var(--color-primary),0.1)] to-[rgba(var(--color-accent),0.1)] text-[rgb(var(--color-primary))] dark:from-[rgba(var(--color-primary),0.2)] dark:to-[rgba(var(--color-accent),0.2)] dark:text-[rgba(var(--color-primary),0.8)] shadow-inner">
+                        {% if review.author_photo %}
+                            <img src="{{ review.author_photo.url }}" alt="{{ review.author_name }}" class="h-full w-full rounded-full object-cover">
+                        {% else %}
+                            <i class="fas fa-user text-xl"></i>
+                        {% endif %}
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="font-bold text-lg text-[rgb(var(--color-text))]">{{ review.author_name }}</h4>
+                        <p class="text-sm text-[rgb(var(--color-primary))]">{{ review.achievement }}</p>
+                    </div>
+                </div>
+
+                <!-- Текст отзыва -->
+                <blockquote class="relative">
+                    <div class="absolute top-0 left-0 text-6xl text-[rgba(var(--color-text-secondary),0.2)] font-serif">"</div>
+                    <p class="relative z-10 italic text-[rgb(var(--color-text-secondary))] pl-8 pt-4 text-justify">
+                        {{ review.content }}
+                    </p>
+                    <div class="absolute bottom-0 right-0 text-6xl text-[rgba(var(--color-text-secondary),0.2)] font-serif">"</div>
+                </blockquote>
+
+                <!-- Рейтинг (если есть) -->
+                {% if review.rating %}
+
+                <div class="mt-6 flex items-center" style="display: none;" id="blue-stars">
+                    <div class="flex text-[rgb(var(--color-accent))]">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= review.rating %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <span class="ml-2 text-sm text-[rgb(var(--color-text-secondary))]">{{ review.rating }}/5</span>
+                </div>
+
+                <div style="display: block;" id="yellow-stars">
+                <div class="mt-6 flex items-center">
+                    <div class="flex text-[rgb(var(--color-accent))]">
+                      {% include 'main/_star_rating.html' with rating=review.rating %}
+                    </div>
+                    <span class="ml-2 text-sm text-[rgb(var(--color-text-secondary))]">{{ review.rating }}/5</span>
+                </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
