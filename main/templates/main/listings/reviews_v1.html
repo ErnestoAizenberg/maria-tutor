@@ -1,0 +1,17 @@
+{% for review in reviews %}
+  <div class="testimonial-card p-8 rounded-xl">
+      <div class="flex items-center mb-4">
+          <div class="flex-shrink-0 h-12 w-12 rounded-full flex items-center justify-center"
+               style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+              <i class="fas fa-user"></i>
+          </div>
+          <div class="ml-4">
+            <h4 class="font-bold">{{ review.author_name }}</h4>
+              <p class="text-sm" style="color: rgb(var(--color-text-secondary));">{{ review.achievement }}</p>
+          </div>
+      </div>
+      <p class="italic" style="color: rgb(var(--color-text-secondary));">
+      "{{ review.content }}"
+      </p>
+  </div>
+{% endfor %}
