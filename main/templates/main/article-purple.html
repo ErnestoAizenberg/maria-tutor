@@ -34,7 +34,17 @@
         line-height: 1.7;
         color: rgb(var(--color-text));
     }
+  .article-content a {
+    color: rgb(var(--color-primary));
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    border-bottom: 1px solid rgba(var(--color-primary), 0.2);
+  }
 
+  .article-content a:hover {
+    color: rgb(var(--color-primary-dark));
+    border-bottom-color: rgb(var(--color-primary));
+  }
     .article-content p {
         margin-bottom: 1.5rem;
     }
@@ -95,6 +105,10 @@
         color: rgb(var(--color-text-secondary));
     }
 
+    .article-content blockquote a {
+      color: inherit;
+      border-bottom-color: currentColor;
+    }
     .article-content img {
         border-radius: var(--radius-xl);
         margin: 2rem auto;
@@ -154,6 +168,10 @@
         background-color: rgb(var(--color-bg-card));
         border: 1px solid rgba(var(--color-border), 0.2);
     }
+    .author-card a {
+      color: rgb(var(--color-primary));
+      border-bottom: none;
+    }
 
     .author-avatar {
         width: 3rem;
@@ -187,6 +205,10 @@
     .newsletter-section {
         background-color: rgb(var(--color-bg-secondary));
         padding: 4rem 1rem;
+    }
+    .newsletter-section a {
+      color: rgb(var(--color-primary));
+      border-bottom: none;
     }
 </style>
 
