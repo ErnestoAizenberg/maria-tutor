@@ -1,5 +1,5 @@
 {% extends 'main/base.html' %}
-
+{% load static %}
 {% block title %}{{ article.title }}{% endblock %}
 
 {% block meta_description %}{{ article.abstract }}{% endblock %}
@@ -9,9 +9,9 @@
 {% block og_url %}{{ request.build_absolute_uri }}{% endblock %}
 {% block og_type %}article{% endblock %}
 {% block og_site_name %}Репетитор по биологии и химии | Мария Серединская{% endblock %}
-{% block og_title %}{{ article.title %}{% endblock %}
+{% block og_title %}{{ article.title }}{% endblock %}
 {% block og_description %}{{ article.abstract }}{% endblock %}
-{% block og_image %}{{ article.image_preview.url }}{% endblock %}
+{% block og_image %}{% if article.image_preview %}{{ request.scheme }}://{{ request.get_host }}{{ article.image_preview.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/default-social.jpg' %}{% endif %}{% endblock %}
 {% block og_image_alt %}Превью к статье{% endblock %}
 {% block og_image_width %}1200{% endblock %}
 {% block og_image_height %}630{% endblock %}
@@ -23,8 +23,9 @@
 {% block twitter_image %}{{ article.image_preview.url }}{% endblock %}
 
 {% block extra_meta %}
-<meta property="article:published_time" content="{{ article.created_at }}" />
-<meta property="article:modified_time" content="{{ article.updated_at }}" />
+    <meta property="article:published_time" content="{{ article.created_at }}" />
+    <meta property="article:modified_time" content="{{ article.updated_at }}" />
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ article.get_absolute_url }}">
 {% endblock %}
 
 {% block content %}
