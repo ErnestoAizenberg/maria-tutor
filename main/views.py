@@ -74,9 +74,9 @@ def index(request):
 
     try:
         # Get published articles ordered by creation date (newest first)
-        articles = Article.objects.filter(status="published").order_by("-created_at")
-        reviews = Review.objects.filter(is_published=True).order_by("-created_at")
-        publications = Publication.objects.all()
+        articles = Article.objects.filter(status="published").order_by("-created_at")[:6]
+        reviews = Review.objects.filter(is_published=True).order_by("-created_at")[:6]
+        publications = Publication.objects.all()[:6]
 
         # Initialize form with session data if exists, otherwise create empty form
         if "application_form_data" in request.session:
