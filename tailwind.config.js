@@ -1,6 +1,7 @@
-// main/tailwind.config.js
+// main/static/src/tailwind.config.js
 module.exports = {
-  content: [<F12>
+  content: [
+    // Пути ОТНОСИТЕЛЬНО этого конфига!
     "main/templates/**/*.html",  // Шаблоны Django
   ],
   theme: {

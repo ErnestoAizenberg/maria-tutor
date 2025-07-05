@@ -126,7 +126,7 @@ body {
 
 .hero-gradient {
     background: linear-gradient(135deg, rgba(var(--color-primary), 0.1) 0%, rgba(var(--color-bg), 1) 100%);
-}/
+}
 
 .popular-badge {
     background: linear-gradient(135deg, rgb(var(--color-primary)) 0%, rgb(var(--color-secondary)) 100%);
