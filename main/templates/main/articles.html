@@ -67,9 +67,11 @@
     <section class="mt-20 bg-card p-8 rounded-2xl text-center">
         <h2 class="text-2xl font-bold mb-4">Получайте новые статьи первыми</h2>
         <p class="mb-6 max-w-2xl mx-auto">Подпишитесь на рассылку, чтобы получать уведомления о новых материалах и полезные советы по подготовке</p>
-        <form class="max-w-md mx-auto flex">
-            <input type="email" placeholder="Ваш email" class="flex-grow px-4 py-3 rounded-l-lg border-0 focus:ring-2 focus:ring-primary">
-            <button type="submit" class="bg-primary text-white px-6 py-3 rounded-r-lg font-medium">Подписаться</button>
+        <form class="my-form max-w-md mx-auto flex" action="/subscribe_email/" method="POST">
+            {% csrf_token %}
+
+            <input type="email" placeholder="Ваш email" class="flex-grow px-4 py-3 rounded-l-lg border-0 focus:ring-2 focus:ring-primary" name="email" required>
+            <button type="submit" class="px-6 py-3 rounded-r-lg font-medium" style="background-color: var(--color-secondary);">Подписаться</button>
         </form>
     </section>
 </div>
