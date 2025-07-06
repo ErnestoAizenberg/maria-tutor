@@ -294,7 +294,8 @@
     <div class="article-content">
         {% if article.content %}
             {% load markdown_tags %}
-            {{ article.content|markdown_to_html }}
+            {% load lazy_images %}
+            {{ article.content|markdown_to_html|lazy_images }}
         {% else %}
             <p>Содержание статьи пока недоступно.</p>
         {% endif %}
