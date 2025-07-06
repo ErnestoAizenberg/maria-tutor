@@ -11,7 +11,11 @@
 {% block og_site_name %}Репетитор по биологии и химии | Мария Серединская{% endblock %}
 {% block og_title %}{{ article.title }}{% endblock %}
 {% block og_description %}{{ article.abstract }}{% endblock %}
+
+{% if article.image_preview %}
 {% block og_image %}{% if article.image_preview %}{{ request.scheme }}://{{ request.get_host }}{{ article.image_preview.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'img/default-social.jpg' %}{% endif %}{% endblock %}
+{% endif %}
+
 {% block og_image_alt %}Превью к статье{% endblock %}
 {% block og_image_width %}1200{% endblock %}
 {% block og_image_height %}630{% endblock %}
@@ -20,7 +24,10 @@
 {% block twitter_card %}summary_large_image{% endblock %}
 {% block twitter_title %}{{ article.title }}{% endblock %}
 {% block twitter_description %}{{ article.abstract }}{% endblock %}
+
+{% if article.image_preview %}
 {% block twitter_image %}{{ article.image_preview.url }}{% endblock %}
+{% endif %}
 
 {% block extra_meta %}
     <meta property="article:published_time" content="{{ article.created_at }}" />
