@@ -193,18 +193,26 @@ class PublicationAdmin(admin.ModelAdmin):
     )
 
 
+from .models import Article, Tag
+
 class ArticleAdminForm(forms.ModelForm):
     content = forms.CharField(
         widget=CKEditorWidget(config_name="default"), label="Контент"
     )  # Добавляем CKEditor для поля content
 
+    # Кастомная форма с улучшенным виджетом для тегов
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        widget=admin.widgets.FilteredSelectMultiple("Теги", False),
+        required=False,
+    )
+
     class Meta:
         model = Article
-        fields = "__all__"
-
+        fields = '__all__'
 
 class ArticleAdmin(admin.ModelAdmin):
-    form = ArticleAdminForm  # Используем кастомную форму с CKEditor
+    form = ArticleAdminForm
     list_display = (
         "title",
         "author",
@@ -212,26 +220,72 @@ class ArticleAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
         "image_preview_display",
+        "display_tags",  # Новое поле для отображения тегов
     )
-    list_filter = ("status", "created_at", "author")
-    search_fields = ("title", "abstract", "content")
+    list_filter = (
+        "status",
+        "created_at",
+        "author",
+        "tags",  # Добавляем фильтр по тегам
+    )
+    search_fields = (
+        "title",
+        "abstract",
+        "content",
+        "tags__name",  # Поиск по названиям тегов
+    )
     prepopulated_fields = {"slug": ("title",)}
     readonly_fields = ("created_at", "updated_at", "image_preview_display")
+    filter_horizontal = ('tags',)  # Горизонтальный фильтр для тегов
+
     fieldsets = (
         (None, {"fields": ("title", "slug", "status", "author")}),
-        ("Content", {"fields": ("abstract", "content", "image_preview")}),
+        ("Content", {"fields": ("abstract", "content", "image_preview", "tags")}),  # Добавили tags
         ("Dates", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
     )
+
+    def display_tags(self, obj):
+        """Кастомное отображение тегов в списке статей"""
+        return ", ".join([tag.name for tag in obj.tags.all()])
+    display_tags.short_description = "Теги"
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('tags')
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "tags":
+            kwargs["queryset"] = Tag.objects.order_by('name')
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
 
     def image_preview_display(self, obj):
         if obj.image_preview:
             return format_html(
-                '<img src="{}" style="max-height: 100px;"/>', obj.image_preview.url
+                '<img src="{}" style="max-height: 100px;"/>',
+                obj.image_preview.url
             )
         return "-"
-
     image_preview_display.short_description = "Preview"
 
+
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug', 'article_count', 'created_at')
+    search_fields = ('name', 'slug')
+    list_filter = ('created_at',)
+    prepopulated_fields = {'slug': ('name',)}
+    readonly_fields = ('created_at', 'updated_at')
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'slug')
+        }),
+        ('Метаданные', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+
+    def article_count(self, obj):
+        return obj.article_set.count()
+    article_count.short_description = "Кол-во статей"
 
 # Регистрация моделей в кастомной админке
 custom_admin_site.register(User)
@@ -239,6 +293,7 @@ custom_admin_site.register(Application, ApplicationAdmin)
 custom_admin_site.register(ConnectMessage, ConnectMessageAdmin)
 custom_admin_site.register(Publication, PublicationAdmin)
 custom_admin_site.register(Article, ArticleAdmin)
+custom_admin_site.register(Tag, TagAdmin)
 custom_admin_site.register(Review, ReviewAdmin)
 
 # Настройки заголовков

@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1>Статьи по тегу "{{ tag.name }}"</h1>
+
+{% if articles %}
+    <div class="article-list">
+        {% for article in articles %}
+            <article class="article-preview">
+                <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h2>
+                <div class="meta">
+                    <span class="author">Автор: {{ article.author.username }}</span>
+                    <span class="date">{{ article.created_at|date:"d E Y" }}</span>
+                </div>
+                <p class="excerpt">{{ article.abstract|truncatewords:30 }}</p>
+                <div class="tags">
+                    {% for tag in article.tags.all %}
+                        <a href="{% url 'articles_by_tag' tag.slug %}" class="tag">{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+
+    {% include 'main/_pagination.html' with page_obj=articles %}
+{% else %}
+    <p>Пока нет статей с этим тегом.</p>
+{% endif %}
+{% endblock %}

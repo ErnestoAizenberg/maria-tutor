@@ -15,7 +15,7 @@ from django.core.paginator import Paginator
 from tutorproject.logger import setup_logger
 
 from .forms import ApplicationForm, ReviewForm
-from .models import Application, Article, Publication, Review
+from .models import Application, Article, Publication, Review, Tag
 from .utils import search_models
 
 logger = setup_logger(log_file="app.log", level="DEBUG")
@@ -141,6 +141,45 @@ def science(request):
 
     return render(request, "main/science.html", context)
 
+def articles_by_tag(request, slug):
+    """Display list of articles by given slug of a tag"""
+    logger.debug(f"loading articles by teg slug: {slug}")
+    try:
+        tag = get_object_or_404(Tag, slug=slug)
+        logger.debug(f"found tag with this slug {tag}")
+    except Exception as e:
+        logger.error(f"Unexpexted error ocured while searching for tag: {str(e)}")
+    try:
+        articles_list = Article.objects.filter(
+           tags=tag,
+           status="published",
+        ).select_related('author').prefetch_related('tags').order_by('-created_at')
+        logger.debug(f"loaded list of articles for the tag: {articles_list}")
+    except Exception as e:
+        logger.error(f"An error occured while retring articles_list {str(e)}")
+
+    try:
+        paginator = Paginator(articles_list, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+    except Exception as e:
+        logger.error(f"while trying to paginate: {str(e)}")
+
+    context = {
+        'tag': tag,
+        'articles': page_obj,
+        'page_title': f'Статьи на тему {tag.name}'
+    }
+    logger.debug(f"request context at articles_by_tag: {context}")
+
+    try:
+        page = render(request, 'main/articles_by_tag.html', context)
+    except Exception as e:
+        logger.error(f"While rendering articles_by_tag page an error occured: {str(e)}")
+        raise
+
+    return page
+
 
 def article(request, slug):
     """Display a single article with reading time and related articles"""
@@ -170,7 +209,7 @@ def article(request, slug):
         }
         return render(request, "main/article-purple.html", context)
     except Exception as e:
-        logger.error(f"Error loading article {slug}: {str(e)}", exc_info=True)
+        logger.error(f"Error loading article {slug}: {str(e)}")
         messages.error(request, "Article could not be loaded")
         return redirect("index")
 

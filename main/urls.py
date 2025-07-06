@@ -15,6 +15,7 @@ urlpatterns = [
     path("robots.txt", views.robots_txt),
     path('search/', views.search_view, name='search_view'),
     path("article/<slug:slug>/", views.article, name="article"),  # SEO-friendly URL
+    path("tag/<slug:slug>/", views.articles_by_tag, name="articles_by_tag"),
     path("articles/", views.articles, name="articles"),
     path("reviews/", views.reviews, name="reviews"),
     path("add_review/", views.add_review, name="add_review"),

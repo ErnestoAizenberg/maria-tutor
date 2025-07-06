@@ -264,19 +264,25 @@
         {{ article.content|safe }}
     </div>
 
-    <!-- Теги статьи -->
-    {% if article.tags.all %}
-    <div class="mt-12 pt-8 border-t" style="border-color: rgba(var(--color-border), 0.3);">
-        <div class="flex flex-wrap gap-2">
-            {% for tag in article.tags.all %}
-            <span class="px-3 py-1 text-sm rounded-full"
-                  style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
-                {{ tag.name }}
-            </span>
-            {% endfor %}
-        </div>
+{% if article.tags.all %}
+<div class="mt-12 pt-8 border-t" style="border-color: rgba(var(--color-border), 0.3);">
+    <h3 class="text-lg font-medium mb-4" style="color: rgba(var(--color-text), 0.8);">
+        Теги статьи
+    </h3>
+    <div class="flex flex-wrap gap-2">
+        {% for tag in article.tags.all %}
+        <a href="{{ tag.get_absolute_url }}"
+           class="px-3 py-1 text-sm rounded-full transition-all hover:scale-105"
+           style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));"
+           aria-label="Статьи с тегом {{ tag.name }}"
+           title="Посмотреть все статьи с этим тегом">
+            {{ tag.name }}
+            <span class="opacity-60 ml-1">({{ tag.article_set.count }})</span>
+        </a>
+        {% endfor %}
     </div>
-    {% endif %}
+</div>
+{% endif %}
 </article>
 
 <!-- Блок "Поделиться" -->

@@ -350,6 +350,50 @@ class Publication(models.Model):
     def get_absolute_url(self):
         return reverse("publication_detail", kwargs={"slug": self.slug})
 
+from django.core.exceptions import ValidationError
+
+class Tag(models.Model):
+    name = models.CharField(
+        max_length=100,
+        unique=True,
+        verbose_name="Название тега",
+        help_text="Максимум 100 символов"
+    )
+    slug = models.SlugField(
+        max_length=100,
+        unique=True,
+        verbose_name="URL-имя",
+        allow_unicode=True
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата создания"
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Дата обновления"
+    )
+
+    class Meta:
+        verbose_name = "Тег"
+        verbose_name_plural = "Теги"
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('articles_by_tag', kwargs={'slug': self.slug})
+
+    def clean(self):
+        # Запрещаем теги с одинаковым slug
+        if Tag.objects.filter(slug=slugify(self.name)).exclude(id=self.id).exists():
+            raise ValidationError(f"Тег с таким URL-именем уже существует")
 
 class Article(models.Model):
     def upload_preview(self, filename):
@@ -383,6 +427,7 @@ class Article(models.Model):
 
     # Relationships
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    tags = models.ManyToManyField(Tag)
 
     # Status
     STATUS_CHOICES = [
