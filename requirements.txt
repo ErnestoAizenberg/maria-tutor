@@ -5,3 +5,5 @@ django-ckeditor
 python-dotenv
 Pillow
 whitenoise
+markdown
+beautifulsoup4
