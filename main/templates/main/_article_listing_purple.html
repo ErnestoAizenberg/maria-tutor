@@ -1,4 +1,4 @@
-{% for article in articles|slice:":3" %}
+{% for article in articles %}
 <article class="article-preview group">
     <a href="{% url 'article' article.slug %}" class="block rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 bg-card hover:bg-opacity-90 border" style="border-color: rgba(var(--color-border), 0.3);">
         <div class="h-48 relative overflow-hidden" style="background-color: rgba(var(--color-primary), 0.1);">
