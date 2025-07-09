@@ -1,18 +1,18 @@
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
+import dotenv
+
 from .logger import setup_logger
 
+dotenv.load_dotenv()
+
 logger = setup_logger(log_file="settings.log")
-load_dotenv()
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-DEBUG = os.getenv("DEBUG", "True") == "True"
-SECRET_KEY = os.getenv("SECRET_KEY")
-TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-MINI_APP_URL = "https://mariaseredinskaya.pythonanywhere.com"
+DEBUG: bool = os.getenv("DEBUG", "True") == "True"
+SECRET_KEY: str = str(os.getenv("SECRET_KEY"))
+TELEGRAM_BOT_TOKEN: str = str(os.getenv("TELEGRAM_BOT_TOKEN"))
+MINI_APP_URL: str = "https://mariaseredinskaya.pythonanywhere.com"
 ALLOWED_HOSTS = ["mariaseredinskaya.pythonanywhere.com", "localhost", "127.0.0.1", "*"]
 
 INSTALLED_APPS = [
