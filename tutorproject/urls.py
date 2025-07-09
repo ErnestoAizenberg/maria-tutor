@@ -10,6 +10,7 @@ from main.custom_admin import custom_admin_site
 urlpatterns = [
     path("admin/", custom_admin_site.urls),
     path("", include("main.urls")),
+    path("", include("telegram_bot.urls")),
     path(
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),

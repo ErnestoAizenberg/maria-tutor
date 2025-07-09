@@ -10,7 +10,9 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = os.getenv("DEBUG", "True") == "True"
-SECRET_KEY = "django-insecure-ojp6ewm9ue68@xmo*gau5fka4o*1o8p91n)9!8wxjm@tue=yly"
+SECRET_KEY = os.getenv("SECRET_KEY")
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+MINI_APP_URL = "https://mariaseredinskaya.pythonanywhere.com"
 ALLOWED_HOSTS = ["mariaseredinskaya.pythonanywhere.com", "localhost", "127.0.0.1", "*"]
 
 INSTALLED_APPS = [
