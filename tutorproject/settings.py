@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
     "main",
+    "telegram_bot.apps.TelegramBotConfig",
 ]
 
 MIDDLEWARE = [
