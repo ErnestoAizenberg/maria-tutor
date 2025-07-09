@@ -2,16 +2,22 @@ import os
 from pathlib import Path
 
 import dotenv
+from typing import Optional
 
 from .logger import setup_logger
 
-dotenv.load_dotenv()
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+dotenv.load_dotenv(BASE_DIR / ".env")
 
 logger = setup_logger(log_file="settings.log")
-BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG: bool = os.getenv("DEBUG", "True") == "True"
 SECRET_KEY: str = str(os.getenv("SECRET_KEY"))
-TELEGRAM_BOT_TOKEN: str = str(os.getenv("TELEGRAM_BOT_TOKEN"))
+
+TELEGRAM_BOT_TOKEN: Optional[str] = os.getenv("TELEGRAM_BOT_TOKEN")
+if TELEGRAM_BOT_TOKEN is None:
+    raise ValueError("TELEGRAM_BOT_TOKEN не найден в .env!")
+
 MINI_APP_URL: str = "https://mariaseredinskaya.pythonanywhere.com"
 ALLOWED_HOSTS = ["mariaseredinskaya.pythonanywhere.com", "localhost", "127.0.0.1", "*"]
 
