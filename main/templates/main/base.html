@@ -38,7 +38,7 @@
 
     {% block extra_meta %}{% endblock %}
     {# <script src="https://cdn.tailwindcss.com"></script> #}
-    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'dist/css/styles.css' %}" rel="stylesheet">
     {# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> #}
     {# <link rel="stylesheet" href="/static/css/fa.css"> #}
     <link
@@ -179,21 +179,26 @@
         });
 
         // Theme toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+    const themeToggle = document.getElementById('theme-toggle');
+const themeToggleMobile = document.getElementById('theme-toggle-mobile');
 
-        function toggleTheme() {
-            document.documentElement.classList.toggle('theme-light');
-            localStorage.setItem('theme', document.documentElement.classList.contains('theme-light') ? 'light' : 'dark');
-        }
+function toggleTheme() {
+    document.documentElement.classList.toggle('theme-light');
+    localStorage.setItem('theme', document.documentElement.classList.contains('theme-light') ? 'light' : 'dark');
+}
 
-        themeToggle.addEventListener('click', toggleTheme);
-        themeToggleMobile.addEventListener('click', toggleTheme);
+themeToggle.addEventListener('click', toggleTheme);
+themeToggleMobile.addEventListener('click', toggleTheme);
 
-        // Check for saved theme preference
-        if (localStorage.getItem('theme') === 'light') {
-            document.documentElement.classList.add('theme-light');
-        }
+// Check for saved theme preference
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+    document.documentElement.classList.remove('theme-light');
+} else {
+    // По умолчанию устанавливаем светлую тему
+    document.documentElement.classList.add('theme-light');
+    localStorage.setItem('theme', 'light');
+}
     </script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
