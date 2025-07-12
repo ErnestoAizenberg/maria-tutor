@@ -10,6 +10,168 @@ from django.utils.text import slugify
 
 User = get_user_model()
 
+class Teacher(models.Model):
+    def upload_avatar(self, filename):
+        """Генерирует путь для загрузки аватара учителя."""
+        ext = filename.split(".")[-1].lower()
+        return f"teacher/avatars/{self.name}.{ext}"
+
+    # Основная информация
+    name = models.CharField(
+        max_length=100,
+        blank=False,
+        verbose_name="Имя",
+        help_text="Полное имя учителя",
+    )
+
+    status = models.CharField(
+        max_length=250,
+        blank=False,
+        verbose_name="Статус",
+        help_text="Краткий статус под именем учителя",
+    )
+
+    description = models.TextField(
+        max_length=800,
+        blank=True,
+        verbose_name="Описание",
+        help_text="Подробное описание учителя",
+    )
+
+    avatar = models.ImageField(
+        upload_to=upload_avatar,
+        blank=True,
+        null=True,
+        verbose_name="Аватар",
+        validators=[
+            FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png", "webp"])
+        ],
+        help_text="Изображение должно быть в формате JPG, PNG или WEBP. Рекомендуемый размер: 300x300px.",
+    )
+
+    # Контактная информация
+    email = models.EmailField(
+        max_length=300,
+        blank=True,
+        verbose_name="Email",
+        help_text="Электронная почта учителя",
+        validators=[EmailValidator()],
+    )
+
+    phone = models.CharField(
+        max_length=20,
+        blank=True,
+        verbose_name="Телефон",
+        help_text="Контактный телефон учителя",
+    )
+
+    # Социальные сети
+    telegram = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name="Telegram",
+        help_text="Имя пользователя в Telegram (без @)",
+    )
+
+    vk = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name="VK",
+        help_text="Имя пользователя или ID в VK",
+    )
+
+    instagram = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name="Instagram",
+        help_text="Имя пользователя в Instagram (без @)",
+    )
+
+    twitter = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name="Twitter",
+        help_text="Имя пользователя в Twitter (без @)",
+    )
+
+    linkedin = models.CharField(
+        max_length=100,
+        blank=True,
+        verbose_name="LinkedIn",
+        help_text="Имя пользователя или URL в LinkedIn",
+    )
+
+    # Служебные поля
+    slug = models.SlugField(
+        max_length=100,
+        unique=True,
+        verbose_name="URL-идентификатор",
+        help_text="Автоматическое поле для удобных URL",
+        blank=True,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата создания",
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="Дата обновления",
+    )
+
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name="Активен",
+        help_text="Отображается ли учитель на сайте",
+    )
+
+    class Meta:
+        verbose_name = "Учитель"
+        verbose_name_plural = "Учителя"
+        ordering = ['name']
+
+    def __str__(self):
+        return f"{self.name} - {self.status}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            if not self.name:
+                raise ValueError("Нельзя сгенерировать slug: необходимо указать имя учителя")
+
+            base_slug = slugify(self.name)
+            self.slug = base_slug
+
+            # Проверка уникальности slug
+            similar_slugs = set(
+                Teacher.objects.filter(slug__startswith=base_slug)
+                .exclude(pk=self.pk)
+                .values_list("slug", flat=True)
+            )
+
+            if self.slug in similar_slugs:
+                counter = 1
+                while f"{base_slug}-{counter}" in similar_slugs:
+                    counter += 1
+                self.slug = f"{base_slug}-{counter}"
+
+        super().save(*args, **kwargs)
+
+    def get_social_links(self):
+        """Возвращает словарь с ссылками на социальные сети учителя."""
+        socials = {}
+        if self.telegram:
+            socials['telegram'] = f"https://t.me/{self.telegram}"
+        if self.vk:
+            socials['vk'] = f"https://vk.com/{self.vk}"
+        if self.instagram:
+            socials['instagram'] = f"https://instagram.com/{self.instagram}"
+        if self.twitter:
+            socials['twitter'] = f"https://twitter.com/{self.twitter}"
+        if self.linkedin:
+            socials['linkedin'] = self.linkedin if self.linkedin.startswith('http') else f"https://linkedin.com/in/{self.linkedin}"
+        return socials
+
 
 class Review(models.Model):
     SOURCE_UNKNOWN = "unknown"
