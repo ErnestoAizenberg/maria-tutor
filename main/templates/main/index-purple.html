@@ -127,11 +127,11 @@
         <div class="grid md:grid-cols-2 gap-12 items-center">
             <div class="order-2 md:order-1">
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-6">
-                  <span class="text-gradient">{{ teacher.name }}</span><br>
-                  {{ teacher.status }}
+                  <span class="text-gradient">{{ teacher.name|default:'Ваше имя' }}</span><br>
+                  {{ teacher.status|default:'Ваш статус'}}
                 </h1>
                 <p class="text-lg mb-8 max-w-lg max-h-32" style="color: rgb(var(--color-text-secondary));">
-                  {{ teacher.description }}
+                  {{ teacher.description|default:'Ваше описание' }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
                     <a href="#lessons" class="btn btn-primary px-6 py-3">
@@ -189,7 +189,9 @@
 {#{% include 'main/sections/blog_v2.html' with articles=articles %}#}
 
 <!-- Testimonials -->
+{% if reviews %}
 {% include 'main/sections/reviews_v2.html' with reviews=reviews %}
+{% endif %}
 
 <!-- Contact Section -->
 {% include 'main/sections/contact_v3.html' %}
