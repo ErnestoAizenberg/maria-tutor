@@ -28,7 +28,7 @@
     <meta property="og:locale" content="{% block og_locale %}ru_RU{% endblock %}">
 
     <!-- Twitter -->
-    <meta name="twitter:card" content="{% block twitter_card %}summary_large_image{% endblock %}">
+    <meta name="twitter:card" content="{% block t<F10>witter_card %}summary_large_image{% endblock %}">
     <meta name="twitter:title" content="{% block twitter_title %}{% endblock %}">
     <meta name="twitter:description" content="{% block twitter_description %}{% endblock %}">
     <meta name="twitter:image" content="{% block twitter_image %}{% endblock %}">
@@ -59,7 +59,7 @@
                 <div class="flex items-center">
                     <a href="/" class="flex items-center">
                         <span class="text-2xl mr-2 text-primary"><i class="fas fa-atom"></i></span>
-                        <span class="font-serif text-xl font-bold">Мария Серединская</span>
+                        <span class="font-serif text-xl font-bold">{{ teacher.name|default:'Мария Серединская' }}</span>
                     </a>
                 </div>
 
@@ -112,10 +112,10 @@
                 <div>
                     <div class="flex items-center mb-6">
                         <span class="text-2xl mr-2 text-primary"><i class="fas fa-atom"></i></span>
-                        <span class="font-serif text-xl font-bold">Мария Серединская</span>
+                        <span class="font-serif text-xl font-bold">{{ teacher.name|default:'Мария Серединская'}}</span>
                     </div>
                     <p class="text-secondary">
-                        Репетитор по биологии и химии. Нейробиолог, исследователь поведения животных.
+                    {{ teacher.description|default:'Репетитор по биологии и химии. Нейробиолог, исследователь поведения животных.' }}
                     </p>
                 </div>
 
@@ -135,14 +135,18 @@
                 <div>
                     <h4 class="font-serif font-bold text-lg mb-6">Контакты</h4>
                     <ul class="space-y-3">
+                      {% if teacher.email %}
                         <li class="flex items-center">
                             <i class="fas fa-envelope mr-3 text-primary"></i>
-                            mariseredinskaya@gmail.com
+                            {{ teacher.email }}
                         </li>
+                      {% endif %}
+                        {% if teacher.telegram %}
                         <li class="flex items-center">
                             <i class="fab fa-telegram mr-3 text-primary"></i>
-                            @Mickey_Fin
+                            @{{ teacher.telegram }}
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
 

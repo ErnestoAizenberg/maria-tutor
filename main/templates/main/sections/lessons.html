@@ -1,78 +1,25 @@
 <section id="lessons" class="py-20 px-4 sm:px-6 lg:px-8" style="background-color: rgb(var(--color-bg));">
     <div class="max-w-7xl mx-auto">
+
         <div class="text-center mb-16">
-            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full mb-4"
+          {% comment %}
+          <span class="inline-block px-3 py-1 text-sm font-medium rounded-full mb-4"
                   style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
                 Обучение
             </span>
+          {% endcomment %}
             <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Формат занятий</h2>
-            <p class="max-w-3xl mx-auto text-lg" style="color: rgb(var(--color-text-secondary));">
-                Индивидуальный подход к каждому ученику с учетом целей, уровня подготовки и особенностей восприятия информации.
-            </p>
+            {% comment %}
+                <p class="max-w-3xl mx-auto text-lg" style="color: rgb(var(--color-text-secondary));">
+            Индивидуальный подход к каждому ученику с учетом целей, уровня подготовки и особенностей восприятия информации.
+                </p>
+            {% endcomment %}
         </div>
 
         <div class="grid md:grid-cols-3 gap-8 mb-16">
-            {% comment %}
-            <!-- Biology -->
-            <div class="card p-8">
-                <div class="text-primary text-4xl mb-6">
-                    <i class="fas fa-dna"></i>
-                </div>
-                <h3 class="text-xl font-serif font-bold mb-4">Биология</h3>
-                <ul class="custom-list space-y-2 mb-6" style="color: rgb(var(--color-text-secondary));">
-                    <li>Подготовка к ЕГЭ и ОГЭ</li>
-                    <li>Олимпиадная биология</li>
-                    <li>Углубленный школьный курс</li>
-                    <li>Подготовка к вузовским экзаменам</li>
-                </ul>
-                <div class="mt-6">
-                    <span class="text-2xl font-bold">2 500 ₽</span>
-                    <span style="color: rgb(var(--color-text-secondary));">/ 60 мин</span>
-                </div>
-            </div>
-
-            <!-- Chemistry -->
-            <div class="card p-8">
-                <div class="text-primary text-4xl mb-6">
-                    <i class="fas fa-flask"></i>
-                </div>
-                <h3 class="text-xl font-serif font-bold mb-4">Химия</h3>
-                <ul class="custom-list space-y-2 mb-6" style="color: rgb(var(--color-text-secondary));">
-                    <li>Подготовка к ЕГЭ и ОГЭ</li>
-                    <li>Органическая химия</li>
-                    <li>Решение задач повышенной сложности</li>
-                    <li>Биохимия для биологов</li>
-                </ul>
-                <div class="mt-6">
-                    <span class="text-2xl font-bold">2 500 ₽</span>
-                    <span style="color: rgb(var(--color-text-secondary));">/ 60 мин</span>
-                </div>
-            </div>
-
-            <!-- Special -->
-            <div class="card p-8 relative" style="border: 2px solid rgba(var(--color-primary), 0.3); background-color: rgba(var(--color-primary), 0.05);">
-                <div class="absolute top-0 right-0 text-white px-3 py-1 text-xs font-bold rounded-bl-lg rounded-tr-lg popular-badge">
-                    ПОПУЛЯРНО
-                </div>
-                <div class="text-primary text-4xl mb-6">
-                    <i class="fas fa-brain"></i>
-                </div>
-                <h3 class="text-xl font-serif font-bold mb-4">Спецкурсы</h3>
-                <ul class="custom-list space-y-2 mb-6" style="color: rgb(var(--color-text-secondary));">
-                    <li>Основы нейробиологии</li>
-                    <li>Эффективные методы обучения</li>
-                    <li>Преодоление прокрастинации</li>
-                    <li>Обучение с СДВГ</li>
-                </ul>
-                <div class="mt-6">
-                    <span class="text-2xl font-bold">3 000 ₽</span>
-                    <span style="color: rgb(var(--color-text-secondary));">/ 60 мин</span>
-                </div>
-            </div>
-            {% endcomment %}
             {% include 'main/_ed_formats.html' %}
         </div>
-
+        {% comment %}
         <!-- Booking Form -->
         <div class="max-w-3xl mx-auto card overflow-hidden">
             <div class="grid md:grid-cols-2">
@@ -86,7 +33,7 @@
                             </div>
                             <div>
                                 <p class="text-sm" style="color: rgba(255,255,255,0.7);">Телефон</p>
-                                <p class="font-medium">+7 (931) 372-65-33</p>
+                                <p class="font-medium">{{ teacher.phone }}</p>
                             </div>
                         </div>
                         <div class="flex items-center">
@@ -95,7 +42,7 @@
                             </div>
                             <div>
                                 <p class="text-sm" style="color: rgba(255,255,255,0.7);">Email</p>
-                                <p class="font-medium">mariseredinskaya@gmail.com</p>
+                                <p class="font-medium">{{ teacher.email }}</p>
                             </div>
                         </div>
                         <div class="flex items-center">
@@ -104,7 +51,7 @@
                             </div>
                             <div>
                                 <p class="text-sm" style="color: rgba(255,255,255,0.7);">Telegram</p>
-                                <p class="font-medium">@Mickey_Fin</p>
+                                <p class="font-medium">@{{ teacher.telegram }}</p>
                             </div>
                         </div>
                     </div>
@@ -114,28 +61,28 @@
                        {% csrf_token %}
                        <div class="space-y-4">
                             {% if application_form.errors %}
-<div class="p-4 mb-6 bg-red-50 border border-red-200 rounded-lg">
-    <h3 class="flex items-center text-red-800 font-medium mb-3">
-        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-        </svg>
-        Пожалуйста, исправьте ошибки
-    </h3>
-    <ul class="text-red-700 text-sm space-y-1">
-        {% for field in application_form %}
-            {% for error in field.errors %}
-                {% if error|length  > 8 %}
-                <li class="flex items-start">
-                    <span class="mr-1">•</span>
-                    <span><strong>{{ field.label }}:</strong> {{ error }}</span>
-                </li>
-                {% endif %}
-            {% endfor %}
-        {% endfor %}
-    </ul>
-</div>
-{% endif %}
-     <div>
+                              <div class="p-4 mb-6 bg-red-50 border border-red-200 rounded-lg">
+                                  <h3 class="flex items-center text-red-800 font-medium mb-3">
+                                      <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                                      </svg>
+                                      Пожалуйста, исправьте ошибки
+                                  </h3>
+                                  <ul class="text-red-700 text-sm space-y-1">
+                                      {% for field in application_form %}
+                                          {% for error in field.errors %}
+                                              {% if error|length  > 8 %}
+                                              <li class="flex items-start">
+                                                  <span class="mr-1">•</span>
+                                                  <span><strong>{{ field.label }}:</strong> {{ error }}</span>
+                                              </li>
+                                              {% endif %}
+                                          {% endfor %}
+                                      {% endfor %}
+                                  </ul>
+                              </div>
+                            {% endif %}
+                          <div>
                                 <label class="block text-sm font-medium mb-1" style="color: rgb(var(--color-text-secondary));">Ваше имя</label>
                                 <input type="text" class="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-primary"
                                                    style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);" value="{{ application_form.name.value|default_if_none:""}}" name="name" required>
@@ -167,6 +114,7 @@
                 </div>
             </div>
         </div>
+        {% endcomment %}
     </div>
 </section>
 

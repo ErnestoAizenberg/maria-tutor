@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 {% block title %}
-    🔬 Мария Серединская | Репетитор по биологии и химии онлайн • Подготовка к ЕГЭ, ОГЭ и олимпиадам
+🔬 {{ teacher.name }} | {{ teacher.status }}
 {% endblock %}
 
 {% block meta_description %}
@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block meta_keywords %}
-репетитор по биологии, репетитор по химии, подготовка к ЕГЭ по биологии, подготовка к ОГЭ по химии, олимпиадная биология, репетитор для студентов, нейробиолог преподаватель, занятия по биологии онлайн, обучение с СДВГ, Мария Серединская отзывы, ЕГЭ 2025 биология, ВсОШ по биологии, молекулярная биология, биохимия онлайн, дистанционные уроки
+ репетитор по биологии, репетитор по химии, подготовка к ЕГЭ по биологии, подготовка к ОГЭ по химии, олимпиадная биология, репетитор для студентов, нейробиолог преподаватель, занятия по биологии онлайн, обучение с СДВГ, Мария Серединская отзывы, ЕГЭ 2025 биология, ВсОШ по биологии, молекулярная биология, биохимия онлайн, дистанционные уроки
 {% endblock %}
 
 {% block og_type %}website{% endblock %}
@@ -127,12 +127,11 @@
         <div class="grid md:grid-cols-2 gap-12 items-center">
             <div class="order-2 md:order-1">
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-6">
-                    <span class="text-gradient">Мария Серединская</span><br>
-                    Репетитор по биологии и химии
+                  <span class="text-gradient">{{ teacher.name }}</span><br>
+                  {{ teacher.status }}
                 </h1>
-                <p class="text-lg mb-8 max-w-lg" style="color: rgb(var(--color-text-secondary));">
-                    Преподаватель с 9-летним опытом. Нейробиолог, исследователь поведения животных.
-                    Помогаю ученикам не только освоить предмет, но и полюбить процесс обучения.
+                <p class="text-lg mb-8 max-w-lg max-h-32" style="color: rgb(var(--color-text-secondary));">
+                  {{ teacher.description }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
                     <a href="#lessons" class="btn btn-primary px-6 py-3">
@@ -145,9 +144,9 @@
             </div>
             <div class="order-1 md:order-2 relative">
                 <div class="relative w-full aspect-square max-w-md mx-auto">
-                  <img src="https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000"
-                       alt="Мария Серндинская на уроке биологии"
-                       title="Репетитор по биологии"
+                  <img src="{{ teacher.avatar.url }}"
+                       alt="{{ teacher.name }}"
+                       title="{{ teacher.status }}"
                        class="absolute inset-0 w-full h-full object-cover z-0 rounded-2xl"
                        style="border: 1px solid rgba(var(--color-border), 0.3);"
                        fetchpriority="high"/>
@@ -187,13 +186,13 @@
 {% include 'main/sections/lessons.html' %}
 
 <!-- Blog Section -->
-{% include 'main/sections/blog.html' with articles=articles %}
+{#{% include 'main/sections/blog_v2.html' with articles=articles %}#}
 
 <!-- Testimonials -->
 {% include 'main/sections/reviews_v2.html' with reviews=reviews %}
 
 <!-- Contact Section -->
-{% include 'main/sections/contact_v1.html' %}
+{% include 'main/sections/contact_v3.html' %}
 
 
 {% endblock content %}
