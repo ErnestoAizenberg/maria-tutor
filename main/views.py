@@ -15,7 +15,7 @@ from django.core.paginator import Paginator
 from tutorproject.logger import setup_logger
 
 from .forms import ApplicationForm, ReviewForm
-from .models import Application, Article, Publication, Review, Tag
+from .models import Application, Article, Publication, Review, Tag, LessonCard
 from .utils import search_models
 
 logger = setup_logger(log_file="app.log", level="DEBUG")
@@ -100,7 +100,9 @@ def index(request):
             "reviews": reviews,
             "application_form": form,
             "publications": publications,
+            "lesson_cards": LessonCard.objects.all(),
         }
+        logger.debug(f"Main page context: {context}")
         logger.debug(f"form.erros: {form.errors}")
         logger.debug(f"Loaded {len(articles)} published articles for homepage")
         return render(request, "main/index-purple.html", context)

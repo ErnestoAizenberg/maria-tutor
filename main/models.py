@@ -637,3 +637,30 @@ class Article(models.Model):
         ordering = ["-created_at"]
         verbose_name = "Статья"
         verbose_name_plural = "Статьи"
+
+
+class LessonCard(models.Model):
+    # Основные поля
+    title = models.CharField("Название", max_length=100)  # "Индивидуальные занятия"
+    icon_class = models.CharField("Иконка (Font Awesome)", max_length=50, default="fas fa-star")  # "fas fa-user-graduate"
+    price = models.CharField("Цена", max_length=50)  # "от 1600 ₽/час"
+    button_text = models.CharField("Текст кнопки", max_length=50, default="Подробнее")  # "Подробнее о тарифах"
+    button_link = models.CharField("Ссылка кнопки", max_length=100, blank=True)  # "/programs/one-on-one"
+    is_featured = models.BooleanField("Пометка 'ВЫГОДНО'", default=False)
+
+    # Для удобного администрирования (необязательно)
+    order = models.PositiveIntegerField("Порядок отображения", default=0)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ["order"]
+
+
+class LessonFeature(models.Model):
+    card = models.ForeignKey(LessonCard, on_delete=models.CASCADE, related_name="features")
+    text = models.CharField("Текст пункта", max_length=200)  # "Гибкое расписание"
+
+    def __str__(self):
+        return self.text

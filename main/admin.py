@@ -11,7 +11,8 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 from .custom_admin import custom_admin_site
-from .models import Application, Article, ConnectMessage, Publication, Review, Teacher
+from .models import Application, Article, ConnectMessage, Publication, Review, Teacher, LessonCard, LessonFeature
+
 
 User = get_user_model()
 
@@ -420,9 +421,21 @@ class TeacherAdmin(admin.ModelAdmin):
         queryset.update(is_active=False)
     make_inactive.short_description = "Деактивировать выбранных учителей"
 
+
+class LessonFeatureInline(admin.TabularInline):
+    model = LessonFeature
+    extra = 1
+
+class LessonCardAdmin(admin.ModelAdmin):
+    list_display = ["title", "price", "order"]
+    inlines = [LessonFeatureInline]
+    list_editable = ["order"]
+
+
 # Регистрация моделей в кастомной админке
 custom_admin_site.register(User)
 custom_admin_site.register(Teacher, TeacherAdmin)
+custom_admin_site.register(LessonCard, LessonCardAdmin)
 custom_admin_site.register(Application, ApplicationAdmin)
 custom_admin_site.register(ConnectMessage, ConnectMessageAdmin)
 custom_admin_site.register(Publication, PublicationAdmin)
