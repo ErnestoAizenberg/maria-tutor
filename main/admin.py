@@ -11,7 +11,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 from .custom_admin import custom_admin_site
-from .models import Application, Article, ConnectMessage, Publication, Review
+from .models import Application, Article, ConnectMessage, Publication, Review, Teacher
 
 User = get_user_model()
 
@@ -287,8 +287,142 @@ class TagAdmin(admin.ModelAdmin):
         return obj.article_set.count()
     article_count.short_description = "Кол-во статей"
 
+
+@admin.register(Teacher)
+class TeacherAdmin(admin.ModelAdmin):
+    # Поля для отображения в списке
+    list_display = (
+        'name',
+        'status',
+        'email',
+        'phone',
+        'is_active',
+        'avatar_preview',
+        'created_at',
+    )
+
+    # Поля для поиска
+    search_fields = (
+        'name',
+        'email',
+        'phone',
+        'status',
+        'slug',
+    )
+
+    # Фильтры справа
+    list_filter = (
+        'is_active',
+        'created_at',
+    )
+
+    # Поля только для чтения
+    readonly_fields = (
+        'slug',
+        'created_at',
+        'updated_at',
+        'avatar_preview',
+        'social_links',
+    )
+
+    # Группировка полей в форме редактирования
+    fieldsets = (
+        ('Основная информация', {
+            'fields': (
+                'name',
+                'status',
+                'description',
+                'is_active',
+            )
+        }),
+        ('Контактная информация', {
+            'fields': (
+                'email',
+                'phone',
+            )
+        }),
+        ('Социальные сети', {
+            'fields': (
+                'telegram',
+                'vk',
+                'instagram',
+                'twitter',
+                'linkedin',
+                'social_links',
+            )
+        }),
+        ('Медиа', {
+            'fields': (
+                'avatar',
+                'avatar_preview',
+            )
+        }),
+        #('Служебная информация', {
+        #    'fields': (
+        #        'slug',
+        #        'created_at',
+        #        'updated_at',
+        #    )
+        #}),"""
+    )
+
+    # Автоматическое заполнение slug при добавлении
+    #prepopulated_fields = {'slug': ('name',)}
+
+    # Сортировка по умолчанию
+    ordering = ('-is_active', 'name')
+
+    # Действия для списка
+    actions = ['make_active', 'make_inactive']
+
+    # Поля, которые можно редактировать прямо в списке
+    list_editable = ('is_active',)
+
+    # Пагинация
+    list_per_page = 25
+
+    # Кастомные методы
+    def avatar_preview(self, obj):
+        if obj.avatar:
+            return format_html(
+                '<img src="{}" width="50" height="50" style="object-fit: cover;" />',
+                obj.avatar.url
+            )
+        return "-"
+    avatar_preview.short_description = 'Превью'
+
+    def social_links(self, obj):
+        links = []
+        if obj.telegram:
+            links.append(f'<a href="https://t.me/{obj.telegram}" target="_blank">Telegram</a>')
+        if obj.vk:
+            links.append(f'<a href="https://vk.com/{obj.vk}" target="_blank">VK</a>')
+        if obj.instagram:
+            links.append(f'<a href="https://instagram.com/{obj.instagram}" target="_blank">Instagram</a>')
+        if obj.twitter:
+            links.append(f'<a href="https://twitter.com/{obj.twitter}" target="_blank">Twitter</a>')
+        if obj.linkedin:
+            if obj.linkedin.startswith('http'):
+                links.append(f'<a href="{obj.linkedin}" target="_blank">LinkedIn</a>')
+            else:
+                links.append(f'<a href="https://linkedin.com/in/{obj.linkedin}" target="_blank">LinkedIn</a>')
+
+        return format_html(' | '.join(links)) if links else "-"
+    social_links.short_description = 'Ссылки на соцсети'
+    social_links.allow_tags = True
+
+    # Кастомные действия
+    def make_active(self, request, queryset):
+        queryset.update(is_active=True)
+    make_active.short_description = "Активировать выбранных учителей"
+
+    def make_inactive(self, request, queryset):
+        queryset.update(is_active=False)
+    make_inactive.short_description = "Деактивировать выбранных учителей"
+
 # Регистрация моделей в кастомной админке
 custom_admin_site.register(User)
+custom_admin_site.register(Teacher, TeacherAdmin)
 custom_admin_site.register(Application, ApplicationAdmin)
 custom_admin_site.register(ConnectMessage, ConnectMessageAdmin)
 custom_admin_site.register(Publication, PublicationAdmin)
