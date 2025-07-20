@@ -1,15 +1,15 @@
 {% extends 'main/base.html' %}
 
 {% block title %}
-Обо мне | Мария Серединская - репетитор по биологии и химии с научным подходом
+  Обо мне | Мария Серединская - репетитор по биологии и химии с научным подходом
 {% endblock %}
 
 {% block meta_description %}
-Магистр биологических наук, преподаватель СПбГУ с 9-летним опытом. Специализация: нейробиология, зоология позвоночных. Автор 5+ научных публикаций. Подготовка к ЕГЭ, ОГЭ и олимпиадам.
+  Магистр биологических наук, преподаватель СПбГУ с 9-летним опытом. Специализация: нейробиология, зоология позвоночных. Автор 5+ научных публикаций. Подготовка к ЕГЭ, ОГЭ и олимпиадам.
 {% endblock %}
 
 {% block meta_keywords %}
-репетитор биология химия СПбГУ, научные публикации по биологии, преподаватель зоологии, нейробиолог репетитор, подготовка к олимпиадам по биологии, магистр наук биология, методики преподавания биологии
+  репетитор биология химия СПбГУ, научные публикации по биологии, преподаватель зоологии, нейробиолог репетитор, подготовка к олимпиадам по биологии, магистр наук биология, методики преподавания биологии
 {% endblock %}
 
 {% block og_type %}profile{% endblock %}
@@ -29,237 +29,239 @@
 {% block twitter_image %}https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000{% endblock %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-12 max-w-6xl">
+  <div class="container mx-auto px-4 py-12 max-w-6xl">
     <!-- Hero Section -->
     <section class="text-center mb-16">
       <h1 class="text-4xl font-bold mb-4">{{ teacher.name }}</h1>
-        <p class="text-xl text-secondary max-w-3xl mx-auto">
-         {{ teacher.description }}
-        </p>
+      <p class="text-xl text-secondary max-w-3xl mx-auto">
+        {{ teacher.description }}
+      </p>
     </section>
 
     <!-- Main Content -->
     <div class="flex flex-col lg:flex-row gap-12">
-        <!-- Photo & Quick Facts -->
-        <div class="lg:w-1/3">
-            <div class="card p-6 sticky top-6">
-                <img src="/static/images/maria-profile-picture.jpg"
-                     alt="Мария Серединская - репетитор по биологии и химии"
-                     class="rounded-full w-64 h-64 object-cover mx-auto mb-6 border-4 border-primary">
+      <!-- Photo & Quick Facts -->
+      <div class="lg:w-1/3">
+        <div class="card p-6 sticky top-6">
+          <img src="/static/images/maria-profile-picture.jpg"
+               alt="Мария Серединская - репетитор по биологии и химии"
+               class="rounded-full w-64 h-64 object-cover mx-auto mb-6 border-4 border-primary">
 
-<div class="space-y-4">
-    <div>
-        <h3 class="font-bold text-lg text-primary">Образование:</h3>
-        <ul class="list-disc pl-5 space-y-2">
-            <!-- Магистратура -->
-            <li>
-                <span class="font-semibold">Магистр биологии</span>
-                <span class="block text-sm text-gray-600">Санкт-Петербургский государственный университет, диплом с отличием</span>
-            </li>
+          <div class="space-y-4">
+            <div>
+              <h3 class="font-bold text-lg text-primary">Образование:</h3>
+              <ul class="list-disc pl-5 space-y-2">
+                <!-- Магистратура -->
+                <li>
+                  <span class="font-semibold">Магистр биологии</span>
+                  <span class="block text-sm text-gray-600">СПбГУ, специализация зоология позвоночных</span>
+                </li>
 
-            <!-- Бакалавриат -->
-            <li>
-                <span class="font-semibold">Бакалавр биологии</span>
-                <span class="block text-sm text-gray-600">СПбГУ, специализация: физиология</span>
-            </li>
+                <!-- Бакалавриат -->
+                <li>
+                  <span class="font-semibold">Бакалавр биологии</span>
+                  <span class="block text-sm text-gray-600">СПбГУ, специализация: физиология</span>
+                </li>
 
-            <!-- Курсы -->
-            <li>
-                <span class="font-semibold">Дополнительная подготовка:</span>
-                <span class="block text-sm text-gray-600">Нейрофизиология, биоинформатика, методика преподавания</span>
-            </li>
-        </ul>
-    </div>
-                    <div>
-                        <h3 class="font-bold text-lg text-primary">Научная работа:</h3>
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>5+ публикаций в международных журналах</li>
-                            <li>Участие в 6 конференциях</li>
-                            <li>Грант Российского научного фонда</li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 class="font-bold text-lg text-primary">Преподавание:</h3>
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>9 лет репетиторского опыта</li>
-                            <li>250+ подготовленных учеников</li>
-                            <li>Преподаватель СПбГУ</li>
-                        </ul>
-                    </div>
-                </div>
+                {% comment %}
+                <!-- Курсы -->
+                <li>
+                  <span class="font-semibold">Дополнительная подготовка:</span>
+                  <span class="block text-sm text-gray-600">Нейрофизиология, биоинформатика, методика преподавания</span>
+                </li>
+                {% endcomment %}
+              </ul>
             </div>
+            <div>
+              <h3 class="font-bold text-lg text-primary">Научная работа:</h3>
+              <ul class="list-disc pl-5 space-y-1">
+                <li>5+ публикаций в международных журналах</li>
+                <li>Участие в 6 конференциях</li>
+                <li>Грант Российского научного фонда</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="font-bold text-lg text-primary">Преподавание:</h3>
+              <ul class="list-disc pl-5 space-y-1">
+                <li>9 лет репетиторского опыта</li>
+                <li>250+ подготовленных учеников</li>
+                <li>Преподаватель СПбГУ</li>
+              </ul>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <!-- Detailed Bio -->
-        <div class="lg:w-2/3 space-y-8">
-            <!-- Scientific Experience -->
-<section class="mb-12">
-    <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">Научный опыт</h2>
+      <!-- Detailed Bio -->
+      <div class="lg:w-2/3 space-y-8">
+        <!-- Scientific Experience -->
+        <section class="mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">Научный опыт</h2>
 
-    <div class="card rounded-lg shadow-sm p-6 mb-6">
-        <h3 class="text-xl font-bold mb-3 text-primary">Исследования в биологии и медицине</h3>
-        <p class="mb-4">Работала в ведущих лабораториях СПбГУ, где изучала:</p>
-        <ul class="list-disc pl-5 space-y-2 mb-4">
-            <li>Как стресс влияет на организм и способы его снижения</li>
-            <li>Действие лекарственных препаратов на поведение</li>
-            <li>Современные методы анализа биологических данных</li>
-        </ul>
-        <p class="text-sm text-gray-600">Результаты опубликованы в международных научных журналах.</p>
-    </div>
+          <div class="card rounded-lg shadow-sm p-6 mb-6">
+            <h3 class="text-xl font-bold mb-3 text-primary">Исследования в биологии и медицине</h3>
+            <p class="mb-4">Работала в лабораториях СПбГУ, где изучала:</p>
+            <ul class="list-disc pl-5 space-y-2 mb-4">
+              <li>Как стресс влияет на организм и способы его снижения</li>
+              <li>Действие лекарственных препаратов на поведение</li>
+              <li>Современные методы анализа биологических данных</li>
+            </ul>
+            <p class="text-sm text-gray-600">Результаты опубликованы в международных научных журналах.</p>
+          </div>
 
-    <div class="card rounded-lg shadow-sm p-6">
-        <h3 class="text-xl font-bold mb-3 text-primary">Исследования в зоологии</h3>
-        <p class="mb-4">Участвовала в проектах по изучению животных:</p>
-        <ul class="list-disc pl-5 space-y-2">
-            <li>Поведение редких видов (сайгаки, моржи)</li>
-            <li>Современные технологии наблюдения за животными</li>
-        </ul>
-        <div class="mt-4">
-            <p class="text-sm text-gray-600">Этот опыт помогает наглядно объяснять биологические процессы на уроках.</p>
-        </div>
-    </div>
+          <div class="card rounded-lg shadow-sm p-6">
+            <h3 class="text-xl font-bold mb-3 text-primary">Исследования в зоологии</h3>
+            <p class="mb-4">Участвовала в проектах по изучению животных:</p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Поведение редких видов (сайгаки, моржи)</li>
+              <li>Современные технологии наблюдения за животными</li>
+            </ul>
+            <div class="mt-4">
+              <p class="text-sm text-gray-600">Этот опыт помогает наглядно объяснять биологические процессы на уроках.</p>
+            </div>
+          </div>
 
-    <div class="mt-8 bg-blue-50 rounded-lg p-6">
-        <h3 class="text-xl font-bold mb-3 text-primary">Почему это важно для учеников?</h3>
-        <ul class="list-disc pl-5 space-y-2">
-            <li>Знание современных исследований делает объяснения актуальными и интересными</li>
-            <li>Научный подход помогает понять сложные темы ЕГЭ на примерах из практики</li>
-            <li>Опыт работы с данными учит анализировать информацию — ключевой навык для олимпиад</li>
-        </ul>
-    </div>
-</section>
-            <!-- Teaching Experience -->
-            <section>
-                <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">Преподавательский опыт</h2>
+          <div class="mt-8 bg-blue-50 rounded-lg p-6">
+            <h3 class="text-xl font-bold mb-3 text-primary">Почему это важно для учеников?</h3>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Знание современных исследований делает объяснения актуальными и интересными</li>
+              <li>Научный подход помогает понять сложные темы ЕГЭ на примерах из практики</li>
+              <li>Опыт работы с данными учит анализировать информацию — ключевой навык для олимпиад</li>
+            </ul>
+          </div>
+        </section>
 
-                <div class="space-y-6">
-                    <div class="card p-6 hover-scale">
-                        <div class="flex items-start">
-                            <div class="text-primary text-2xl mr-4">
-                                <i class="fas fa-university"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold mb-2">Преподаватель СПбГУ</h3>
-                                <p>Ведение практических занятий по зоологии позвоночных для студентов бакалавриата. Разработка учебных материалов и методических пособий.</p>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Teaching Experience -->
+        <section>
+          <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">Преподавательский опыт</h2>
 
-                    <div class="card p-6 hover-scale">
-                        <div class="flex items-start">
-                            <div class="text-primary text-2xl mr-4">
-                                <i class="fas fa-graduation-cap"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold mb-2">Репетиторская деятельность</h3>
-                                <p class="mb-2">С 2017 года подготовила более 250 учеников по биологии и химии:</p>
-                                <ul class="list-disc pl-5 space-y-1">
-                                    <li>Индивидуальные программы для школьников 9-11 классов</li>
-                                    <li>Подготовка к ЕГЭ, ОГЭ и вузовским олимпиадам</li>
-                                    <li>Курс молекулярной биологии на английском языке</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card p-6 hover-scale">
-                        <div class="flex items-start">
-                            <div class="text-primary text-2xl mr-4">
-                                <i class="fas fa-campground"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold mb-2">Летняя школа "Зеркальный"</h3>
-                                <p>Разработка и проведение курса лекций и практических занятий по молекулярной биологии для одаренных школьников.</p>
-                            </div>
-                        </div>
-                    </div>
+          <div class="space-y-6">
+            <div class="card p-6 hover-scale">
+              <div class="flex items-start">
+                <div class="text-primary text-2xl mr-4">
+                  <i class="fas fa-university"></i>
                 </div>
-            </section>
-
-            <!-- Publications -->
-            <section>
-                <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">Научные публикации</h2>
-
-                <div class="space-y-4">
-                    <div class="border-l-4 border-primary pl-4 py-2">
-                        <h3 class="font-bold">Пространственные отношения в группах моржей</h3>
-                        <p class="text-sm text-text-secondary">Giljov A.N., Seredinskaya M.V. et al. Nature Conservation Research, 2024</p>
-                        <a href="https://doi.org/10.24189/ncr.2024.030" class="text-primary text-sm hover:underline">DOI: 10.24189/ncr.2024.030</a>
-                    </div>
-
-                    <div class="border-l-4 border-primary pl-4 py-2">
-                        <h3 class="font-bold">Модель хронического стресса у Danio rerio</h3>
-                        <p class="text-sm text-text-secondary">Demin K.A., Seredinskaya M.V. et al. Journal of Neuroscience Research, 2025</p>
-                        <a href="https://doi.org/10.1002/jnr.70025" class="text-primary text-sm hover:underline">DOI: 10.1002/jnr.70025</a>
-                    </div>
-
-                    <div class="border-l-4 border-primary pl-4 py-2">
-                        <h3 class="font-bold">Новый метод оценки стресс-зависимого поведения</h3>
-                        <p class="text-sm text-text-secondary">Demin K.A., Seredinskaya M.V. et al. Journal of Neuroscience Methods, 2020</p>
-                        <a href="https://doi.org/10.1016/j.jneumeth.2020.108637" class="text-primary text-sm hover:underline">DOI: 10.1016/j.jneumeth.2020.108637</a>
-                    </div>
+                <div>
+                  <h3 class="text-xl font-bold mb-2">Преподавание в СПбГУ</h3>
+                  <p>Проведение курса практических занятий по териологии для студентов бакалавриата Санкт-Петербургского государственного университета.</p>
                 </div>
+              </div>
+            </div>
 
-                <div class="mt-6 text-center">
-                    <a href="#" class="btn btn-outline">Все публикации (5+)</a>
+            <div class="card p-6 hover-scale">
+              <div class="flex items-start">
+                <div class="text-primary text-2xl mr-4">
+                  <i class="fas fa-graduation-cap"></i>
                 </div>
-            </section>
-            {% comment %}
-            <!-- Additional Skills -->
-            <section>
-                <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">Профессиональные навыки</h2>
-
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-3 text-primary">Лабораторные методы</h3>
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>qPCR, HPLC, электрофорез</li>
-                            <li>Конфокальная микроскопия</li>
-                            <li>Микродиссекция тканей</li>
-                        </ul>
-                    </div>
-
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-3 text-primary">Анализ поведения</h3>
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>Тесты на тревожность и стресс</li>
-                            <li>Анализ социального поведения</li>
-                            <li>Обработка аэрофотоснимков</li>
-                        </ul>
-                    </div>
-
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-3 text-primary">Программное обеспечение</h3>
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>Noldus Ethovision, ImageJ</li>
-                            <li>Python, R для анализа данных</li>
-                            <li>GraphPad, STATISTICA</li>
-                        </ul>
-                    </div>
-
-                    <div class="card p-6">
-                        <h3 class="text-xl font-bold mb-3 text-primary">Языки</h3>
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>Русский (носитель)</li>
-                            <li>Английский (B2)</li>
-                        </ul>
-                    </div>
+                <div>
+                  <h3 class="text-xl font-bold mb-2">Репетиторская деятельность</h3>
+                  <p class="mb-2">С 2017 года подготовила более 250 учеников по биологии и химии:</p>
+                  <ul class="list-disc pl-5 space-y-1">
+                    <li>Индивидуальные программы для школьников 9-11 классов</li>
+                    <li>Подготовка к ЕГЭ, ОГЭ и вузовским олимпиадам</li>
+                  </ul>
                 </div>
-            </section>
-            {% endcomment %}
-        </div>
+              </div>
+            </div>
+
+            <div class="card p-6 hover-scale">
+              <div class="flex items-start">
+                <div class="text-primary text-2xl mr-4">
+                  <i class="fas fa-campground"></i>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold mb-2">Летняя школа в лагере "Зеркальный"</h3>
+                  <p>Разработка и проведение курса лекций и практических занятий по молекулярной биологии для одаренных школьников.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Publications -->
+        <section>
+          <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">Научные публикации</h2>
+
+          <div class="space-y-4">
+            <div class="border-l-4 border-primary pl-4 py-2">
+              <h3 class="font-bold">Пространственные отношения в группах моржей</h3>
+              <p class="text-sm text-text-secondary">Giljov A.N., Seredinskaya M.V. et al. Nature Conservation Research, 2024</p>
+              <a href="https://doi.org/10.24189/ncr.2024.030" class="text-primary text-sm hover:underline">DOI: 10.24189/ncr.2024.030</a>
+            </div>
+
+            <div class="border-l-4 border-primary pl-4 py-2">
+              <h3 class="font-bold">Модель хронического стресса у Danio rerio</h3>
+              <p class="text-sm text-text-secondary">Demin K.A., Seredinskaya M.V. et al. Journal of Neuroscience Research, 2025</p>
+              <a href="https://doi.org/10.1002/jnr.70025" class="text-primary text-sm hover:underline">DOI: 10.1002/jnr.70025</a>
+            </div>
+
+            <div class="border-l-4 border-primary pl-4 py-2">
+              <h3 class="font-bold">Новый метод оценки стресс-зависимого поведения</h3>
+              <p class="text-sm text-text-secondary">Demin K.A., Seredinskaya M.V. et al. Journal of Neuroscience Methods, 2020</p>
+              <a href="https://doi.org/10.1016/j.jneumeth.2020.108637" class="text-primary text-sm hover:underline">DOI: 10.1016/j.jneumeth.2020.108637</a>
+            </div>
+          </div>
+
+          <div class="mt-6 text-center">
+            <a href="#" class="btn btn-outline">Все публикации (5+)</a>
+          </div>
+        </section>
+        {% comment %}
+        <!-- Additional Skills -->
+        <section>
+          <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">Профессиональные навыки</h2>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="card p-6">
+              <h3 class="text-xl font-bold mb-3 text-primary">Лабораторные методы</h3>
+              <ul class="list-disc pl-5 space-y-1">
+                <li>qPCR, HPLC, электрофорез</li>
+                <li>Конфокальная микроскопия</li>
+                <li>Микродиссекция тканей</li>
+              </ul>
+            </div>
+
+            <div class="card p-6">
+              <h3 class="text-xl font-bold mb-3 text-primary">Анализ поведения</h3>
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Тесты на тревожность и стресс</li>
+                <li>Анализ социального поведения</li>
+                <li>Обработка аэрофотоснимков</li>
+              </ul>
+            </div>
+
+            <div class="card p-6">
+              <h3 class="text-xl font-bold mb-3 text-primary">Программное обеспечение</h3>
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Noldus Ethovision, ImageJ</li>
+                <li>Python, R для анализа данных</li>
+                <li>GraphPad, STATISTICA</li>
+              </ul>
+            </div>
+
+            <div class="card p-6">
+              <h3 class="text-xl font-bold mb-3 text-primary">Языки</h3>
+              <ul class="list-disc pl-5 space-y-1">
+                <li>Русский (носитель)</li>
+                <li>Английский (B2)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        {% endcomment %}
+      </div>
     </div>
 
     <!-- CTA Section -->
     <section class="mt-20 text-center bg-primary text-white p-12 rounded-2xl">
-        <h2 class="text-3xl font-bold mb-4">Научный подход к преподаванию</h2>
-        <p class="text-xl mb-8 max-w-2xl mx-auto">
-            Использую актуальные научные знания и индивидуальные методики в подготовке учеников
-        </p>
-        <a href="/application" class="btn bg-white text-primary px-8 py-3 text-lg font-bold hover:bg-gray-100">
-            Записаться на занятие
-        </a>
+      <h2 class="text-3xl font-bold mb-4">Научный подход к преподаванию</h2>
+      <p class="text-xl mb-8 max-w-2xl mx-auto">
+        Использую актуальные научные знания и индивидуальные методики в подготовке учеников
+      </p>
+      <a href="/application" class="btn bg-white text-primary px-8 py-3 text-lg font-bold hover:bg-gray-100">
+        Записаться на занятие
+      </a>
     </section>
-</div>
+  </div>
 {% endblock %}
