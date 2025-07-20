@@ -122,55 +122,7 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 hero-gradient">
-    <div class="max-w-7xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="order-2 md:order-1">
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-6">
-                  <span class="text-gradient">{{ teacher.name|default:'Ваше имя' }}</span><br>
-                  {{ teacher.status|default:'Ваш статус'}}
-                </h1>
-                <p class="text-lg mb-8 max-w-lg max-h-32" style="color: rgb(var(--color-text-secondary));">
-                  {{ teacher.description|default:'Ваше описание' }}
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="/lessons" class="btn btn-primary px-6 py-3">
-                        Записаться на урок
-                    </a>
-                    <a href="/science" class="btn btn-outline px-6 py-3">
-                        Научные работы
-                    </a>
-                </div>
-            </div>
-            <div class="order-1 md:order-2 relative">
-                <div class="relative w-full aspect-square max-w-md mx-auto">
-                  <img src="{{ teacher.avatar.url }}"
-                       alt="{{ teacher.name }}"
-                       title="{{ teacher.status }}"
-                       class="absolute inset-0 w-full h-full object-cover z-0 rounded-2xl"
-                       style="border: 1px solid rgba(var(--color-border), 0.3);"
-                       fetchpriority="high"/>
-
-                  <div class="absolute -bottom-6 -left-6 p-4 rounded-lg shadow-lg" style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
-                      <div class="text-primary text-3xl">
-                          <i class="fas fa-graduation-cap"></i>
-                        </div>
-                        <p class="font-bold mt-1">СПбГУ</p>
-                        <p class="text-xs" style="color: rgb(var(--color-text-secondary));">Биологический факультет</p>
-                    </div>
-
-                    <div class="absolute -top-6 -right-6 p-4 rounded-lg shadow-lg" style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
-                        <div class="text-primary text-3xl">
-                            <i class="fas fa-flask"></i>
-                        </div>
-                        <p class="font-bold mt-1">9 лет</p>
-                        <p class="text-xs" style="color: rgb(var(--color-text-secondary));">Опыта преподавания</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+{% include 'main/sections/header/header_v1.html' %}
 
 <!-- About Section -->
 {% if False %}
