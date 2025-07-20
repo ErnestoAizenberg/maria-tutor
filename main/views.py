@@ -122,7 +122,9 @@ def index(request):
 def lessons(request):
     """Display lessons page"""
     logger.info("Rendering lessons page")
-    context = {}
+    context = {
+        "lesson_cards": LessonCard.objects.all(),
+    }
 
     return render(request, "main/lessons.html", context)
 
