@@ -1,0 +1,120 @@
+<section class="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <!-- Parallax Background with Gradient Overlay -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/90 via-indigo-900/80 to-purple-900/90 dark:from-gray-900/95 dark:via-gray-900/90 dark:to-black/95"></div>
+        {% comment %}
+        <img src="{{ teacher.avatar.url }}" alt="{{ teacher.name }}"
+             class="w-full h-full object-cover scale-110"
+             style="transform: scale(1.1); filter: blur(1px);"
+             fetchpriority="high"/>
+        {% endcomment %}
+    </div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+            <!-- Text Content with Staggered Animation -->
+            <div class="space-y-6 text-white">
+                <div class="overflow-hidden">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight transform transition duration-700 ease-out translate-y-10 opacity-0 animate-fade-in-up">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400">{{ teacher.name|default:'Ваше имя' }}</span><br>
+                        <span class="font-medium text-xl sm:text-2xl text-gray-200 block mt-2 tracking-wide">
+                            {{ teacher.status|default:'Ваш статус'}}
+                        </span>
+                    </h1>
+                </div>
+
+                <div class="overflow-hidden">
+                    <p class="text-lg text-gray-100 mb-8 max-w-xl transform transition duration-700 ease-out translate-y-10 opacity-0 animate-fade-in-up delay-100">
+                        {{ teacher.description|default:'Ваше описание' }}
+                    </p>
+                </div>
+
+                <div class="overflow-hidden flex flex-wrap gap-4 transform transition duration-700 ease-out translate-y-10 opacity-0 animate-fade-in-up delay-200">
+                    <a href="/lessons" class="btn-primary px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-600/30 transition-all duration-300 transform hover:-translate-y-1 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+                        Записаться на урок
+                    </a>
+                    <a href="/science" class="btn-outline px-8 py-4 rounded-xl border-2 border-white/30 hover:border-white bg-white/5 backdrop-blur-sm hover:bg-white/10 text-white transition-all duration-300 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/></svg>
+                        Научные работы
+                    </a>
+                </div>
+
+                <!-- Experience & Education - Animated Cards -->
+                <div class="overflow-hidden grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-lg mt-10 transform transition duration-700 ease-out translate-y-10 opacity-0 animate-fade-in-up delay-300">
+                    <div class="p-5 bg-white/10 backdrop-blur-lg rounded-xl border border-white/20 hover:border-cyan-400/40 transition-all duration-300 group hover:shadow-lg hover:shadow-cyan-500/10">
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 p-3 bg-cyan-900/30 rounded-lg group-hover:bg-cyan-500/10 transition-colors">
+                                <svg class="w-6 h-6 text-cyan-300" fill="currentColor" viewBox="0 0 512 512"><path d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"/></svg>
+                            </div>
+                            <div>
+                                <p class="font-bold text-xl text-cyan-200">{{ teacher.experience_years|default:'9' }}+</p>
+                                <p class="font-medium">Опыта преподавания</p>
+                                {#<p class="text-sm text-gray-300 mt-1">Преподаватель высшей категории</p>#}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-5 bg-white/10 backdrop-blur-lg rounded-xl border border-white/20 hover:border-indigo-400/40 transition-all duration-300 group hover:shadow-lg hover:shadow-indigo-500/10">
+                        <div class="flex items-start gap-4">
+                            <div class="mt-1 p-3 bg-indigo-900/30 rounded-lg group-hover:bg-indigo-500/10 transition-colors">
+                                <svg class="w-6 h-6 text-indigo-300" fill="currentColor" viewBox="0 0 640 512"><path d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z"/></svg>
+                            </div>
+                            <div>
+                                <p class="font-bold text-xl text-indigo-200">{{ teacher.education.university|default:'СПбГУ' }}</p>
+                                <p class="font-medium">{{ teacher.education.faculty|default:'Биологический факультет' }}</p>
+                                {#<p class="text-sm text-gray-300 mt-1">PhD, Кандидат наук</p>#}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Profile Image with Floating Effect -->
+            <div class="hidden lg:flex justify-center items-center">
+                <div class="relative">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full opacity-70 blur-xl animate-pulse-slow"></div>
+                    <div class="relative overflow-hidden rounded-full border-4 border-white/10 shadow-2xl shadow-blue-900/50 w-80 h-80 lg:w-96 lg:h-96">
+                        <img src="{{ teacher.avatar.url }}" alt="{{ teacher.name }}"
+                             class="w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-700 ease-in-out"
+                             fetchpriority="high"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Elements -->
+    <div class="absolute bottom-10 left-10 w-8 h-8 rounded-full bg-cyan-400/20 animate-float"></div>
+    <div class="absolute top-20 right-1/4 w-6 h-6 rounded-full bg-indigo-400/30 animate-float animation-delay-2000"></div>
+</section>
+
+<style>
+@keyframes fade-in-up {
+    to { transform: translateY(0); opacity: 1; }
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-20px) translateX(10px); }
+}
+@keyframes pulse-slow {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 0.4; }
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.7s forwards cubic-bezier(0.19, 1, 0.22, 1);
+}
+.animate-float {
+    animation: float 8s infinite ease-in-out;
+}
+.animate-pulse-slow {
+    animation: pulse-slow 6s infinite;
+}
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+</style>

@@ -1,0 +1,67 @@
+<section class="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0 z-0">
+        <img src="{{ teacher.avatar.url }}"
+             alt="{{ teacher.name }}"
+             class="w-full h-full object-cover"
+             fetchpriority="high"/>
+        <div class="absolute inset-0 bg-black/40 dark:bg-black/60"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Left Column - Text Content -->
+            <div class="text-white">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                    <span class="text-blue-300">{{ teacher.name|default:'Ваше имя' }}</span><br>
+                    {{ teacher.status|default:'Ваш статус'}}
+                </h1>
+
+                <p class="text-lg text-gray-200 mb-8 max-w-lg">
+                    {{ teacher.description|default:'Ваше описание' }}
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="/lessons" class="btn-primary px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white">
+                        Записаться на урок
+                    </a>
+                    <a href="/science" class="btn-outline px-6 py-3 rounded-lg border-white text-white hover:bg-white/10">
+                        Научные работы
+                    </a>
+                </div>
+
+                <!-- Experience & Education - Clean Cards -->
+                <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md">
+                    <div class="p-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                        <div class="flex items-center gap-3">
+                            <div class="text-blue-300 text-2xl">
+                            <svg aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 1em; height: 1em; vertical-align: -0.125em;">
+  <path fill="currentColor" d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"></path>
+</svg>
+                            </div>
+                            <div>
+                                <p class="font-bold">{{ teacher.experience_years|default:'9' }} лет</p>
+                                <p class="text-sm text-gray-200">Опыта преподавания</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20">
+                        <div class="flex items-center gap-3">
+                            <div class="text-blue-300 text-2xl">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold">{{ teacher.education.university|default:'СПбГУ' }}</p>
+                                <p class="text-sm text-gray-200">{{ teacher.education.faculty|default:'Биологический факультет' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Can be used for additional content or kept empty -->
+            <div class="hidden md:block"></div>
+        </div>
+    </div>
+</section>
