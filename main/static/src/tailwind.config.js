@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     // Пути ОТНОСИТЕЛЬНО этого конфига!
-    "../../../templates/**/*.html",  // Шаблоны Django
+    "main/templates/**/*.html",  // Шаблоны Django
   ],
   theme: {
     extend: {},
