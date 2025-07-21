@@ -1,5 +1,45 @@
 {% extends 'main/base.html' %}
+{% block title %}Подписка оформлена успешно!{% endblock title %}
 
 {% block content %}
-e-mail был подписан на рассылку
-{% endblock %}
+    <style>
+        .a {
+          color: rgb(var(--color-primary));
+          text-decoration: none;
+          transition: all var(--transition-fast);
+          border-bottom: 1px solid rgba(var(--color-primary), 0.2);
+        }
+        .success-icon {
+            color: #28a745;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .success-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+    </style>
+
+<div class="container">
+    <div class="success-container">
+        <div class="success-icon">✓</div>
+        <h1 class="text-4xl mb-4">Спасибо за подписку!</h1>
+        <p class="mb-4">Вы успешно подписались на нашу рассылку. Теперь вы будете первыми получать наши новости и специальные предложения.</p>
+
+        <p class="mb-6">Если это произошло по ошибке или вы передумали, вы можете <a href="/unsubscribe-email" class="a">отписаться</a> в любой момент.</p>
+
+        <div class="pt-6">
+          <a href="/" class="btn btn-primary px-8 py-3 text-lg group transition-all duration-300">
+            <i class="fas fa-home mr-2 transition-transform duration-300 group-hover:scale-110"></i>
+            Вернуться на главную
+            <i class="fas fa-chevron-right ml-2 opacity-70 group-hover:opacity-100 group-hover:ml-3 transition-all duration-300"></i>
+          </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}
