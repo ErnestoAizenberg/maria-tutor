@@ -3,7 +3,7 @@
   --color-primary: 109, 40, 217;  /* Фиолетовый */
   --color-primary-dark: 76, 29, 149;
   --color-primary-light: 139, 92, 246;
-  --color-secondary: 236, 72, 153; /* Розовый */
+  --color-secondary: 120, 180, 120;/*236, 72, 153;  Розовый */
   --color-accent: 59, 130, 246;   /* Синий */
   --color-text: 229, 229, 229;    /* Почти белый */
   --color-text-secondary: 180, 180, 180;
@@ -36,7 +36,7 @@
   --color-primary: 109, 40, 217;
   --color-primary-dark: 76, 29, 149;
   --color-primary-light: 139, 92, 246;
-  --color-secondary: 236, 72, 153;
+  --color-secondary: 0, 160, 120; /* Розоватый 236, 72, 153;*/
   --color-accent: 59, 130, 246;
   --color-text: 30, 30, 30;
   --color-text-secondary: 100, 100, 100;
