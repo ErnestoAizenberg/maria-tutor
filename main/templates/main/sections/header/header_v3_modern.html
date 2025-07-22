@@ -1,5 +1,27 @@
-<section class="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-    <!-- Parallax Background with Gradient Overlay -->
+<style>
+body {
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(30, 58, 138, 0.9),
+    rgba(49, 46, 129, 0.8),
+    rgba(88, 28, 135, 0.9)
+  );
+}
+
+/* Тёмная тема */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-image: linear-gradient(
+      to bottom right,
+      rgba(17, 24, 39, 0.95),
+      rgba(17, 24, 39, 0.9),
+      rgba(0, 0, 0, 0.95)
+    );
+  }
+}
+</style>
+  <section class="relative py-20 md:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <!-- Parallax Background with Gradient Overlay -->
     <div class="absolute inset-0 z-0 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-blue-900/90 via-indigo-900/80 to-purple-900/90 dark:from-gray-900/95 dark:via-gray-900/90 dark:to-black/95"></div>
         {% comment %}
@@ -34,9 +56,9 @@
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
                         Записаться на урок
                     </a>
-                    <a href="/science" class="btn-outline px-8 py-4 rounded-xl border-2 border-white/30 hover:border-white bg-white/5 backdrop-blur-sm hover:bg-white/10 text-white transition-all duration-300 flex items-center gap-2">
+                    <a href="/about_me" class="btn-outline px-8 py-4 rounded-xl border-2 border-white/30 hover:border-white bg-white/5 backdrop-blur-sm hover:bg-white/10 text-white transition-all duration-300 flex items-center gap-2">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/></svg>
-                        Научные работы
+                        Обо мне
                     </a>
                 </div>
 

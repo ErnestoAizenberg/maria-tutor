@@ -122,7 +122,7 @@
 
 {% block content %}
 <!-- Hero Section -->
-{% include 'main/sections/header/header_v1.html' %}
+{% include 'main/sections/header/header_v3_modern.html' %}
 
 <!-- About Section -->
 {% if False %}
@@ -135,14 +135,16 @@
 {% endif %}
 
 <!-- Lessons Section -->
+{% if False %}
 {% include 'main/sections/lessons.html' with lesson_cards=lesson_cards %}
+{% endif %}
 
 <!-- Blog Section -->
 {#{% include 'main/sections/blog_v2.html' with articles=articles %}#}
 
 <!-- Testimonials -->
 {% if reviews %}
-{% include 'main/sections/reviews_v2.html' with reviews=reviews %}
+{% include 'main/sections/reviews_v2_modern.html' with reviews=reviews %}
 {% endif %}
 
 <!-- Contact Section -->

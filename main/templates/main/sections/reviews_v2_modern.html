@@ -1,0 +1,30 @@
+{#<section class="py-20 px-4 sm:px-6 lg:px-8" style="background-color: rgb(var(--color-bg));">#}
+<section id="contact" class="py-20 px-4 sm:px-6 lg:px-8" style="background: linear-gradient(to bottom, rgba(var(--color-primary), 0.05) 0%, rgba(var(--color-bg), 0.8) 100%);">
+  <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="inline-block px-3 py-1 text-sm font-medium rounded-full mb-4"
+                  style="background-color: rgba(var(--color-primary), 0.1); color: rgb(var(--color-primary));">
+                Отзывы
+            </span>
+            {% comment %}
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold mb-6">Что говорят ученики</h2>
+            <p class="max-w-3xl mx-auto text-lg" style="color: rgb(var(--color-text-secondary));">
+                Результаты и впечатления тех, кто уже занимался с Марией.
+            </p>
+            {% endcomment %}
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          {% include 'main/listings/reviews_v2.html' with reviews=reviews %}
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="reviews/" class="btn btn-outline px-6 py-3">
+                Все отзовы
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        </div>
+    </div>
+</section>
