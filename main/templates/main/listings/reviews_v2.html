@@ -19,16 +19,16 @@
     </div>
 
     <!-- Текст отзыва -->
-    <blockquote class="relative">
+    {#<blockquote class="relative">#}
       {% if review.source == 'profi_ru' %}
       Отзыв с {{ review.get_source_display }}:
       {% endif %}
-        <div class="absolute top-0 left-0 text-6xl text-[rgba(var(--color-text-secondary),0.2)] font-serif">"</div>
+      {#<div class="absolute top-0 left-0 text-6xl text-[rgba(var(--color-text-secondary),0.2)] font-serif">"</div>#}
         <p class="relative z-10 italic text-[rgb(var(--color-text-secondary))] pl-8 pt-4 text-justify">
             {{ review.content }}
         </p>
-        <div class="absolute bottom-0 right-0 text-6xl text-[rgba(var(--color-text-secondary),0.2)] font-serif">"</div>
-    </blockquote>
+        {#<div class="absolute bottom-0 right-0 text-6xl text-[rgba(var(--color-text-secondary),0.2)] font-serif">"</div>#}
+        {#</blockquote>#}
 
     <!-- Рейтинг (если есть) -->
     {% if review.rating %}
