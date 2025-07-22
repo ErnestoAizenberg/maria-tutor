@@ -1,4 +1,8 @@
-<div class="card p-6 h-full hover-scale flex flex-col">
+<div class="card p-6 h-full hover-scale flex flex-col {% if card.is_featured %}relative{% endif %}" style="{% if card.is_featured %}border: 2px solid rgba(var(--color-primary), 0.3);{% endif %}">
+    {% if card.is_featured %}
+      <div class="absolute top-0 right-0 text-white px-3 py-1 text-xs font-bold rounded-bl-lg rounded-tr-lg bg-primary">ВЫГОДНО</div>
+    {% endif %}
+
     <div class="text-primary text-3xl mb-4">
         <i class="{{ card.icon_class }}"></i>
     </div>
