@@ -63,76 +63,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-12 px-4 sm:px-6 lg:px-8" style="background-color: rgb(var(--color-bg-secondary));">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid md:grid-cols-4 gap-12">
-                <div>
-                    <div class="flex items-center mb-6">
-                        <span class="text-2xl mr-2 text-primary"><i class="fas fa-atom"></i></span>
-                        <span class="font-serif text-xl font-bold">{{ teacher.name|default:'Ваше имя'}}</span>
-                    </div>
-                    <p class="text-secondary">
-                    {{ teacher.description|default:'Ваше описание' }}
-                    </p>
-                </div>
-
-                {#{% comment %}#}
-                <div>
-                    <h4 class="font-serif font-bold text-lg mb-6">Навигация</h4>
-                    <ul class="space-y-3">
-                        <li><a href="/about_me" class="hover:text-primary transition leaf-link">Обо мне</a></li>
-                        {#<li><a href="#science" class="hover:text-primary transition">Научная работа</a></li>#}
-                        <li><a href="/lessons" class="hover:text-primary transition leaf-link">Уроки</a></li>
-                        <li><a href="/articles" class="hover:text-primary transition leaf-link">Блог</a></li>
-                        <li><a href="/reviews" class="hover:text-primary transition leaf-link">Отзовы</a></li>
-                        <li><a href="/contacts" class="hover:text-primary transition leaf-link">Контакты</a></li>
-                        <li><a href="/search" class="hover:text-primary transition leaf-link">Поиск по сайту</a></li>
-                    </ul>
-                </div>
-                {# {% endcomment %} #}
-
-                <div>
-                    <h4 class="font-serif font-bold text-lg mb-6">Контакты</h4>
-                    <ul class="space-y-3">
-                      {% if teacher.email %}
-                        <li class="flex items-center">
-                            <i class="fas fa-envelope mr-3 text-primary"></i>
-                            {{ teacher.email }}
-                        </li>
-                      {% endif %}
-                        {% if teacher.telegram %}
-                        <li class="flex items-center">
-                            <i class="fab fa-telegram mr-3 text-primary"></i>
-                            @{{ teacher.telegram }}
-                        </li>
-                        {% endif %}
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-serif font-bold text-lg mb-6">Подписаться</h4>
-                    <p class="mb-4">Получайте уведомления о новых статьях и наборах учеников.</p>
-                    <form class="flex" action="/subscribe_email/" method="POST">
-                      {% csrf_token %}
-                      <input type="email" placeholder="Ваш email" class="px-4 py-2 rounded-l-md w-full focus:outline-none focus:ring-2 focus:ring-primary" style="background-color: rgb(var(--color-bg-card)); color: rgb(var(--color-text));" name="email" required>
-                        <button type="submit" class="btn-primary px-4 py-2 rounded-r-md">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="border-t mt-12 pt-8 flex flex-col md:flex-row justify-between items-center" style="border-color: rgba(var(--color-border), 0.5);">
-                <p class="mb-4 md:mb-0">
-                    © 2025 Мария Серединская. Все права защищены.
-                </p>
-                <div class="flex space-x-6">
-                    <a href="/policy" class="hover:text-primary transition">Политика конфиденциальности</a>
-                    <a href="/terms" class="hover:text-primary transition">Условия использования</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    {% include 'main/footer.html' %}
 
     <script>
         // Mobile menu toggle
