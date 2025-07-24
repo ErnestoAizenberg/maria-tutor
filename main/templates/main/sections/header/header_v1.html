@@ -20,12 +20,14 @@
             </div>
             <div class="order-1 md:order-2 relative">
                 <div class="relative w-full aspect-square max-w-md mx-auto">
-                  <img src="{{ teacher.avatar.url }}"
-                       alt="{{ teacher.name }}"
-                       title="{{ teacher.status }}"
-                       class="absolute inset-0 w-full h-full object-cover z-0 rounded-2xl"
-                       style="border: 1px solid rgba(var(--color-border), 0.3);"
-                       fetchpriority="high"/>
+                  {% if teaher.avatar %}
+                    <img src="{{ teacher.avatar.url }}"
+                         alt="{{ teacher.name }}"
+                         title="{{ teacher.status }}"
+                         class="absolute inset-0 w-full h-full object-cover z-0 rounded-2xl"
+                         style="border: 1px solid rgba(var(--color-border), 0.3);"
+                         fetchpriority="high"/>
+                  {% endif %}
 
                   <div class="absolute -bottom-6 -left-6 p-4 rounded-lg shadow-lg" style="background-color: rgb(var(--color-bg-card)); border: 1px solid rgba(var(--color-border), 0.3);">
                       <div class="text-primary text-3xl">

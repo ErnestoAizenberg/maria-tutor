@@ -97,9 +97,11 @@ body {
                 <div class="relative">
                     <div class="absolute -inset-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full opacity-70 blur-xl animate-pulse-slow"></div>
                     <div class="relative overflow-hidden rounded-full border-4 border-white/10 shadow-2xl shadow-blue-900/50 w-80 h-80 lg:w-96 lg:h-96">
+                      {% if teacher.avatar %}
                         <img src="{{ teacher.avatar.url }}" alt="{{ teacher.name }}"
-                             class="w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-700 ease-in-out"
-                             fetchpriority="high"/>
+                               class="w-full h-full object-cover scale-105 hover:scale-100 transition-transform duration-700 ease-in-out"
+                               fetchpriority="high"/>
+                     {% endif %}
                     </div>
                 </div>
             </div>
