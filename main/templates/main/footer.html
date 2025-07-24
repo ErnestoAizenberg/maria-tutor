@@ -1,4 +1,110 @@
 <style>
+  /* Научная навигация для биолога/химика */
+  .bio-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .bio-nav li {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+  }
+
+  .bio-nav a {
+    display: block;
+    padding: 0.75rem 1.25rem;
+    color: rgb(var(--color-text));
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+    transition: all var(--transition-fast);
+    background: rgba(var(--color-bg-card), 0.7);
+    border-left: 3px solid rgb(var(--color-primary));
+  }
+
+  /* Эффект "химической пробирки" при наведении */
+  .bio-nav a:hover {
+    color: white;
+    transform: translateX(5px);
+    background: linear-gradient(
+      90deg,
+      rgba(var(--color-primary), 0.9) 0%,
+      rgba(var(--color-secondary), 0.7) 100%
+    );
+    box-shadow: var(--shadow-sm);
+    border-left-color: rgb(var(--color-accent));
+  }
+
+  /* Анимация пузырьков (для научного стиля) */
+  .bio-nav a:hover::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 30%;
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: bubble 2s ease-in-out infinite;
+  }
+
+  @keyframes bubble {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translateY(-15px) scale(1.2);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translateY(-30px) scale(0.8);
+      opacity: 0;
+    }
+  }
+
+  /* Иконки для пунктов меню */
+  .bio-nav a::after {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f138"; /* иконка стрелки */
+    position: absolute;
+    right: 1rem;
+    opacity: 0;
+    transition: all var(--transition-fast);
+    color: white;
+  }
+
+  .bio-nav a:hover::after {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+
+  .bio-nav a::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 0.75rem;
+    display: inline-block;
+    width: 1.25em;
+    text-align: center;
+    color: rgb(var(--color-primary-light));
+  }
+
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .bio-nav a {
+      padding: 0.6rem 1rem;
+    }
+  }
+</style>
+<style>
   /* Базовые стили для списка контактов */
   .contact-list {
     list-style: none;
@@ -13,7 +119,7 @@
     display: flex;
     align-items: center;
     padding: 0.5rem 0;
-    transition: all 0.2s ease;
+    transition: transform var(--transition-fast);
   }
 
   /* Стили для иконок */
@@ -22,17 +128,16 @@
     text-align: center;
     font-size: 1.1rem;
     margin-right: 0.75rem;
-    color: #3b82f6; /* Синий цвет как primary */
-    transition: transform 0.2s ease;
+    transition: transform var(--transition-fast);
   }
 
-  /* Специфичные цвета для разных платформ */
+  /* Цвета иконок с учетом темы */
   .contact-list .fa-envelope {
-    color: #d44638; /* Красный для email */
+    color: rgb(var(--color-secondary));
   }
 
   .contact-list .fa-telegram {
-    color: #0088cc; /* Синий для Telegram */
+    color: rgb(var(--color-accent));
   }
 
   /* Эффекты при наведении */
@@ -47,16 +152,21 @@
   /* Стили для текста */
   .contact-list a,
   .contact-list span {
-    color: #374151; /* Серый цвет текста */
+    color: rgb(var(--color-text));
     text-decoration: none;
     font-size: 0.95rem;
-    transition: color 0.2s ease;
+    transition: color var(--transition-fast);
   }
 
-  /* Для кликабельных элементов */
   .contact-list a:hover {
-    color: #1e40af; /* Темно-синий при наведении */
+    color: rgb(var(--color-primary-light));
     text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* Для темного фона добавляем свечение */
+  .theme-dark .contact-list li:hover i {
+    filter: drop-shadow(0 0 2px rgba(var(--color-text), 0.3));
   }
 
   /* Адаптивность */
@@ -87,7 +197,7 @@
             {#{% comment %}#}
             <div>
                 <h4 class="font-serif font-bold text-lg mb-6">Навигация</h4>
-                <ul class="space-y-3">
+                <ul class="bio-nav space-y-3">
                     <li><a href="/about_me" class="hover:text-primary transition leaf-link">Обо мне</a></li>
                     {#<li><a href="#science" class="hover:text-primary transition">Научная работа</a></li>#}
                     <li><a href="/lessons" class="hover:text-primary transition leaf-link">Уроки</a></li>
