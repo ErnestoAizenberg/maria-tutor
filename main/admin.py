@@ -1,5 +1,4 @@
 import os
-import requests
 
 from ckeditor.widgets import CKEditorWidget
 from django import forms
@@ -7,11 +6,9 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.html import format_html
-from django.urls import reverse
-from django.http import HttpResponseRedirect
 
 from .custom_admin import custom_admin_site
-from .models import Application, Article, ConnectMessage, Publication, Review, Teacher, LessonCard, LessonFeature
+from .models import Application, Article, Tag, ConnectMessage, Publication, Review, Teacher, LessonCard, LessonFeature
 
 
 User = get_user_model()
@@ -172,7 +169,6 @@ class ConnectMessageAdmin(admin.ModelAdmin):
         css = {"all": ("admin/css/custom.css",)}
 
 
-# @admin.register(Publication)
 class PublicationAdmin(admin.ModelAdmin):
     list_display = ("title", "journal", "publication_date", "is_featured")
     list_filter = ("journal", "publication_date", "is_featured")
@@ -193,8 +189,6 @@ class PublicationAdmin(admin.ModelAdmin):
         ("Metadata", {"fields": ("is_featured",)}),
     )
 
-
-from .models import Article, Tag
 
 class ArticleAdminForm(forms.ModelForm):
     content = forms.CharField(
@@ -289,7 +283,6 @@ class TagAdmin(admin.ModelAdmin):
     article_count.short_description = "Кол-во статей"
 
 
-@admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
     # Поля для отображения в списке
     list_display = (
@@ -357,6 +350,11 @@ class TeacherAdmin(admin.ModelAdmin):
                 'avatar',
                 'avatar_preview',
             )
+        }),
+        ('Мета', {
+            'fields': (
+                'lang',
+            ),
         }),
         #('Служебная информация', {
         #    'fields': (

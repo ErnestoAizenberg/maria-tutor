@@ -1,7 +1,7 @@
 import os
 
 from django.contrib.auth import get_user_model
-from django.core.validators import EmailValidator, FileExtensionValidator, URLValidator, MinValueValidator, MaxValueValidator
+from django.core.validators import EmailValidator, FileExtensionValidator, URLValidator, MinValueValidator, MaxValueValidator, ValidationError
 
 from django.db import models
 from django.urls import reverse
@@ -9,6 +9,11 @@ from django.utils import timezone
 from django.utils.text import slugify
 
 User = get_user_model()
+
+LANGUAGE_CHOICES = [
+    ('ru', 'Russian'),
+    ('en', 'English'),
+]
 
 class Teacher(models.Model):
     def upload_avatar(self, filename):
@@ -124,6 +129,13 @@ class Teacher(models.Model):
         default=True,
         verbose_name="Активен",
         help_text="Отображается ли учитель на сайте",
+    )
+    lang = models.CharField(
+        max_length=20,
+        choices=LANGUAGE_CHOICES,
+        default="en",
+        verbose_name="Язык",
+        help_text="Язык для которого учитель создаётся",
     )
 
     class Meta:
@@ -512,7 +524,6 @@ class Publication(models.Model):
     def get_absolute_url(self):
         return reverse("publication_detail", kwargs={"slug": self.slug})
 
-from django.core.exceptions import ValidationError
 
 class Tag(models.Model):
     name = models.CharField(
@@ -555,7 +566,7 @@ class Tag(models.Model):
     def clean(self):
         # Запрещаем теги с одинаковым slug
         if Tag.objects.filter(slug=slugify(self.name)).exclude(id=self.id).exists():
-            raise ValidationError(f"Тег с таким URL-именем уже существует")
+            raise ValidationError("Тег с таким URL-именем уже существует")
 
 class Article(models.Model):
     def upload_preview(self, filename):
