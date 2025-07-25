@@ -130,12 +130,21 @@ class Teacher(models.Model):
         verbose_name="Активен",
         help_text="Отображается ли учитель на сайте",
     )
+
     lang = models.CharField(
         max_length=20,
         choices=LANGUAGE_CHOICES,
         default="en",
         verbose_name="Язык",
         help_text="Язык для которого учитель создаётся",
+    )
+
+    keywords = models.CharField(
+        max_length=700,
+        blank=True,
+        null=True,
+        verbose_name="Кей-слова",
+        help_text="Ключевые слова для поиска",
     )
 
     class Meta:

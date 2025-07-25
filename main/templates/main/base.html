@@ -11,9 +11,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Основные мета-теги -->
-    <title>{% block title %}{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}{% endblock %}">
-    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+    <title>{% block title %}{{ teacher.name }} | {{ teacher.status }}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{{ teacher.description }}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}{{ teacher.keywords }}{% endblock %}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="{% block og_type %}website{% endblock %}">

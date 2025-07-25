@@ -354,6 +354,7 @@ class TeacherAdmin(admin.ModelAdmin):
         ('Мета', {
             'fields': (
                 'lang',
+                'keywords',
             ),
         }),
         #('Служебная информация', {
