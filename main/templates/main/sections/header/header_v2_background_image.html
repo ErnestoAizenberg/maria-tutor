@@ -1,10 +1,12 @@
 <section class="relative py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
     <!-- Background Image with Overlay -->
     <div class="absolute inset-0 z-0">
-        <img src="{{ teacher.avatar.url }}"
-             alt="{{ teacher.name }}"
-             class="w-full h-full object-cover"
-             fetchpriority="high"/>
+        {% if teacher.avatar %}
+          <img src="{{ teacher.avatar.url }}"
+               alt="{{ teacher.name }}"
+               class="w-full h-full object-cover"
+               fetchpriority="high"/>
+        {% endif %}
         <div class="absolute inset-0 bg-black/40 dark:bg-black/60"></div>
     </div>
 
