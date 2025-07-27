@@ -1,8 +1,5 @@
-"""
-Personal website for biology/chemistry tutor Maria Seredinskaya
-"""
-
 import json
+import logging
 
 from django.contrib import messages
 from django.core.exceptions import ValidationError
@@ -12,13 +9,11 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.paginator import Paginator
 
-from tutorproject.logger import setup_logger
-
 from .forms import ApplicationForm, ReviewForm
 from .models import Application, Article, Publication, Review, Tag, LessonCard
 from .utils import search_models
 
-logger = setup_logger(log_file="app.log", level="DEBUG")
+logger = logging.getLogger('main')
 
 def robots_txt(request):
     content = """User-agent: *
@@ -70,7 +65,6 @@ def search_view(request):
 
 def index(request):
     """Display the homepage with published articles and application form."""
-    logger.info("Rendering homepage")
 
     try:
         # Get published articles ordered by creation date (newest first)
@@ -103,7 +97,10 @@ def index(request):
             "lesson_cards": LessonCard.objects.all(),
         }
         logger.debug(f"Main page context: {context}")
-        logger.debug(f"form.erros: {form.errors}")
+
+        if form.errors:
+            logger.debug(f"form.erros: {form.errors}")
+
         logger.debug(f"Loaded {len(articles)} published articles for homepage")
         return render(request, "main/index-purple.html", context)
 
@@ -121,7 +118,6 @@ def index(request):
 
 def lessons(request):
     """Display lessons page"""
-    logger.info("Rendering lessons page")
     context = {
         "lesson_cards": LessonCard.objects.all(),
     }
@@ -131,7 +127,6 @@ def lessons(request):
 
 def about_me(request):
     """Display about me page"""
-    logger.info("Rendering about me page")
     context = {}
 
     return render(request, "main/about_me.html", context)
@@ -139,7 +134,6 @@ def about_me(request):
 
 def science(request):
     """Display science page"""
-    logger.info("Rendering science page")
     publications = Publication.objects.all()
     context = {"publications": publications}
 
@@ -220,7 +214,6 @@ def article(request, slug):
 
 def articles(request):
     """Display a list of all published articles"""
-    logger.info("Loading all published articles")
     try:
         list_articles = Article.objects.filter(status="published").order_by(
             "-created_at"
@@ -235,7 +228,6 @@ def articles(request):
 
 def test(request):
     """Route for testing templates"""
-    logger.debug("Test route accessed")
     return render(request, "main/article0.html")
 
 
@@ -358,7 +350,6 @@ def application_submit(request):
 
 def apply_success(request):
     """Display success page after application submission"""
-    logger.info("Application success page accessed")
     return render(request, "main/apply_success.html")
 
 
@@ -403,7 +394,6 @@ def connect_request(request):
 
 def connect_success(request):
     """Display success page after contact form submission"""
-    logger.debug("Contact success page accessed")
     return render(request, "main/connect_success.html")
 
 
@@ -443,7 +433,6 @@ def subscribe_email(request):
 
 def email_subscribe_success(request):
     """Display success page after email subscription"""
-    logger.debug("Email subscription success page accessed")
     return render(request, "main/email_subscribe_success.html")
 
 

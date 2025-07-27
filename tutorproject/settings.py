@@ -1,16 +1,123 @@
 import os
+import json
 from pathlib import Path
+from typing import Optional
+import logging
+import logging.config
 
 import dotenv
-from typing import Optional
+from django.utils.timezone import now
+from pythonjsonlogger import jsonlogger
 
-from .logger import setup_logger
+dotenv.load_dotenv(".env")
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-dotenv.load_dotenv(BASE_DIR / ".env")
+LOG_DIR = BASE_DIR / "logs"
+LOG_DIR.mkdir(exist_ok=True, mode=0o755)
 
-logger = setup_logger(log_file="settings.log")
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+        "json": {
+            "()": "pythonjsonlogger.jsonlogger.JsonFormatter",
+            "format": """
+                %(asctime)s %(levelname)s %(module)s
+                %(message)s %(pathname)s %(lineno)d
+            """,
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        "file_errors": {
+            "level": "ERROR",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOG_DIR / "errors.log",
+            "maxBytes": 10 * 1024 * 1024,
+            "backupCount": 5,
+            "formatter": "verbose",
+            "encoding": "utf-8",
+        },
+        "file_access": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOG_DIR / "access.log",
+            "maxBytes": 10 * 1024 * 1024,
+            "backupCount": 5,
+            "formatter": "json",
+            "encoding": "utf-8",
+        },
+        "file_django": {
+            "level": "INFO",
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": LOG_DIR / "django.log",
+            "when": "midnight",
+            "backupCount": 30,
+            "formatter": "verbose",
+            "encoding": "utf-8",
+        },
+        "file_business": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": LOG_DIR / "business.log",
+            "maxBytes": 10 * 1024 * 1024,
+            "backupCount": 5,
+            "formatter": "json",
+            "encoding": "utf-8",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file_django"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+        'django.server': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        "django.request": {
+            "handlers": ["file_errors", "console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "django.db.backends": {
+            "handlers": ["console"],
+            "level": os.getenv("DB_LOG_LEVEL", "WARNING"),
+            "propagate": False,
+        },
+        "access" : {
+            "handlers": ["file_access"],
+            "level": os.getenv("ACCESS_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+        "main": {
+            "handlers": ["file_business", "console"],
+            "level": os.getenv("APP_LOG_LEVEL", "INFO"),
+            "propagate": False,
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING",
+    },
+}
+
+logging.config.dictConfig(LOGGING)
+
 DEBUG: bool = os.getenv("DEBUG", "True") == "True"
 SECRET_KEY: str = str(os.getenv("SECRET_KEY"))
 
@@ -37,7 +144,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -45,6 +152,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "main.middleware.CustomErrorMiddleware",
+    "main.logging_middleware.RequestLoggingMiddleware",
 ]
 
 ROOT_URLCONF = "tutorproject.urls"
@@ -96,7 +204,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -129,5 +237,3 @@ CKEDITOR_CONFIGS = {
 HTML_MINIFY = True
 EXCLUDE_FROM_MINIFYING = ("/admin/", "/api/")
 KEEP_COMMENTS_ON_MINIFYING = False
-
-logger.info(f"Debug is {DEBUG}")
