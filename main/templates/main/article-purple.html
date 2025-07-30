@@ -272,20 +272,28 @@
             </div>
         </div>
 
+        {% comment %}
         <div class="flex items-center space-x-3">
-            <a href="https://t.me/Mickey_Fin" target="_blank" rel="noopener noreferrer"
+          {% if teacher.telegram %}
+          <a href="https://t.me/{{ teacher.telegram }}" target="_blank" rel="noopener noreferrer"
                class="share-button" aria-label="Telegram автора">
                 <i class="fab fa-telegram"></i>
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer"
+          {% endif %}
+          {% if teacher.vk %}
+          <a href="https://vk.com/{{ teacher.vk }}" target="_blank" rel="noopener noreferrer"
                class="share-button" aria-label="VK автора">
                 <i class="fab fa-vk"></i>
             </a>
-            <a href="#" target="_blank" rel="noopener noreferrer"
+          {% endif %}
+          {% if teacher.twitter %}
+          <a href="https://x.com/{{ teacher.twitter }}" target="_blank" rel="noopener noreferrer"
                class="share-button" aria-label="Twitter автора">
                 <i class="fab fa-twitter"></i>
             </a>
+          {% endif %}
         </div>
+        {% endcomment %}
     </div>
 </div>
 
