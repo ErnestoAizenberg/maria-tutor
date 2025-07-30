@@ -9,7 +9,6 @@
 {# Open Graph #}
 {% block og_url %}{{ request.build_absolute_uri|default:"" }}{% endblock %}
 {% block og_type %}article{% endblock %}
-{% block og_site_name %}Репетитор по биологии и химии | Мария Серединская{% endblock %}
 {% block og_title %}{{ article.title|default:"Статья" }}{% endblock %}
 {% block og_description %}{{ article.abstract|default:"" }}{% endblock %}
 
@@ -256,8 +255,8 @@
 <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-12">
     <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
         <div class="author-card">
-            <img src="https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000"
-                 alt="Мария Серединская"
+          <img src="{{ teacher.avatar.url }}"
+               alt="{{ teacher.name }}"
                  class="author-avatar"
                  loading="lazy">
             <div>
