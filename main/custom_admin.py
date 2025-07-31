@@ -1,6 +1,4 @@
-# main/custom_admin.py
 from django.contrib import admin, messages
-from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import path
 
@@ -13,18 +11,17 @@ class CustomAdminSite(admin.AdminSite):
         custom_urls = [
             path(
                 "main/application/<int:pk>/process/",
-                self.process_application,
+                self.admin_view(self.process_application),
                 name="process_application",
             ),
             path(
                 "main/connectmessage/<int:pk>/mark_read/",
-                self.mark_message_read,
+                self.admin_view(self.mark_message_read),
                 name="mark_message_read",
             ),
         ]
         return custom_urls + urls
 
-    @staff_member_required
     def process_application(self, request, pk):
         app = get_object_or_404(Application, pk=pk)
         app.is_processed = True
@@ -32,7 +29,6 @@ class CustomAdminSite(admin.AdminSite):
         messages.success(request, f"Application from {app.name} marked as processed")
         return redirect("admin:main_application_changelist")
 
-    @staff_member_required
     def mark_message_read(self, request, pk):
         msg = get_object_or_404(ConnectMessage, pk=pk)
         msg.is_read = True
