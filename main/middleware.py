@@ -1,8 +1,8 @@
 import logging
 
 from django.http import HttpResponse
-from django.template.loader import render_to_string
 from django.template import TemplateDoesNotExist
+from django.template.response import TemplateResponse
 
 class CustomErrorMiddleware:
     def __init__(self, get_response):
@@ -58,18 +58,15 @@ class CustomErrorMiddleware:
             extra={
                 'template_name': template_name,
                 'exception': str(exception) if exception else None,
-                'request_path': request.path
+                'request_path': request.path,
             }
         )
 
         try:
-            html_content = render_to_string(template_name, context)
+            response = TemplateResponse(request, template_name, context, status=status_code)
+            response.render()
             self.logger.debug(f"Successfully rendered error template: {template_name}")
-            return HttpResponse(
-                html_content,
-                status=status_code,
-                content_type='text/html'
-            )
+            return response
         except TemplateDoesNotExist:
             self.logger.warning(f"Error template not found: {template_name}. Falling back to plain text response.")
             # Если шаблона нет - возвращаем минимальный ответ
