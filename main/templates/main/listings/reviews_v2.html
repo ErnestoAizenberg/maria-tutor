@@ -14,7 +14,9 @@
         </div>
         <div class="ml-4">
             <h4 class="font-bold text-lg text-[rgb(var(--color-text))]">{{ review.author_name }}</h4>
-            <p class="text-sm text-[rgb(var(--color-primary))]">{{ review.achievement }}</p>
+            {% if review.achievement %}
+                <p class="text-sm text-[rgb(var(--color-primary))]">{{ review.achievement }}</p>
+            {% endif %}
         </div>
     </div>
 
