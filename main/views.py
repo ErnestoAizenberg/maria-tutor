@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.core.paginator import Paginator
 
 from .forms import ApplicationForm, ReviewForm
-from .models import Application, Article, Publication, Review, Tag, LessonCard
+from .models import Application, Article, Publication, Review, Tag, LessonCard, ConnectMessage
 from .utils import search_models
 
 logger = logging.getLogger('main')
@@ -330,10 +330,24 @@ def application_submit(request):
             to=["sereernest@gmail.com"],  # Recipient list
             reply_to=[user_email],  # Replies go to applicant
         )
-        email.send(fail_silently=False)
+        try:
+            email.send(fail_silently=False)
+        except Exception as err:
+            logger.error(f"While sending APPLICATION /email an error occured: {err}")
 
-        application = Application(name=name, email=email, subject=subject, goal=goal)
-        application.save()
+        try:
+            application = Application(name=name, email=email, subject=subject, goal=goal)
+            application.save()
+        except Exception as e:
+            logger.error(f"Failed to save Application, error: {str(e)}", exc_info=True)
+            return HttpResponse(
+                "Приносим извинения! Возникла техническая ошибка при отправке формы.<br><br>"
+                "Мы уже получили уведомление о проблеме и работаем над её решением.<br>"
+                "Вы можете:<ul>"
+                "<li>Попробовать отправить заявку ещё раз через 5-10 минут</li>"
+                "<li>Позвонить нам по телефону: +79213301390</li>"
+                "<li>Написать на почту: sereernest@gmail.com</li></ul>", status=500)
+
         logger.info(f"Application saved successfully (ID: {application.id})")
 
         return redirect("apply_success")
@@ -377,6 +391,24 @@ def connect_request(request):
         messages.error(request, "Please enter a valid email address")
         return redirect("index")
 
+    try:
+        new_connect_msg = ConnectMessage(
+            name=name,
+            email=email,
+            message=message,
+        )
+        new_connect_msg.save()
+    except Exception as e:
+        logger.error(f"Failed to save ConnectMessage, error: {str(e)}", exc_info=True)
+        return HttpResponse(
+            "Приносим извинения! Возникла техническая ошибка при отправке формы.<br><br>"
+            "Мы уже получили уведомление о проблеме и работаем над её решением.<br>"
+            "Вы можете:<ul>"
+            "<li>Попробовать отправить заявку ещё раз через 5-10 минут</li>"
+            "<li>Позвонить нам по телефону: +79213301390</li>"
+            "<li>Написать на почту: sereernest@gmail.com</li></ul>", status=500)
+
+
     subject = f"Вопрос от {name}"
     email = EmailMessage(
         subject=subject,
@@ -385,7 +417,10 @@ def connect_request(request):
         to=["sereernest@gmail.com"],  # Recipient list
         reply_to=[email],  # Replies go to applicant
     )
-    email.send(fail_silently=False)
+    try:
+        email.send(fail_silently=False)
+    except Exception as err:
+        logger.error(f"While CONTACT email an error occured: {err}")
 
     # Here you would typically save the message or send email
     logger.info("Contact form processed successfully")
