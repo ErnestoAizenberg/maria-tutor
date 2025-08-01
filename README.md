@@ -7,7 +7,7 @@
 <h1>maria-tutor</h1>
 Personal website for biology/chemistry tutor Maria Seredinskaya
   <h3>✨ Check it Out!</h3>
-  <a href="https://mariaseredinskaya.pythonanywhere.com/">
+  <a href="https://www.maria-tutor.ru">
     <img src="https://img.shields.io/badge/||_‎_‎_‎_‎_OPEN_WEBSITE_‎_‎_‎_‎||-0969DA?style=for-the-badge&logoColor=white" alt="Open Maria-tutor">
   </a>
 </div>
