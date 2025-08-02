@@ -3,19 +3,19 @@
 🔬 {{ teacher.name }} | {{ teacher.status }}
 {% endblock %}
 
-{% block meta_description %}
-Репетитор по биологии и химии | Олимпиадная подготовка, помощь студентам с СДВГ. Первый урок бесплатно
-{% endblock %}
+{% block meta_description %}{{ teacher.meta_description|default:"teacher.description" }}{% endblock %}
 
 {% block meta_keywords %}{{ teacher.keywords }}{% endblock %}
 
 {% block og_type %}website{% endblock %}
-{% block og_site_name %}Репетитор по биологии и химии | Мария Серединская{% endblock %}
+{% block og_site_name %}{{ teacher.status }} | {{ teacher.name }}{% endblock %}
 {% block og_title %}{{ teacher.name }} | {{ teacher.status }}{% endblock %}
 {% block og_description %}Профессиональная подготовка к ЕГЭ, ОГЭ и олимпиадам по биологии и химии. Научный подход, индивидуальные методики для студентов с СДВГ. Первый урок бесплатно{% endblock %}
 {% block og_url %}{{ request.base_url }}{% endblock %}
-{% block og_image %}https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000{% endblock %}
-{% block og_image_alt %}Мария Серединская - профессиональный репетитор по биологии и химии{% endblock %}
+{% if teacher.avatar %}
+{% block og_image %}{{ teacher.avatar.url }}{% endblock %}
+{% endif %}
+{% block og_image_alt %}{{ teacher.name }} - {{ teacher.description }}{% endblock %}
 {% block og_image_width %}1200{% endblock %}
 {% block og_image_height %}630{% endblock %}
 {% block og_locale %}ru_RU{% endblock %}
@@ -23,7 +23,9 @@
 {% block twitter_card %}summary_large_image{% endblock %}
 {% block twitter_title %}🔥 Репетитор по биологии/химии | Подготовка к ЕГЭ и олимпиадам{% endblock %}
 {% block twitter_description %}Профессиональная подготовка к ЕГЭ, ОГЭ и олимпиадам по биологии и химии. Научный подход, индивидуальные методики для студентов с СДВГ. Первый урок бесплатно{% endblock %}
-{% block twitter_image %}https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000{% endblock %}
+{% if teacher.avatar %}
+{% block twitter_image %}{{ teacher.avatar.url }}{% endblock %}
+{% endif %}
 
 {% block extra_meta %}
 <link rel="canonical" href="https://mariaseredinskaya.pythonanywhere.com/">
@@ -31,13 +33,15 @@
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "name": "Мария Серединская",
+  "name": "{{ teacher.name }}",
   {#"jobTitle": "Репетитор по биологии и химии",#}
   "description": "Профессиональный преподаватель с 9-летним опытом. Специализация: подготовка к ЕГЭ/ОГЭ, олимпиадная биология, нейробиология. Работа с студентами с СДВГ.",
   "priceRange": "2000-2500 RUB",
   "areaServed": "Санкт-Петербург",
   "url": "{{ request.build_absolute_uri }}",
-  "image": "https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg",
+  {% if teacher.avatar %}
+  "image": "{{ teacher.avatar.url }}",
+  {% endif %}
   "sameAs": [
     "https://vk.com/id625218410",
     "https://t.me/himbioraz",
@@ -48,7 +52,7 @@
     "addressLocality": "Санкт-Петербург",
     "addressCountry": "RU"
   },
-  "email": "mariseredinskaya@gmail.com",
+  "email": "{{ teacher.email }}",
   "telephone": "+7 (931) 372-65-33",
   "reviews": [
     {
