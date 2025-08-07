@@ -147,6 +147,13 @@ class Teacher(models.Model):
         help_text="Ключевые слова для поиска",
     )
 
+    @property
+    def aggregate_rating(self):
+        from django.db.models import Avg
+        avg = self.reviews.aggregate(avg_rating=Avg('rating'))['avg_rating']
+
+        return round(avg, 1) if avg is not None else 0
+
     class Meta:
         verbose_name = "Учитель"
         verbose_name_plural = "Учителя"
@@ -216,6 +223,14 @@ class Review(models.Model):
         (SOURCE_SOCIAL, "Социальные сети"),
         (SOURCE_OTHER, "Другое"),
     ]
+
+    teacher = models.ForeignKey(
+        Teacher,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="reviews",
+    )
 
     source = models.CharField(
         max_length=20,

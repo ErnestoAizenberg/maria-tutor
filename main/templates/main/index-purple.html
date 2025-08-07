@@ -28,20 +28,17 @@
 {% endif %}
 
 {% block extra_meta %}
-<link rel="canonical" href="https://mariaseredinskaya.pythonanywhere.com/">
+<link rel="canonical" href="https://www.maria-tutor.ru/">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "{{ teacher.name }}",
-  {#"jobTitle": "Репетитор по биологии и химии",#}
-  "description": "Профессиональный преподаватель с 9-летним опытом. Специализация: подготовка к ЕГЭ/ОГЭ, олимпиадная биология, нейробиология. Работа с студентами с СДВГ.",
-  "priceRange": "2000-2500 RUB",
-  "areaServed": "Санкт-Петербург",
+  "description": "{{ teacher.status }}.",
+  "priceRange": "{{ teacher.price_range|default:'2000-2500' }} {{ teacher.currency|default:'RUB' }}",
+  "areaServed": "{{ teacher.area_served|default:'Russia' }}",
   "url": "{{ request.build_absolute_uri }}",
-  {% if teacher.avatar %}
-  "image": "{{ teacher.avatar.url }}",
-  {% endif %}
+  {% if teacher.avatar %}"image": "{{ teacher.avatar.url }}",{% endif %}
   "sameAs": [
     "https://vk.com/id625218410",
     "https://t.me/himbioraz",
@@ -49,73 +46,52 @@
   ],
   "address": {
     "@type": "PostalAddress",
-    "addressLocality": "Санкт-Петербург",
-    "addressCountry": "RU"
+    "addressLocality": "{{ teacher.address_locality|default:'Saint-Petersberg' }}",
+    "addressCountry": "{{ teacher.lang|default:'RU' }}"
   },
-  "email": "{{ teacher.email }}",
-  "telephone": "+7 (931) 372-65-33",
-  "reviews": [
+  {% if teacher.email %}"email": "{{ teacher.email }}",{% endif %}
+  {% if teacher.phone %}"telephone": "{{ teacher.phone }}",{% endif %}
+  {% if reviews %}"review": [
+    {% for review in reviews %}
     {
       "@type": "Review",
       "author": {
         "@type": "Person",
-        "name": "Александра К."
+        "name": "{{ review.author_name }}"
       },
-      "datePublished": "2023-05-15",
-      "reviewBody": "Отличный преподаватель! Объясняет сложные темы простым языком.",
+      "datePublished": "{{ review.created_at }}",
+      "reviewBody": "{{ review.content }}",
       "reviewRating": {
         "@type": "Rating",
-        "ratingValue": "5",
+        "ratingValue": "{{ review.rating }}",
         "bestRating": "5"
       }
-    },
-    {
-      "@type": "Review",
-      "author": {
-        "@type": "Person",
-        "name": "Иван П."
-      },
-      "datePublished": "2023-06-20",
-      "reviewBody": "Помогла подготовиться к ЕГЭ за короткий срок, результат - 92 балла!",
-      "reviewRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      }
-    }
-  ],
+    }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  ],{% endif %}
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "24",
+    "ratingValue": "{{ teacher.aggregate_rating }}",
+    "reviewCount": "{{ reviews|length|default:'0' }}",
     "bestRating": "5"
   },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Услуги репетитора",
     "itemListElement": [
+      {% for card in lesson_cards %}
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Подготовка к ЕГЭ по биологии",
-          "description": "Индивидуальное занятие (60 минут)"
+          "name": "{{ card.title }}",
+          "description": "{% if card.description %}{{ card.description }}{% else %}{% for feature in card.features.all %}{{ feature }}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}"
         },
-        "price": "2000",
-        "priceCurrency": "RUB",
+        "price": "{{ card.price }}",
+        "priceCurrency": "{{ teacher.currency|default:'RUB' }}",
         "availability": "https://schema.org/InStock"
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Олимпиадная подготовка",
-          "description": "Индивидуальные занятия по углубленной программе"
-        },
-        "price": "2500",
-        "priceCurrency": "RUB",
-        "availability": "https://schema.org/InStock"
-      }
+      }{% if not forloop.last %},{% endif %}
+      {% endfor %}
     ]
   }
 }
