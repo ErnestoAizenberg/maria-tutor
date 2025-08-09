@@ -201,6 +201,94 @@ class Teacher(models.Model):
         return socials
 
 
+class TariffQuerySet(models.QuerySet):
+    def active(self):
+        return self.filter(is_active=True)
+
+    def with_format_groups(self):
+        return self.order_by('format_type', 'program_name')
+
+    def for_teacher(self, teacher):
+        return self.active().filter(teacher=teacher)
+
+class TariffManager(models.Manager):
+    def get_queryset(self):
+        return TariffQuerySet(self.model, using=self._db)
+
+    def active(self):
+        return self.get_queryset().active()
+
+    def with_format_groups(self):
+        return self.get_queryset().with_format_groups()
+
+    def for_teacher(self, teacher):
+        return self.get_queryset().for_teacher(teacher)
+
+
+class Tariff(models.Model):
+    teacher = models.ForeignKey(
+        Teacher,
+        on_delete=models.CASCADE,
+        related_name='tariffs',
+        null=True,
+        blank=True,
+    )
+    format_type = models.CharField(
+        max_length=50,
+        verbose_name='Тип формата',
+        help_text='Основной тип формата (Индивидуально/Парные/Групповые/Асинхронное)'
+    )
+    format_display = models.CharField(
+        max_length=50,
+        verbose_name='Отображаемое название формата',
+        help_text='Как будет показано в таблице'
+    )
+    program_name = models.CharField(
+        max_length=100,
+        verbose_name='Название программы'
+    )
+    price = models.PositiveIntegerField(verbose_name='Стоимость')
+    price_unit = models.CharField(
+        max_length=20,
+        default='₽/час',
+        verbose_name='Единица стоимости'
+    )
+    is_group_format = models.BooleanField(
+        default=False,
+        verbose_name='Групповой формат?',
+        help_text='Для стилизации групповых форматов'
+    )
+
+    # Метаданные
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    slug = models.SlugField(unique=True, blank=True)
+    is_active = models.BooleanField(default=True)
+
+    objects = TariffManager()
+
+    class Meta:
+        ordering = ['format_type', 'program_name']
+        verbose_name = 'Тариф'
+        verbose_name_plural = 'Тарифы'
+        indexes = [
+            models.Index(fields=['format_type']),
+            models.Index(fields=['is_active']),
+        ]
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(f"{self.teacher.name}-{self.format_type}-{self.program_name}")
+            self.slug = base_slug
+            counter = 1
+            while Tariff.objects.filter(slug=self.slug).exists():
+                self.slug = f"{base_slug}-{counter}"
+                counter += 1
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.format_display} {self.program_name}: {self.price}{self.price_unit}"
+
 class Review(models.Model):
     SOURCE_UNKNOWN = "unknown"
     SOURCE_NATIVE = "native"  # Оставлен напрямую на сайте

@@ -1,0 +1,27 @@
+{% load tariff_tags %}
+
+<table class="w-full border-collapse rounded-lg overflow-hidden shadow-lg">
+    <thead>
+        <tr class="bg-primary text-white">
+            <th class="p-4 text-left font-semibold">Формат</th>
+            <th class="p-4 text-left font-semibold">Программа</th>
+            <th class="p-4 text-right font-semibold">Стоимость</th>
+        </tr>
+    </thead>
+    <tbody class="divide-y divide-border">
+        {% regroup teacher.tariffs.active|group_by_format by format_type as format_groups %}
+        {% for format_group in format_groups %}
+            {% for tariff in format_group.list %}
+                <tr class="{% if tariff.is_group_format %}bg-card{% endif %} hover:bg-bg-secondary transition-colors duration-200">
+                    {% if forloop.first %}
+                        <td class="p-4 font-semibold text-primary" rowspan="{{ format_group.list|length }}">
+                            {{ tariff.format_display }}
+                        </td>
+                    {% endif %}
+                    <td class="p-4">{{ tariff.program_name }}</td>
+                    <td class="p-4 text-right">{{ tariff.price }} {{ tariff.price_unit }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
