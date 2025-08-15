@@ -1,0 +1,12 @@
+{% extends "admin/change_form.html" %}
+
+{% block submit_buttons_bottom %}
+    {{ block.super }}
+
+    <div class="submit-row">
+        {% if original and original.teacher %}
+            <input type="submit" value="Create Default Pages" name="_create_default_pages"
+                   style="background: #417690; color: white;">
+        {% endif %}
+    </div>
+{% endblock %}
