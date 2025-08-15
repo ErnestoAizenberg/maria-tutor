@@ -14,6 +14,8 @@ LANGUAGE_CHOICES = [
     ('ru', 'Russian'),
     ('en', 'English'),
 ]
+def get_teacher():
+    return Teacher.objects.filter(lang='ru').first()
 
 class Teacher(models.Model):
     def upload_avatar(self, filename):
@@ -185,6 +187,9 @@ class Teacher(models.Model):
 
         super().save(*args, **kwargs)
 
+    def get_page(self, page_slug):
+        return self.pages.filter(slug=page_slug).first()
+
     def get_social_links(self):
         """Возвращает словарь с ссылками на социальные сети учителя."""
         socials = {}
@@ -199,6 +204,160 @@ class Teacher(models.Model):
         if self.linkedin:
             socials['linkedin'] = self.linkedin if self.linkedin.startswith('http') else f"https://linkedin.com/in/{self.linkedin}"
         return socials
+
+
+def create_default_pages(teacher_slug):
+    # Get teacher or raise error
+    teacher = Teacher.objects.filter(slug=teacher_slug).first()
+    if not teacher:
+        raise ValueError(f"Teacher with slug '{teacher_slug}' not found")
+
+    # Default pages configuration
+    pages_config = {
+        "contacts": {
+            "name": "Контакты",
+            "show_in_navbar": True,
+            "show_in_footer": True,
+            "title": f"Контакты {teacher.name} - Связь, Telegram-каналы и сотрудничество",
+            "meta_description": f"Как связаться с {teacher.name}. {teacher.status}",
+            "hero_title": f"Свяжитесь с {teacher.name}",
+            "hero_sub_title": "Выберите удобный способ связи",
+        },
+        "lessons": {
+            "name": "Уроки",
+            "show_in_navbar": True,
+            "show_in_footer": False,
+            "title": f"Стоимость и форматы занятий • {teacher.name} | {teacher.status}",
+            "meta_description": f"Расписание и описание уроков с {teacher.name}",
+            "hero_title": f"Уроки с {teacher.name}",
+            "hero_sub_title": "Расписание и описание занятий",
+        },
+        "about_me": {
+            "name": "Обо мне",
+            "show_in_navbar": True,
+            "show_in_footer": True,
+            "title": f"Обо мне | {teacher.name} - {teacher.status}",
+            "meta_description": f"Подробная информация о {teacher.name}. {teacher.status}",
+            "hero_title": teacher.name,
+            "hero_sub_title": teacher.description,
+            "og_type": "profile",
+            "og_title": f"Обо мне - {teacher.name} | {teacher.status}"
+        },
+        "reviews": {
+            "name": "Отзывы",
+            "show_in_navbar": True,
+            "show_in_footer": False,
+            "title": f"🔬 {teacher.name} | Отзывы учеников о преподователe",
+            "meta_description": f"Отзывы учеников о занятиях с {teacher.name}",
+            "hero_title": f"Отзывы о {teacher.name}",
+            "hero_sub_title": f"Средний рейтинг: {teacher.aggregate_rating}/5",
+            "og_title": "{teacher.name} | Отзывы учеников о преподователе",
+            "og_site_name": f"{teacher.status} | {teacher.name}",
+        },
+        "articles": {
+            "name": "Статьи",
+            "show_in_navbar": False,
+            "show_in_footer": True,
+            "title": f"Статьи {teacher.name} | {teacher.status}",
+            "meta_description": f"Полезные статьи и материалы от {teacher.name}",
+            "hero_title": f"Статьи от {teacher.name}",
+            "hero_sub_title": "Полезные материалы и советы",
+        },
+    }
+
+    created_pages = []
+
+    for slug, config in pages_config.items():
+        # Check if page already exists
+        if not Page.objects.filter(teacher=teacher, slug=slug).exists():
+            # Generate common SEO fields
+            seo_fields = {
+                "og_title": config.get("title", ""),
+                "og_description": config.get("meta_description", ""),
+                "og_url": f"/{teacher.slug}/{slug}",
+                "twitter_title": config.get("title", ""),
+                "twitter_description": config.get("meta_description", ""),
+            }
+
+            # Create the page
+            page = Page(
+                teacher=teacher,
+                slug=slug,
+                is_published=True,
+                **config,
+                **seo_fields,
+            )
+            page.save()
+            created_pages.append(page)
+
+    return {
+        "teacher": teacher.name,
+        "created_pages": [p.name for p in created_pages],
+        "total_created": len(created_pages),
+    }
+
+class Page(models.Model):
+    teacher = models.ForeignKey(
+        'Teacher',
+        on_delete=models.SET_NULL,
+        related_name='pages',
+        null=True,
+        blank=True,
+    )
+    name = models.CharField(
+        max_length=200,
+        help_text="Page name, displayed in footer and navbar"
+    )
+    show_in_navbar = models.BooleanField(default=False)
+    show_in_footer = models.BooleanField(default=False)
+    is_published = models.BooleanField(default=False)
+
+    # SEO fields with more appropriate max_lengths
+    title = models.CharField(max_length=200)
+    meta_description = models.CharField(max_length=300, blank=True)
+    meta_keywords = models.CharField(max_length=300, blank=True)
+
+    # OpenGraph fields
+    og_type = models.CharField(max_length=50, default='website', blank=True)
+    og_site_name = models.CharField(max_length=100, blank=True)
+    og_title = models.CharField(max_length=300, blank=True)
+    og_description = models.CharField(max_length=500, blank=True)
+    og_url = models.URLField(max_length=500, blank=True)
+    og_image = models.URLField(max_length=500, blank=True)
+    og_image_width = models.PositiveIntegerField(blank=True, null=True)
+    og_image_height = models.PositiveIntegerField(blank=True, null=True)
+    og_locale = models.CharField(max_length=10, default='en_US', blank=True)
+
+    # Twitter fields
+    twitter_card = models.CharField(max_length=50, default='summary_large_image', blank=True)
+    twitter_title = models.CharField(max_length=300, blank=True)
+    twitter_description = models.CharField(max_length=500, blank=True)
+    twitter_image = models.URLField(max_length=500, blank=True)
+
+    # Hero section
+    hero_title = models.CharField(max_length=200, blank=True)
+    hero_sub_title = models.CharField(max_length=400, blank=True)
+
+    # URL and tracking
+    slug = models.SlugField(
+        max_length=200,
+        unique=False,
+        help_text="URL part after /, can be not unique",
+        blank=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    views = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+    def view(self):
+        self.views += 1
+        self.save(update_fields=['views'])
+
+    class Meta:
+        ordering = ['-created_at']
 
 
 class TariffQuerySet(models.QuerySet):
