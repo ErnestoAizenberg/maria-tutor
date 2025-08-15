@@ -2,13 +2,14 @@ import os
 
 from ckeditor.widgets import CKEditorWidget
 from django import forms
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.html import format_html
+from django.http import HttpResponseRedirect
 
 from .custom_admin import custom_admin_site
-from .models import Application, Article, Tag, ConnectMessage, Publication, Review, Teacher, LessonCard, LessonFeature
+from .models import Application, Article, Tag, ConnectMessage, Publication, Review, Teacher, LessonCard, LessonFeature, Tariff, Page, create_default_pages
 
 
 User = get_user_model()
@@ -373,7 +374,7 @@ class TeacherAdmin(admin.ModelAdmin):
     ordering = ('-is_active', 'name')
 
     # Действия для списка
-    actions = ['make_active', 'make_inactive']
+    actions = ['make_active', 'make_inactive', 'create_default_pages_action']
 
     # Поля, которые можно редактировать прямо в списке
     list_editable = ('is_active',)
@@ -421,6 +422,12 @@ class TeacherAdmin(admin.ModelAdmin):
     make_inactive.short_description = "Деактивировать выбранных учителей"
 
 
+    def create_default_pages_action(self, request, queryset):
+        PageAdmin.create_default_pages_action(self, request, queryset)
+
+    create_default_pages_action.short_diescription = "★ Create default pages"
+
+
 class LessonFeatureInline(admin.TabularInline):
     model = LessonFeature
     extra = 1
@@ -431,9 +438,80 @@ class LessonCardAdmin(admin.ModelAdmin):
     list_editable = ["order"]
 
 
+
+class TariffAdmin(admin.ModelAdmin):
+    list_display = ('format_display', 'program_name', 'teacher', 'price', 'price_unit', 'is_active')
+    list_filter = ('format_type', 'is_active', 'is_group_format')
+    search_fields = ('program_name', 'format_display', 'teacher__name')
+    list_editable = ('is_active', 'price')
+    list_per_page = 20
+    ordering = ('format_type', 'program_name')
+    fieldsets = (
+        (None, {
+            'fields': ('teacher', 'is_active')
+        }),
+        ('Формат обучения', {
+            'fields': ('format_type', 'format_display', 'is_group_format')
+        }),
+        ('Программа и стоимость', {
+            'fields': ('program_name', 'price', 'price_unit')
+        }),
+    )
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('teacher')
+
+
+class PageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'teacher', 'slug', 'is_published', 'show_in_navbar', 'show_in_footer')
+    list_filter = ('teacher', 'is_published', 'show_in_navbar', 'show_in_footer')
+    search_fields = ('name', 'slug', 'teacher__name')
+    actions = ['create_default_pages_action']
+
+    # Add a custom button to the change form
+    change_form_template = 'admin/custom_page_change_form.html'
+
+    def response_change(self, request, obj):
+        if "_create_default_pages" in request.POST:
+            self.create_default_pages_action(request, Teacher.objects.filter(pk=obj.teacher_id))
+            return HttpResponseRedirect(".")
+        return super().response_change(request, obj)
+
+    def create_default_pages_action(self, request, queryset):
+        # Handle both Page and Teacher querysets
+        teachers = set()
+
+        # If Pages are selected, get their teachers
+        for item in queryset:
+            if isinstance(item, Page) and item.teacher:
+                teachers.add(item.teacher)
+            elif isinstance(item, Teacher):
+                teachers.add(item)
+
+        if not teachers:
+            self.message_user(request, "No teachers selected", messages.ERROR)
+            return
+
+        created_count = 0
+        for teacher in teachers:
+            result = create_default_pages(teacher.slug)
+            created_count += result['total_created']
+            self.message_user(
+                request,
+                f"Created {result['total_created']} pages for {teacher.name}: {', '.join(result['created_pages'])}",
+                messages.SUCCESS
+            )
+
+        if created_count == 0:
+            self.message_user(request, "All default pages already exist", messages.WARNING)
+
+    create_default_pages_action.short_description = "★ Create default pages for selected teachers"
+
 # Регистрация моделей в кастомной админке
 custom_admin_site.register(User)
+custom_admin_site.register(Tariff, TariffAdmin)
 custom_admin_site.register(Teacher, TeacherAdmin)
+custom_admin_site.register(Page, PageAdmin)
 custom_admin_site.register(LessonCard, LessonCardAdmin)
 custom_admin_site.register(Application, ApplicationAdmin)
 custom_admin_site.register(ConnectMessage, ConnectMessageAdmin)
