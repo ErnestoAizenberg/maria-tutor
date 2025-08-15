@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.core.paginator import Paginator
 
 from .forms import ApplicationForm, ReviewForm
-from .models import Application, Article, Publication, Review, Tag, LessonCard, ConnectMessage
+from .models import Application, Article, Publication, Review, Tag, LessonCard, ConnectMessage, get_teacher
 from .utils import search_models
 
 logger = logging.getLogger('main')
@@ -118,8 +118,11 @@ def index(request):
 
 def lessons(request):
     """Display lessons page"""
+    teacher = get_teacher()
+    page = teacher.get_page("lessons")
     context = {
         "lesson_cards": LessonCard.objects.all(),
+        "page": page,
     }
 
     return render(request, "main/lessons.html", context)
@@ -127,8 +130,11 @@ def lessons(request):
 
 def about_me(request):
     """Display about me page"""
-    context = {}
 
+    teacher = get_teacher()
+    page = teacher.get_page("about_me")
+
+    context = {"page": page}
     return render(request, "main/about_me.html", context)
 
 
@@ -214,16 +220,20 @@ def article(request, slug):
 
 def articles(request):
     """Display a list of all published articles"""
+
+    teacher = get_teacher()
+    page = teacher.get_page("articles")
+
     try:
         list_articles = Article.objects.filter(status="published").order_by(
             "-created_at"
         )
         logger.debug(f"Found {len(list_articles)} published articles")
-        return render(request, "main/articles.html", {"articles": list_articles})
+        return render(request, "main/articles.html", {"articles": list_articles, "page": page})
     except Exception as e:
         logger.error(f"Error loading articles list: {str(e)}", exc_info=True)
         messages.error(request, "Could not load articles")
-        return render(request, "main/articles.html", {"articles": []})
+        return render(request, "main/articles.html", {"articles": [], "page": page})
 
 
 def test(request):
@@ -232,12 +242,16 @@ def test(request):
 
 
 def contacts(request):
-    context = {}
+    teacher = get_teacher()
+    page = teacher.get_page("contacts")
+    context = {"page": page}
     return render(request, "main/contacts.html", context)
 
 
 def reviews(request):
     """Display a list of all published articles"""
+    teacher = get_teacher()
+    page = teacher.get_page("reviews")
     reviews = Review.objects.filter(is_published=True).order_by("-created_at")
     if "review_form_data" in request.session:
         form = ReviewForm(request.session["review_form_data"])
