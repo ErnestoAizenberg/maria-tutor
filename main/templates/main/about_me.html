@@ -1,40 +1,35 @@
 {% extends 'main/base.html' %}
 
-{% block title %}
-  Обо мне | Мария Серединская - репетитор по биологии и химии с научным подходом
-{% endblock %}
+{% block title %}{% if page and page.title %}{{ page.title }}{% endif %}{% endblock %}
 
-{% block meta_description %}
-  Магистр биологических наук, преподаватель СПбГУ с 9-летним опытом. Специализация: нейробиология, зоология позвоночных. Автор 5+ научных публикаций. Подготовка к ЕГЭ, ОГЭ и олимпиадам.
-{% endblock %}
+{% block meta_description %}{{ page.meta_description }}{% endblock %}
 
-{% block meta_keywords %}
-  репетитор биология химия СПбГУ, научные публикации по биологии, преподаватель зоологии, нейробиолог репетитор, подготовка к олимпиадам по биологии, магистр наук биология, методики преподавания биологии
-{% endblock %}
+{% block meta_keywords %}{{ page.meta_keywords }}{% endblock %}
 
-{% block og_type %}profile{% endblock %}
-{% block og_site_name %}Профессиональный репетитор по биологии и химии{% endblock %}
-{% block og_title %}Обо мне - Мария Серединская | Репетитор с научным подходом{% endblock %}
-{% block og_description %}Магистр биологических наук с 9-летним опытом подготовки к ЕГЭ, ОГЭ и олимпиадам. Специализация - нейробиология и работа с учениками с СДВГ.{% endblock %}
-{% block og_url %}{{ request.base_url }}{% endblock %}
-{% block og_image %}https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000{% endblock %}
-{% block og_image_alt %}Мария Серединская - репетитор по биологии и химии{% endblock %}
-{% block og_image_width %}1200{% endblock %}
-{% block og_image_height %}630{% endblock %}
-{% block og_locale %}ru_RU{% endblock %}
+{% block og_type %}{{ page.og_type }}{% endblock %}
+{% block og_site_name %}{{ page.og_site_name }}{% endblock %}
+{% block og_title %}{{ page.og_title }}{% endblock %}
+{% block og_description %}{{ page.og_description }}{% endblock %}
+{% block og_url %}{{ request.get_absolute_uri }}{% endblock %}
+{% block og_image %}{{ page.og_image }}{% endblock %}
+{% block og_image_alt %}{{ page.og_image_alt }}{% endblock %}
+{% block og_image_width %}{{ page.og_image_width }}{% endblock %}
+{% block og_image_height %}{{ page.og_image_height }}{% endblock %}
+{% block og_locale %}{{ page.og_locale }}{% endblock %}
 
-{% block twitter_card %}summary_large_image{% endblock %}
-{% block twitter_title %}🧪 Обо мне: репетитор по биологии/химии с научным бэкграундом{% endblock %}
-{% block twitter_description %}Магистр биологических наук, 9 лет опыта, авторские методики для учеников с СДВГ. Подготовка к ЕГЭ, ОГЭ и олимпиадам.{% endblock %}
-{% block twitter_image %}https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000{% endblock %}
+{% block twitter_card %}{% if page and page.twitter_card %}{{ page.twitter_card }}{% endif %}{% endblock %}
+{% block twitter_title %}{{ page.twitter_title }}{% endblock %}
+{% block twitter_description %}{{ page.twitter_description }}{% endblock %}
+{% block twitter_image %}{{ page.twitter_image }}{% endblock %}
+
 
 {% block content %}
   <div class="container mx-auto px-4 py-12 max-w-6xl">
     <!-- Hero Section -->
     <section class="text-center mb-16">
-      <h1 class="text-4xl font-bold mb-4">{{ teacher.name }}</h1>
+      <h1 class="text-4xl font-bold mb-4">{{ page.hero_title }}</h1>
       <p class="text-xl text-secondary max-w-3xl mx-auto">
-        {{ teacher.description }}
+      {{ page.hero_sub_title }}
       </p>
     </section>
 

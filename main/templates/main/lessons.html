@@ -1,42 +1,34 @@
 {% extends 'main/base.html' %}
+{% load teacher_tags %}
 
-{% block title %}
-Стоимость и форматы занятий • Мария Серединская • Репетитор по биологии и химии
-{% endblock title %}
+{% block title %}{{ page.title }}{% endblock title %}
 
-{% block meta_description %}
-Подробная информация о стоимости индивидуальных и групповых занятий, специализированных программах подготовки к олимпиадам и обучению на английском языке. Гибкие тарифы и льготные условия.
-{% endblock %}
+{% block meta_description %}{{ page.meta_description }}{% endblock %}
 
-{% block meta_keywords %}
-стоимость занятий биология, цена репетитора химия, индивидуальные уроки биология, парные занятия химия, групповая подготовка ЕГЭ, асинхронное обучение биология, олимпиадная подготовка цена, биология на английском стоимость, льготные места репетитор, тарифы 2025, скидки на обучение
-{% endblock %}
+{% block meta_keywords %}{{ page.meta_keywords }}{% endblock %}
 
-{% block og_type %}website{% endblock %}
-{% block og_site_name %}Стоимость занятий | Репетитор по биологии и химии{% endblock %}
-{% block og_title %}Стоимость и форматы занятий | Мария Серединская{% endblock %}
-{% block og_description %}Подробные тарифы на индивидуальные, парные и групповые занятия. Специальные программы подготовки к олимпиадам и обучению на английском языке. Льготные условия для мотивированных учеников.{% endblock %}
-{% block og_url %}{{ request.base_url }}{% endblock %}
-{% block og_image %}https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000{% endblock %}
-{% block og_image_alt %}Тарифы и форматы обучения у репетитора по биологии и химии{% endblock %}
-{% block og_image_width %}1200{% endblock %}
-{% block og_image_height %}630{% endblock %}
-{% block og_locale %}ru_RU{% endblock %}
+{% block og_type %}{{ page.og_type }}{% endblock %}
+{% block og_site_name %}{{ page.og_site_name }}{% endblock %}
+{% block og_title %}{{ page.og_title }}{% endblock %}
+{% block og_description %}{{ page.og_description }}{% endblock %}
+{% block og_url %}{{ request.get_absolute_uri }}{% endblock %}
+{% block og_image %}{{ page.og_image }}{% endblock %}
+{% block og_image_alt %}{{ page.og_image_alt }}{% endblock %}
+{% block og_image_width %}{{ page.og_image_width }}{% endblock %}
+{% block og_image_height %}{{ page.og_image_height }}{% endblock %}
+{% block og_locale %}{{ page.og_locale }}{% endblock %}
 
-{% block twitter_card %}summary_large_image{% endblock %}
-{% block twitter_title %}💰 Стоимость занятий по биологии и химии | Гибкие тарифы 2025{% endblock %}
-{% block twitter_description %}Индивидуальные от 1600₽/час, групповые от 700₽/час. Олимпиадная подготовка и биология на английском. Льготные места для мотивированных учеников.{% endblock %}
-{% block twitter_image %}https://img.repetit.ru/teachers/126278/photo/photo_sqr_lrg.jpg?ts=638832935463670000{% endblock %}
+{% block twitter_card %}{% if page and page.twitter_card %}{{ page.twitter_card }}{% endif %}{% endblock %}
+{% block twitter_title %}{{ page.twitter_title }}{% endblock %}
+{% block twitter_description %}{{ page.twitter_description }}{% endblock %}
+{% block twitter_image %}{{ page.twitter_image }}{% endblock %}
 
 {% block content %}
 <div class="container mx-auto py-12 px-4 max-w-6xl">
     <!-- Hero Section -->
     <section class="text-center mb-16">
-        <h1 class="text-4xl font-bold mb-6">Профессиональная подготовка по биологии и химии</h1>
-        <p class="text-xl text-secondary max-w-3xl mx-auto">
-            Специализация на олимпиадной подготовке и биологии на английском языке.
-            Индивидуальный подход к каждому ученику с 9-летним опытом преподавания.
-        </p>
+      <h1 class="text-4xl font-bold mb-6">{{ page.hero_title }}</h1>
+        <p class="text-xl text-secondary max-w-3xl mx-auto">{{ page.hero_title_sub }}</p>
     </section>
 
     <!-- Priority Notice -->

@@ -1,32 +1,27 @@
 {% extends 'main/base.html' %}
 
-{% block title %}
-Блог репетитора по биологии и химии | Мария Серединская
-{% endblock %}
+{% block title %}{% if page and page.title %}{{ page.title }}{% endif %}{% endblock %}
 
-{% block meta_description %}
-Полезные статьи и материалы по биологии, химии, подготовке к ЕГЭ и олимпиадам. Советы по эффективному обучению и научные обзоры от профессионального репетитора.
-{% endblock %}
+{% block meta_description %}{{ page.meta_description }}{% endblock %}
 
-{% block meta_keywords %}
-блог репетитора биология, статьи по химии, подготовка к ЕГЭ биология, олимпиадные задачи, научные статьи биология, как учить биологию, советы репетитора, методики обучения, разбор заданий ЕГЭ, новости биологии 2025
-{% endblock %}
+{% block meta_keywords %}{{ page.meta_keywords }}{% endblock %}
 
-{% block og_type %}website{% endblock %}
-{% block og_site_name %}Блог репетитора по биологии и химии{% endblock %}
-{% block og_title %}Полезные материалы по биологии и химии | Блог Марии Серединской{% endblock %}
-{% block og_description %}Статьи, разборы задач и советы по эффективному изучению биологии и химии от профессионального репетитора с 9-летним опытом.{% endblock %}
-{% block og_url %}{{ request.base_url }}{% endblock %}
-{% block og_image %}https://example.com/path-to-your-blog-preview-image.jpg{% endblock %}
-{% block og_image_alt %}Блог репетитора по биологии и химии с полезными материалами{% endblock %}
-{% block og_image_width %}1200{% endblock %}
-{% block og_image_height %}630{% endblock %}
-{% block og_locale %}ru_RU{% endblock %}
+{% block og_type %}{{ page.og_type }}{% endblock %}
+{% block og_site_name %}{{ page.og_site_name }}{% endblock %}
+{% block og_title %}{{ page.og_title }}{% endblock %}
+{% block og_description %}{{ page.og_description }}{% endblock %}
+{% block og_url %}{{ request.get_absolute_uri }}{% endblock %}
+{% block og_image %}{{ page.og_image }}{% endblock %}
+{% block og_image_alt %}{{ page.og_image_alt }}{% endblock %}
+{% block og_image_width %}{{ page.og_image_width }}{% endblock %}
+{% block og_image_height %}{{ page.og_image_height }}{% endblock %}
+{% block og_locale %}{{ page.og_locale }}{% endblock %}
 
-{% block twitter_card %}summary_large_image{% endblock %}
-{% block twitter_title %}📚 Блог репетитора: полезные материалы по биологии и химии{% endblock %}
-{% block twitter_description %}Разборы сложных тем, советы по подготовке и научные обзоры от профессионального преподавателя.{% endblock %}
-{% block twitter_image %}https://example.com/path-to-your-blog-preview-image.jpg{% endblock %}
+{% block twitter_card %}{% if page and page.twitter_card %}{{ page.twitter_card }}{% endif %}{% endblock %}
+7{% block twitter_title %}{{ page.twitter_title }}{% endblock %}
+{% block twitter_description %}{{ page.twitter_description }}{% endblock %}
+
+{% block twitter_image %}{{ page.twitter_image }}{% endblock %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-12 max-w-7xl">

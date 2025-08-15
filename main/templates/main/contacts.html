@@ -1,6 +1,26 @@
 {% extends 'main/base.html' %}
 
-{% block title %}Контакты Марии Серединской - Связь, Telegram-каналы и сотрудничество{% endblock %}
+{% block title %}{% if page and page.title %}{{ page.title }}{% endif %}{% endblock %}
+
+{% block meta_description %}{{ page.meta_description }}{% endblock %}
+
+{% block meta_keywords %}{{ page.meta_keywords }}{% endblock %}
+
+{% block og_type %}{{ page.og_type }}{% endblock %}
+{% block og_site_name %}{{ page.og_site_name }}{% endblock %}
+{% block og_title %}{{ page.og_title }}{% endblock %}
+{% block og_description %}{{ page.og_description }}{% endblock %}
+{% block og_url %}{{ request.get_absolute_uri }}{% endblock %}
+{% block og_image %}{{ page.og_image }}{% endblock %}
+{% block og_image_alt %}{{ page.og_image_alt }}{% endblock %}
+{% block og_image_width %}{{ page.og_image_width }}{% endblock %}
+{% block og_image_height %}{{ page.og_image_height }}{% endblock %}
+{% block og_locale %}{{ page.og_locale }}{% endblock %}
+
+{% block twitter_card %}{% if page and page.twitter_card %}{{ page.twitter_card }}{% endif %}{% endblock %}
+{% block twitter_title %}{{ page.twitter_title }}{% endblock %}
+{% block twitter_description %}{{ page.twitter_description }}{% endblock %}
+{% block twitter_image %}{{ page.twitter_image }}{% endblock %}
 
 {% block content %}
 <!-- Contact Section -->
