@@ -198,9 +198,11 @@
             <div>
                 <h4 class="font-serif font-bold text-lg mb-6">Навигация</h4>
                 <ul class="bio-nav space-y-3">
-                    <li><a href="/reviews" class="hover:text-primary transition leaf-link">Отзывы</a></li>
-                    <li><a href="/contacts" class="hover:text-primary transition leaf-link">Контакты</a></li>
-                    <li><a href="/search" class="hover:text-primary transition leaf-link">Поиск по сайту</a></li>
+                  {% for page in teacher.pages.all %}
+                    {% if page.show_in_footer %}
+                    <li><a href="/{{ page.slug }}" class="hover:text-primary transition leaf-link">{{ page.name }}</a></li>
+                  {% endif %}
+                  {% endfor %}
                 </ul>
             </div>
             {# {% endcomment %} #}
@@ -238,7 +240,7 @@
 
         <div class="border-t mt-12 pt-8 flex flex-col md:flex-row justify-between items-center" style="border-color: rgba(var(--color-border), 0.5);">
             <p class="mb-4 md:mb-0">
-                © 2025 Мария Серединская. Все права защищены.
+            © 2025 {{ teacher.name|default:"Неизвестный" }}. Все права защищены.
             </p>
             <div class="flex space-x-6">
                 <a href="/policy" class="hover:text-primary transition">Политика конфиденциальности</a>
