@@ -9,7 +9,8 @@ from django.utils.html import format_html
 from django.http import HttpResponseRedirect
 
 from .custom_admin import custom_admin_site
-from .models import Application, Article, Tag, ConnectMessage, Publication, Review, Teacher, LessonCard, LessonFeature, Tariff, Page, create_default_pages
+from .models import Application, Article, Tag, ConnectMessage, Publication, Review, Teacher, LessonCard, LessonFeature, Tariff, Page
+from .defaults import create_default_pages
 
 
 User = get_user_model()
