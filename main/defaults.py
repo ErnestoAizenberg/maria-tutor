@@ -22,6 +22,7 @@ def create_default_pages(teacher_slug):
     pages_config = {
         "contacts": {
             "name": "Контакты",
+            "is_navbar_button": True,
             "show_in_navbar": True,
             "show_in_footer": True,
             "title": f"Контакты {teacher.name} - Связь, Telegram-каналы и сотрудничество",

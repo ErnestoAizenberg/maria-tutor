@@ -10,11 +10,14 @@
 
             <!-- Desktop menu -->
             <div class="hidden md:flex items-center space-x-8">
-                <a href="/about_me" class="nav-link leaf-link">Обо мне</a>
-                <a href="/lessons" class="nav-link leaf-link">Уроки</a>
-                <a href="/articles" class="nav-link leaf-link">Блог</a>
-                <a href="/contacts" class="btn btn-primary leaf-button">Контакты</a>
-                <button class="theme-toggle" id="theme-toggle"></button>
+              {% for page in teacher.pages.all %}
+                {% if page.is_navbar_button %}<F11>
+                  <a href="/{{ page.slug }}" class="btn btn-primary leaf-button">{{ page.name }}</a>
+              <button class="theme-toggle" id="theme-toggle"></button>
+                {% elif page.show_in_navbar %}
+                  <a href="/{{ page.slug }}" class="nav-link leaf-link">{{ page.name }}</a>
+                {% endif %}
+              {% endfor %}
             </div>
 
             <!-- Mobile menu button -->
@@ -32,10 +35,13 @@
     <!-- Mobile menu -->
     <div class="md:hidden hidden shadow-lg leaf-mobile-menu" id="mobile-menu" style="background-color: rgb(var(--color-bg-card));">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <a href="/about_me" class="block px-3 py-2 rounded-md hover:bg-opacity-10 hover:bg-white leaf-mobile-link">Обо мне</a>
-            <a href="/lessons" class="block px-3 py-2 rounded-md hover:bg-opacity-10 hover:bg-white leaf-mobile-link">Уроки</a>
-            <a href="/articles" class="block px-3 py-2 rounded-md hover:bg-opacity-10 hover:bg-white leaf-mobile-link">Блог</a>
-            <a href="/contacts" class="block px-3 py-2 rounded-md btn-primary text-center leaf-mobile-button">Контакты</a>
+              {% for page in teacher.pages.all %}
+                {% if page.is_navbar_button %}
+                <a href="/{{ page.slug }}" class="block px-3 py-2 rounded-md btn-primary text-center leaf-mobile-button">{{ page.name }}</a>
+                {% elif page.show_in_navbar %}
+                <a href="/{{ page.slug }}" class="block px-3 py-2 rounded-md hover:bg-opacity-10 hover:bg-white leaf-mobile-link">{{ page.name }}</a>
+                {% endif %}
+              {% endfor %}
         </div>
     </div>
 </nav>

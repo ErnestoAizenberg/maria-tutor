@@ -465,7 +465,7 @@ class TariffAdmin(admin.ModelAdmin):
 
 class PageAdmin(admin.ModelAdmin):
     list_display = ('name', 'teacher', 'slug', 'is_published', 'show_in_navbar', 'show_in_footer')
-    list_filter = ('teacher', 'is_published', 'show_in_navbar', 'show_in_footer')
+    list_filter = ('teacher', 'is_published', 'show_in_navbar', 'show_in_footer', 'is_navbar_button')
     search_fields = ('name', 'slug', 'teacher__name')
     actions = ['create_default_pages_action']
 
