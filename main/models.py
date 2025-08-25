@@ -56,6 +56,16 @@ class Teacher(models.Model):
         help_text="Изображение должно быть в формате JPG, PNG или WEBP. Рекомендуемый размер: 300x300px.",
     )
 
+    avatar2 = models.ImageField(
+        upload_to=upload_avatar,
+        blank=True,
+        null=True,
+        verbose_name="Второй аватар",
+        validators=[
+            FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png", "webp"])
+        ],
+        help_text="Изображение должно быть в формате JPG, PNG или WEBP. Рекомендуемый размер: 300x300px. Аватар для страницы about.",
+    )
     # Контактная информация
     email = models.EmailField(
         max_length=300,
