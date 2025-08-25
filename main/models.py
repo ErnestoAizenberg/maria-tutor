@@ -221,12 +221,12 @@ class Teacher(models.Model):
 
 
 class Page(models.Model):
-    teacher = models.ForeignKey(
-        'Teacher',
-        on_delete=models.SET_NULL,
+    teacher = models.foreignkey(
+        'teacher',
+        on_delete=models.set_null,
         related_name='pages',
-        null=True,
-        blank=True,
+        null=true,
+        blank=true,
     )
     name = models.CharField(
         max_length=200,
