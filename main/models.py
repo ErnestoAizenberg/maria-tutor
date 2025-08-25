@@ -159,6 +159,10 @@ class Teacher(models.Model):
         help_text="Ключевые слова для поиска",
     )
 
+    education = models.JSONField(null=True, blank=True, verbose_name='Образование')
+    scientific_work = models.JSONField(null=True, blank=True, verbose_name='Научная работа')
+    tutoring = models.JSONField(null=True, blank=True, verbose_name='Репетиторство')
+
     @property
     def aggregate_rating(self):
         from django.db.models import Avg
