@@ -351,6 +351,14 @@ class TeacherAdmin(admin.ModelAdmin):
             'fields': (
                 'avatar',
                 'avatar_preview',
+                'avatar2',
+            )
+        }),
+        ('JSON', {
+            'fields': (
+                'education',
+                'scientific_work',
+                'tutoring',
             )
         }),
         ('Мета', {
