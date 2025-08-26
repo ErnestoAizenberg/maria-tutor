@@ -222,7 +222,7 @@ class Teacher(models.Model):
 
 
 class Page(models.Model):
-    teacher = models.foreignkey(
+    teacher = models.ForeignKey(
         'teacher',
         on_delete=models.set_null,
         related_name='pages',
