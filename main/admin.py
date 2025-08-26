@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect
 from .custom_admin import custom_admin_site
 from .models import Application, Article, Tag, ConnectMessage, Publication, Review, Teacher, LessonCard, LessonFeature, Tariff, Page
 from .defaults import create_default_pages
-
+from .forms import PageAdminForm
 
 User = get_user_model()
 
@@ -464,7 +464,8 @@ class TariffAdmin(admin.ModelAdmin):
 
 
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'teacher', 'slug', 'is_published', 'show_in_navbar', 'show_in_footer')
+    form = PageAdminForm
+    list_display = ('name', 'teacher', 'slug', 'is_published', 'show_in_navbar', 'show_in_footer', 'config_yaml')
     list_filter = ('teacher', 'is_published', 'show_in_navbar', 'show_in_footer', 'is_navbar_button')
     search_fields = ('name', 'slug', 'teacher__name')
     actions = ['create_default_pages_action']

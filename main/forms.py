@@ -1,7 +1,39 @@
 from django import forms
 from django.core.exceptions import ValidationError
+import yaml
 
-from .models import Review
+from .models import Review, Page
+from .widgets import YAMLEditorWidget
+
+class PageAdminForm(forms.ModelForm):
+    class Meta:
+        model = Page
+        fields = '__all__'
+        widgets = {
+            'config_yaml': YAMLEditorWidget(),
+        }
+
+    def clean_config_yaml(self):
+        yaml_content = self.cleaned_data.get('config_yaml', '')
+
+        if yaml_content:
+            try:
+                # Validate YAML syntax
+                parsed = yaml.safe_load(yaml_content)
+
+                # Optional: Re-dump to standardize formatting
+                standardized = yaml.dump(parsed,
+                                       default_flow_style=False,
+                                       allow_unicode=True,
+                                       indent=2,
+                                       sort_keys=False)
+                return standardized
+
+            except yaml.YAMLError as e:
+                raise forms.ValidationError(f"Invalid YAML syntax: {e}")
+
+        return yaml_content
+
 
 class SearchForm(forms.Form):
     query = forms.CharField(
