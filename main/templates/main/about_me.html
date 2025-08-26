@@ -22,14 +22,13 @@
 {% block twitter_description %}{{ page.twitter_description }}{% endblock %}
 {% block twitter_image %}{{ page.twitter_image }}{% endblock %}
 
-
 {% block content %}
   <div class="container mx-auto px-4 py-12 max-w-6xl">
     <!-- Hero Section -->
     <section class="text-center mb-16">
       <h1 class="text-4xl font-bold mb-4">{{ page.hero_title }}</h1>
       <p class="text-xl text-secondary max-w-3xl mx-auto">
-      {{ page.hero_sub_title }}
+        {{ page.hero_sub_title }}
       </p>
     </section>
 
@@ -37,228 +36,132 @@
     <div class="flex flex-col lg:flex-row gap-12">
       <!-- Photo & Quick Facts -->
       <div class="lg:w-1/3">
-        <div>
         <div class="card p-6 sticky top-6">
-          <img src="/static/images/maria-profile-picture.jpg"
-               alt="Мария Серединская - репетитор по биологии и химии"
+          <img src="{{ teacher.avatar2.url }}"
+               alt="{{ teacher.name }} - {{ teacher.status }}"
                class="rounded-full w-64 h-64 object-cover mx-auto mb-6 border-4 border-primary">
 
           <div class="space-y-4">
+            {% if teacher.education %}
             <div>
               <h3 class="font-bold text-lg text-primary">Образование:</h3>
               <ul class="list-disc pl-5 space-y-2">
-                <!-- Магистратура -->
-                <li>
-                  <span class="font-semibold">Магистр биологии</span>
-                  <span class="block text-sm text-gray-600">СПбГУ, специализация: зоология позвоночных</span>
-                </li>
-
-                <!-- Бакалавриат -->
-                <li>
-                  <span class="font-semibold">Бакалавр биологии</span>
-                  <span class="block text-sm text-gray-600">СПбГУ, специализация: физиология</span>
-                </li>
-
-                {% comment %}
-                <!-- Курсы -->
-                <li>
-                  <span class="font-semibold">Дополнительная подготовка:</span>
-                  <span class="block text-sm text-gray-600">Нейрофизиология, биоинформатика, методика преподавания</span>
-                </li>
-                {% endcomment %}
+                {% for education in teacher.education.items %}
+                  <li>
+                    <span class="font-semibold">{{ education.degree }}</span>
+                    <span class="block text-sm text-gray-600">{{ education.institution }}, специализация: {{ education.specialisation }}</span>
+                  </li>
+                {% endfor %}
               </ul>
             </div>
+          {% endif %}
+          {% if teacher.scientific_work %}
             <div>
               <h3 class="font-bold text-lg text-primary">Научная работа:</h3>
               <ul class="list-disc pl-5 space-y-1">
-                <li>5+ публикаций в международных журналах</li>
-                <li>Участие в 6 конференциях</li>
-                <li>Грант Российского научного фонда</li>
+                {% for fact in teacher.scientific_work.facts %}
+                  <li>{{ fact }}</li>
+                {% endfor %}
               </ul>
             </div>
-
+          {% endif %}
+          {% if teacher.tutoring %}
             <div>
               <h3 class="font-bold text-lg text-primary">Преподавание:</h3>
               <ul class="list-disc pl-5 space-y-1">
-                <li>9 лет репетиторского опыта</li>
-                <li>250+ подготовленных учеников</li>
-                <li>Преподаватель СПбГУ</li>
+                {% for fact in teacher.tutoring.facts %}
+                  <li>{{ fact }}</li>
+                {% endfor %}
               </ul>
             </div>
+          {% endif %}
           </div>
         </div>
       </div>
-        {% include 'main/includes/tg_channal.html' %}
-      </div>
+
       <!-- Detailed Bio -->
       <div class="lg:w-2/3 space-y-8">
-        <!-- Scientific Experience -->
-        <section class="mb-12">
-          <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">Научный опыт</h2>
+        <!-- Dynamic Sections -->
+        {% for section in page.sections %}
+          <section class="mb-12">
+            {% if section.name %}
+              <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">{{ section.name }}</h2>
+            {% endif %}
 
-          <div class="card rounded-lg shadow-sm p-6 mb-6">
-            <h3 class="text-xl font-bold mb-3 text-primary">Исследования в биологии и медицине</h3>
-            <p class="mb-4">Работала в лабораториях СПбГУ, где изучала:</p>
-            <ul class="list-disc pl-5 space-y-2 mb-4">
-              <li>Как стресс влияет на организм и способы его снижения</li>
-              <li>Действие лекарственных препаратов на поведение</li>
-              <li>Современные методы анализа биологических данных</li>
-            </ul>
-            <p class="text-sm text-gray-600">Результаты опубликованы в международных научных журналах.</p>
-          </div>
+            {% for card in section.cards %}
+              <div class="card rounded-lg shadow-sm p-6 mb-6" style="{% if card.featured %}background-color: rgba(76, 175, 80, 0.3);{% endif %}">
+                {% if card.icon_name %}
+                  <div class="text-primary text-2xl mr-4">
+                    <i class="{{ card.icon_name }}" aria-hidden="true"></i>
+                  </div>
+                {% endif %}
 
-          <div class="card rounded-lg shadow-sm p-6">
-            <h3 class="text-xl font-bold mb-3 text-primary">Исследования в зоологии</h3>
-            <p class="mb-4">Участвовала в проектах по изучению животных:</p>
-            <ul class="list-disc pl-5 space-y-2">
-              <li>Поведение редких видов (сайгаки, моржи)</li>
-              <li>Современные технологии наблюдения за животными</li>
-            </ul>
-            <div class="mt-4">
-              <p class="text-sm text-gray-600">Этот опыт помогает наглядно объяснять биологические процессы на уроках.</p>
-            </div>
-          </div>
+                {% if card.name %}
+                  <h3 class="text-xl font-bold mb-3 text-primary">{{ card.name }}</h3>
+                {% endif %}
 
-          <div class="mt-8 rounded-lg p-6" style="background-color: rgba(76, 175, 80, 0.3);">
-            <h3 class="text-xl font-bold mb-3 text-primary">Почему это важно для учеников?</h3>
-            <ul class="list-disc pl-5 space-y-2">
-              <li>Знание современных исследований делает объяснения актуальными и интересными</li>
-              <li>Научный подход помогает понять сложные темы ЕГЭ на примерах из практики</li>
-              <li>Опыт работы с данными учит анализировать информацию — ключевой навык для олимпиад</li>
-            </ul>
-          </div>
-        </section>
+                {% if card.subtitle %}
+                  <p class="mb-4">{{ card.subtitle }}</p>
+                {% endif %}
 
-        <!-- Teaching Experience -->
-        <section>
-          <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">Преподавательский опыт</h2>
+                {% if card.content %}
+                  <div class="prose max-w-none">
+                    {{ card.content|safe }}
+                  </div>
+                {% endif %}
 
-          <div class="space-y-6">
-            <div class="card p-6 hover-scale">
-              <div class="flex items-start">
-                <div class="text-primary text-2xl mr-4">
-                  <i class="fas fa-university"></i>
-                </div>
-                <div>
-                  <h3 class="text-xl font-bold mb-2">Преподавание в СПбГУ</h3>
-                  <p>Проведение курса практических занятий по териологии для студентов бакалавриата Санкт-Петербургского государственного университета.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="card p-6 hover-scale">
-              <div class="flex items-start">
-                <div class="text-primary text-2xl mr-4">
-                  <i class="fas fa-graduation-cap"></i>
-                </div>
-                <div>
-                  <h3 class="text-xl font-bold mb-2">Репетиторская деятельность</h3>
-                  <p class="mb-2">С 2017 года подготовила более 250 учеников по биологии и химии:</p>
-                  <ul class="list-disc pl-5 space-y-1">
-                    <li>Индивидуальные программы для школьников 9-11 классов</li>
-                    <li>Подготовка к ЕГЭ, ОГЭ и вузовским олимпиадам</li>
+                {% if card.items %}
+                  <ul class="list-disc pl-5 space-y-1 mt-2">
+                    {% for item in card.items %}
+                      <li>{{ item }}</li>
+                    {% endfor %}
                   </ul>
-                </div>
-              </div>
-            </div>
+                {% endif %}
 
-            <div class="card p-6 hover-scale">
-              <div class="flex items-start">
-                <div class="text-primary text-2xl mr-4">
-                  <i class="fas fa-campground"></i>
-                </div>
-                <div>
-                  <h3 class="text-xl font-bold mb-2">Летняя школа в лагере "Зеркальный"</h3>
-                  <p>Разработка и проведение курса лекций и практических занятий по молекулярной биологии для одаренных школьников.</p>
-                </div>
+                {% if card.footer %}
+                  <div class="mt-4 pt-3 border-t text-sm text-gray-600">
+                    {{ card.footer }}
+                  </div>
+                {% endif %}
               </div>
-            </div>
-          </div>
-        </section>
+            {% endfor %}
+          </section>
+        {% endfor %}
 
+        {% if publications %}
         <!-- Publications -->
         <section>
           <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">Научные публикации</h2>
+          {% for publication in publications %}
 
           <div class="space-y-4">
             <div class="border-l-4 border-primary pl-4 py-2">
-              <h3 class="font-bold">Пространственные отношения в группах моржей</h3>
-              <p class="text-sm text-text-secondary">Giljov A.N., Seredinskaya M.V. et al. Nature Conservation Research, 2024</p>
-              <a href="https://doi.org/10.24189/ncr.2024.030" class="text-primary text-sm hover:underline">DOI: 10.24189/ncr.2024.030</a>
-            </div>
-
-            <div class="border-l-4 border-primary pl-4 py-2">
-              <h3 class="font-bold">Модель хронического стресса у Danio rerio</h3>
-              <p class="text-sm text-text-secondary">Demin K.A., Seredinskaya M.V. et al. Journal of Neuroscience Research, 2025</p>
-              <a href="https://doi.org/10.1002/jnr.70025" class="text-primary text-sm hover:underline">DOI: 10.1002/jnr.70025</a>
-            </div>
-
-            <div class="border-l-4 border-primary pl-4 py-2">
-              <h3 class="font-bold">Новый метод оценки стресс-зависимого поведения</h3>
-              <p class="text-sm text-text-secondary">Demin K.A., Seredinskaya M.V. et al. Journal of Neuroscience Methods, 2020</p>
-              <a href="https://doi.org/10.1016/j.jneumeth.2020.108637" class="text-primary text-sm hover:underline">DOI: 10.1016/j.jneumeth.2020.108637</a>
+              <h3 class="font-bold">{{ publication.title }}</h3>
+              <p class="text-sm text-text-secondary">{{ publication.get_authors_short }} {{ publication.journal }}, {{ publication.publication_date|date:"Y" }}</p>
+              <a href="{{ publication.url }}" class="text-primary text-sm hover:underline">DOI: {{ publication.doi }}</a>
             </div>
           </div>
 
+          {% endfor %}
           <div class="mt-6 text-center">
             <a href="/publications" class="btn btn-outline">Все публикации (5+)</a>
           </div>
         </section>
-        {% comment %}
-        <!-- Additional Skills -->
-        <section>
-          <h2 class="text-3xl font-bold mb-6 text-primary border-b pb-2">Профессиональные навыки</h2>
-
-          <div class="grid md:grid-cols-2 gap-6">
-            <div class="card p-6">
-              <h3 class="text-xl font-bold mb-3 text-primary">Лабораторные методы</h3>
-              <ul class="list-disc pl-5 space-y-1">
-                <li>qPCR, HPLC, электрофорез</li>
-                <li>Конфокальная микроскопия</li>
-                <li>Микродиссекция тканей</li>
-              </ul>
-            </div>
-
-            <div class="card p-6">
-              <h3 class="text-xl font-bold mb-3 text-primary">Анализ поведения</h3>
-              <ul class="list-disc pl-5 space-y-1">
-                <li>Тесты на тревожность и стресс</li>
-                <li>Анализ социального поведения</li>
-                <li>Обработка аэрофотоснимков</li>
-              </ul>
-            </div>
-
-            <div class="card p-6">
-              <h3 class="text-xl font-bold mb-3 text-primary">Программное обеспечение</h3>
-              <ul class="list-disc pl-5 space-y-1">
-                <li>Noldus Ethovision, ImageJ</li>
-                <li>Python, R для анализа данных</li>
-                <li>GraphPad, STATISTICA</li>
-              </ul>
-            </div>
-
-            <div class="card p-6">
-              <h3 class="text-xl font-bold mb-3 text-primary">Языки</h3>
-              <ul class="list-disc pl-5 space-y-1">
-                <li>Русский (носитель)</li>
-                <li>Английский (B2)</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-        {% endcomment %}
+        {% endif %}
       </div>
     </div>
 
+    {% if page.cta %}
     <!-- CTA Section -->
     <section class="mt-20 text-center bg-primary text-white p-12 rounded-2xl">
-      <h2 class="text-3xl font-bold mb-4">Научный подход к преподаванию</h2>
+      <h2 class="text-3xl font-bold mb-4">{{ page.cta.heading }}</h2>
       <p class="text-xl mb-8 max-w-2xl mx-auto">
-        Использую актуальные научные знания и индивидуальные методики в подготовке учеников
+        {{ page.cta.text }}
       </p>
-      <a href="/application" class="btn bg-white text-primary px-8 py-3 text-lg font-bold hover:bg-gray-100">
-        Записаться на занятие
+      <a href="{{ page.cta.url }}" class="btn bg-white text-primary px-8 py-3 text-lg font-bold hover:bg-gray-100">
+        {{ page.cta.button_text }}
       </a>
     </section>
+    {% endif %}
   </div>
 {% endblock %}

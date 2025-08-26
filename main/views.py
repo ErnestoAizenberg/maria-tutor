@@ -132,9 +132,11 @@ def about_me(request):
     """Display about me page"""
 
     teacher = get_teacher()
+    publications = Publication.objects.all()
     page = teacher.get_page("about_me")
+    print(f"{page.name} sections: {page.sections}, page.config: {page.config}")
 
-    context = {"page": page}
+    context = {"page": page, "publications": publications}
     return render(request, "main/about_me.html", context)
 
 
