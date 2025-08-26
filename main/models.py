@@ -234,6 +234,7 @@ class Page(models.Model):
         help_text="Page name, displayed in footer and navbar"
     )
     show_in_navbar = models.BooleanField(default=False)
+    is_navbar_button = models.BooleanField(default=False)
     show_in_footer = models.BooleanField(default=False)
     is_published = models.BooleanField(default=False)
 
