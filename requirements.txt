@@ -10,3 +10,4 @@ beautifulsoup4
 requests
 tzdata
 python-json-logger
+PyYAML
