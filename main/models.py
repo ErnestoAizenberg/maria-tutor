@@ -248,7 +248,7 @@ class Page(models.Model):
     og_site_name = models.CharField(max_length=100, blank=True)
     og_title = models.CharField(max_length=300, blank=True)
     og_description = models.CharField(max_length=500, blank=True)
-    og_url = models.URLField(max_length=500, blank=True)
+    og_url = models.URLField(max_length=500, blank=True, null=True)
     og_image = models.URLField(max_length=500, blank=True)
     og_image_width = models.PositiveIntegerField(blank=True, null=True)
     og_image_height = models.PositiveIntegerField(blank=True, null=True)
