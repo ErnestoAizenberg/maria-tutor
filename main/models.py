@@ -1,4 +1,5 @@
 import os
+import yaml
 
 from django.contrib.auth import get_user_model
 from django.core.validators import EmailValidator, FileExtensionValidator, URLValidator, MinValueValidator, MaxValueValidator, ValidationError
@@ -272,6 +273,38 @@ class Page(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     views = models.PositiveIntegerField(default=0)
+
+    config_yaml = models.TextField(blank=True, help_text="Конфигурация страницы в формате YAML")
+    #_config_data = None
+
+    @property
+    def config(self):
+        """
+        Возвращает распаршенный конфиг.
+        Всегда возвращает словарь, даже при ошибках.
+        """
+        try:
+            if self.config_yaml.strip():
+                parsed_config = yaml.safe_load(self.config_yaml) or {}
+                print(f"DEBUG: Successfully parsed config for {self.slug}: {parsed_config}")  # ОТЛАДКА
+                return parsed_config
+            print(f"DEBUG: Empty config for {self.slug}")  # ОТЛАДКА
+            return {}
+        except yaml.YAMLError as e:
+            print(f"DEBUG: YAML ERROR for {self.slug}: {e}")  # ОТЛАДКА
+            print(f"DEBUG: Config content: {self.config_yaml}")  # ОТЛАДКА
+            return {}
+        except Exception as e:
+            print(f"DEBUG: UNEXPECTED ERROR for {self.slug}: {e}")  # ОТЛАДКА
+            return {}
+
+    @property
+    def sections(self):
+        return self.config.get('sections', [])
+
+    @property
+    def cta(self):
+        return self.config.get('cta', {})
 
     def __str__(self):
         return self.name
