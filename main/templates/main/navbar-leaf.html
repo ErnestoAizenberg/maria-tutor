@@ -11,7 +11,7 @@
             <!-- Desktop menu -->
             <div class="hidden md:flex items-center space-x-8">
               {% for page in teacher.pages.all %}
-                {% if page.is_navbar_button %}<F11>
+                {% if page.is_navbar_button %}
                   <a href="/{{ page.slug }}" class="btn btn-primary leaf-button">{{ page.name }}</a>
               <button class="theme-toggle" id="theme-toggle"></button>
                 {% elif page.show_in_navbar %}
