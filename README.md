@@ -55,14 +55,20 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. Apply migrations and run the development server:
+4. Set up environment:
+
+```bash
+cp .env.example .env
+```
+
+5. Apply migrations and run the development server:
 
 ```bash
 python manage.py migrate
 python manage.py runserver
 ```
 
-5. Open your browser and go to [http://127.0.0.1:8000](http://127.0.0.1:8000) to see the homepage.
+6. Open your browser and go to [http://127.0.0.1:8000](http://127.0.0.1:8000) to see the homepage.
 
 ---
 
