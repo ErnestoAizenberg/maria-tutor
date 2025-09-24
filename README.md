@@ -30,6 +30,7 @@ This is a simple Django project that serves as a personal website for Maria Sere
 
 ### In Progress:
 - [ ] Fully dynamic content
+- [ ] Add all data for about_me page
 
 ### Next Up:
 - [ ] Booking functionality
