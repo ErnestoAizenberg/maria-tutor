@@ -37,6 +37,8 @@ This is a simple Django project that serves as a personal website for Maria Sere
 - [ ] CI/CD pipeline
 - [ ] i18n support
 - [ ] Tutor consultation info
+  - [ ] Add announcement on main page
+  - [ ] Add page with detail info about tutor consultation service
 - [ ] Improve UI
 
 ### Completed:
