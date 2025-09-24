@@ -35,6 +35,7 @@ This is a simple Django project that serves as a personal website for Maria Sere
 - [ ] Booking functionality
 - [ ] Free first-lesson info
 - [ ] CI/CD pipeline
+- [ ] i18n support
 
 ### Completed:
 - [x] Project setup
