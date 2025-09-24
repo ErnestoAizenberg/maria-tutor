@@ -26,6 +26,22 @@ This is a simple Django project that serves as a personal website for Maria Sere
 
 ---
 
+## 🚧 Active Development
+
+### In Progress:
+- [ ] Fully dynamic content
+
+### Next Up:
+- [ ] Booking functionality
+- [ ] Free first-lesson info
+- [ ] CI/CD pipeline
+
+### Completed:
+- [x] Project setup
+
+
+---
+
 ## Getting Started
 
 ### Prerequisites
