@@ -36,6 +36,7 @@ This is a simple Django project that serves as a personal website for Maria Sere
 - [ ] Free first-lesson info
 - [ ] CI/CD pipeline
 - [ ] i18n support
+- [ ] Tutor consultation info
 
 ### Completed:
 - [x] Project setup
