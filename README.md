@@ -46,6 +46,7 @@ This is a simple Django project that serves as a personal website for Maria Sere
 - [ ] Improve UI
   - [ ] Update header of main page
   - [ ] Improve 500 error page
+- [ ] Test suits 
 
 ### Completed:
 - [x] Project setup
