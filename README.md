@@ -107,7 +107,7 @@ python manage.py runserver
 - `README.md` — Project description
 - `LICENSE` — License info
 - `.gitignore` — Files to ignore in version control
-- `main` (or similar) — App directory with main code
+- `main` — App directory with tutor pages
 
 ---
 
