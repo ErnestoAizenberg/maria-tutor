@@ -18,37 +18,48 @@
 
         <!-- Заголовок и текст -->
         <div class="space-y-4">
-            <h2 class="text-3xl font-bold text-white font-serif">{{ error_title }}</h2>
+            <h2 class="text-3xl font-bold text-white font-serif">
+                {% if error_title %}{{ error_title }}{% else %}Ошибка сервера{% endif %}
+            </h2>
             <p class="text-lg text-text-secondary">
-                {{ error_description }}
+                {% if error_description %}
+                    {{ error_description }}
+                {% else %}
+                    Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже.
+                {% endif %}
             </p>
         </div>
 
         <!-- Иконка ошибки -->
         <div class="py-6 text-6xl text-primary/80">
-            <i class="{{ error_icon }} transition-all duration-1000 hover:rotate-6 hover:scale-110"></i>
+            <i class="{% if error_icon %}{{ error_icon }}{% else %}fas fa-exclamation-triangle{% endif %} transition-all duration-1000 hover:rotate-6 hover:scale-110"></i>
         </div>
 
-        <!-- Кнопка возврата -->
-        <div class="pt-6">
-            <a href="/" class="btn btn-primary px-8 py-3 text-lg group transition-all duration-300">
+        <!-- Кнопки действий -->
+        <div class="pt-6 flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/" class="btn btn-primary px-8 py-3 text-lg group transition-all duration-300 flex-1 justify-center">
                 <i class="fas fa-home mr-2 transition-transform duration-300 group-hover:scale-110"></i>
-                Вернуться на главную
+                На главную
                 <i class="fas fa-chevron-right ml-2 opacity-70 group-hover:opacity-100 group-hover:ml-3 transition-all duration-300"></i>
             </a>
+            
+            <button onclick="window.location.reload()" class="btn btn-outline px-6 py-3 text-lg group transition-all duration-300 flex-1 justify-center">
+                <i class="fas fa-redo mr-2 transition-transform duration-300 group-hover:rotate-180"></i>
+                Обновить
+            </button>
         </div>
 
         <!-- Дополнительные ссылки -->
         <div class="pt-8 text-sm text-text-secondary/80">
-            <div class="flex justify-center space-x-4 pt-2">
-              <a href="/search" class="hover:text-primary transition-colors duration-300 flex items-center">
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-4 pt-2">
+                <a href="/search" class="hover:text-primary transition-colors duration-300 flex items-center">
                     <i class="fas fa-search mr-2 text-xs"></i> Поиск по сайту
                 </a>
-                <span class="text-border">•</span>
+                <span class="text-border hidden sm:inline">•</span>
                 <a href="/help" class="hover:text-primary transition-colors duration-300 flex items-center">
                     <i class="fas fa-question-circle mr-2 text-xs"></i> Помощь
                 </a>
-                <span class="text-border">•</span>
+                <span class="text-border hidden sm:inline">•</span>
                 <a href="/contact" class="hover:text-primary transition-colors duration-300 flex items-center">
                     <i class="fas fa-envelope mr-2 text-xs"></i> Контакты
                 </a>
@@ -73,6 +84,17 @@
     @keyframes gradient-shift {
         0%, 100% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
+    }
+    
+    .btn-outline {
+        border: 2px solid rgba(var(--color-primary), 0.3);
+        color: rgba(var(--color-primary), 0.9);
+        background: transparent;
+    }
+    
+    .btn-outline:hover {
+        border-color: rgba(var(--color-primary), 0.7);
+        background: rgba(var(--color-primary), 0.1);
     }
 </style>
 {% endblock %}

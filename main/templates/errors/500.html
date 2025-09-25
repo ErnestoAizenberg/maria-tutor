@@ -1,7 +1,22 @@
-{% extends 'errors/base_error.html' %}
+ {% extends 'errors/base_error.html' %}
 
 {% block content %}
-    {% with error_code="500" error_title="Ошибка сервера" error_description="На сервере произошла внутренняя ошибка. Пожалуйста, попробуйте позже." error_icon="fas fa-server" %}
+    {% with 
+        error_code="500" 
+        error_title="Временные неполадки" 
+        error_description="На сервере произошла непредвиденная ошибка. Мы уже работаем над решением проблемы. Пожалуйста, попробуйте позже." 
+        error_icon="fas fa-server"
+        show_refresh_button=True
+        refresh_button_text="Обновить страницу"
+        show_home_button=True
+        home_button_text="На главную"
+    %}
         {{ block.super }}
     {% endwith %}
+{% endblock %}
+
+{% block extra_content %}
+    <div class="mt-4 text-sm text-gray-600">
+        <p>Если проблема повторяется, пожалуйста, свяжитесь с нашей службой поддержки.</p>
+    </div>
 {% endblock %}
