@@ -108,6 +108,7 @@ python manage.py runserver
 - `LICENSE` — License info
 - `.gitignore` — Files to ignore in version control
 - `main` — App directory with tutor pages
+- `telegram_bot` - Telegram bot for display application UI as Telegram Mini App
 
 ---
 
