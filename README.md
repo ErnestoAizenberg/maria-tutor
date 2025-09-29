@@ -24,9 +24,8 @@ This is a simple Django project that serves as a personal website for Maria Sere
 - Main homepage (index page)
 - Ready for customization and expansion
 
+- **🎯 Project Board:** [View project board](https://github.com/users/ErnestoAizenberg/projects/3)
 ---
-
-- **🎯 Project Board:** [Посмотреть проектную доску](https://github.com/users/ErnestoAizenberg/projects/3)
 
 ## 🚧 Active Development
 
