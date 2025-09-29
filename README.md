@@ -26,6 +26,8 @@ This is a simple Django project that serves as a personal website for Maria Sere
 
 ---
 
+- **🎯 Project Board:** [Посмотреть проектную доску](https://github.com/users/ErnestoAizenberg/projects/3)
+
 ## 🚧 Active Development
 
 ### In Progress:
