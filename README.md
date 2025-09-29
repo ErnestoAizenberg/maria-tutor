@@ -27,34 +27,6 @@ This is a simple Django project that serves as a personal website for Maria Sere
 - **🎯 Project Board:** [View project board](https://github.com/users/ErnestoAizenberg/projects/3)
 ---
 
-## 🚧 Active Development
-
-### In Progress:
-- [ ] Fully dynamic content
-- [ ] Add all data for about_me page
-
-### Next Up:
-- [ ] Booking functionality
-- [ ] Free first-lesson info
-  - [ ] Add announcement on main page
-  - [ ] Add page with detailed info about first lesson
-  - [ ] Add info how to book a first lesson (CTA).
-- [ ] CI/CD pipeline
-- [ ] i18n support
-- [ ] Tutor consultation info
-  - [ ] Add announcement on main page
-  - [ ] Add page with detail info about tutor consultation service
-- [ ] Improve UI
-  - [ ] Update header of main page
-  - [ ] Improve 500 error page
-- [ ] Test suits 
-
-### Completed:
-- [x] Project setup
-
-
----
-
 ## Getting Started
 
 ### Prerequisites
