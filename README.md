@@ -27,6 +27,9 @@ This is a simple Django project that serves as a personal website for Maria Sere
 - **🎯 Project Board:** [View project board](https://github.com/users/ErnestoAizenberg/projects/3)
 ---
 
+## Screenshots
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/16de69f6-230f-4f13-93fb-f8c3783e38e8" />
+
 ## Getting Started
 
 ### Prerequisites
