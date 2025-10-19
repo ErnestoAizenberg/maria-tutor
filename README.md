@@ -28,7 +28,8 @@ This is a simple Django project that serves as a personal website for Maria Sere
 ---
 
 ## Screenshots
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/16de69f6-230f-4f13-93fb-f8c3783e38e8" />
+![image_2025-10-19_16-20-39](https://github.com/user-attachments/assets/20d15b2f-0911-47bd-b8c1-222f5cb5c63c)
+
 
 ## Getting Started
 
