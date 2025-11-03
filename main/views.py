@@ -326,7 +326,7 @@ def application_submit(request):
         request.session["application_form_data"] = request.POST
         request.session["application_form_errors"] = form.errors.as_json()
 
-        return redirect("/#application-form")
+        return redirect("application")
 
     try:
         name = form.cleaned_data.get("name", "").strip()
