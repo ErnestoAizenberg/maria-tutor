@@ -1,10 +1,11 @@
 {% extends 'main/base.html' %}
+
 {% block title %}
-   {% if error_title %}
-     {{ error_title }}
+    {% if error_title %}
+        {{ error_title }}
     {% else %}
-     {{ error_description }}
-   {% endif %}
+        {{ error_description|default:"Ошибка" }}
+    {% endif %}
 {% endblock title %}
 
 {% block content %}
@@ -12,41 +13,41 @@
     <div class="max-w-md w-full space-y-8 text-center">
         <!-- Код ошибки -->
         <div class="relative">
-            <h1 class="text-9xl font-bold text-gradient opacity-90 mb-4 tracking-tighter">{{ error_code }}</h1>
+            <h1 class="text-9xl font-bold text-gradient opacity-90 mb-4 tracking-tighter">{{ error_code|default:"500" }}</h1>
             <div class="absolute -inset-4 bg-gradient-to-r from-primary/10 to-secondary/10 rounded-full blur-md opacity-20"></div>
         </div>
 
         <!-- Заголовок и текст -->
         <div class="space-y-4">
             <h2 class="text-3xl font-bold text-white font-serif">
-                {% if error_title %}{{ error_title }}{% else %}Ошибка сервера{% endif %}
+                {{ error_title|default:"Ошибка сервера" }}
             </h2>
             <p class="text-lg text-text-secondary">
-                {% if error_description %}
-                    {{ error_description }}
-                {% else %}
-                    Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже.
-                {% endif %}
+                {{ error_description|default:"Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже." }}
             </p>
         </div>
 
         <!-- Иконка ошибки -->
         <div class="py-6 text-6xl text-primary/80">
-            <i class="{% if error_icon %}{{ error_icon }}{% else %}fas fa-exclamation-triangle{% endif %} transition-all duration-1000 hover:rotate-6 hover:scale-110"></i>
+            <i class="{{ error_icon|default:'fas fa-exclamation-triangle' }} transition-all duration-1000 hover:rotate-6 hover:scale-110"></i>
         </div>
 
         <!-- Кнопки действий -->
         <div class="pt-6 flex flex-col sm:flex-row gap-4 justify-center">
+            {% if show_home_button != False %}
             <a href="/" class="btn btn-primary px-8 py-3 text-lg group transition-all duration-300 flex-1 justify-center">
                 <i class="fas fa-home mr-2 transition-transform duration-300 group-hover:scale-110"></i>
-                На главную
+                {{ home_button_text|default:"На главную" }}
                 <i class="fas fa-chevron-right ml-2 opacity-70 group-hover:opacity-100 group-hover:ml-3 transition-all duration-300"></i>
             </a>
+            {% endif %}
             
+            {% if show_refresh_button != False %}
             <button onclick="window.location.reload()" class="btn btn-outline px-6 py-3 text-lg group transition-all duration-300 flex-1 justify-center">
                 <i class="fas fa-redo mr-2 transition-transform duration-300 group-hover:rotate-180"></i>
-                Обновить
+                {{ refresh_button_text|default:"Обновить" }}
             </button>
+            {% endif %}
         </div>
 
         <!-- Дополнительные ссылки -->
