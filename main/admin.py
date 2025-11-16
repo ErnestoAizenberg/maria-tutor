@@ -9,7 +9,7 @@ from django.utils.html import format_html
 from django.http import HttpResponseRedirect
 
 from .custom_admin import custom_admin_site
-from .models import Application, Article, Tag, ConnectMessage, Publication, Review, Teacher, LessonCard, LessonFeature, Tariff, Page
+from .models import Application, Article, Tag, ConnectMessage, Publication, Review, Teacher, LessonCard, LessonFeature, Tariff, Page, TutorConsultationRequest
 from .defaults import create_default_pages
 from .forms import PageAdminForm
 
@@ -517,6 +517,62 @@ class PageAdmin(admin.ModelAdmin):
 
     create_default_pages_action.short_description = "★ Create default pages for selected teachers"
 
+
+class TutorConsultationRequestAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "email",
+        "phone",
+        "experience_years",
+        "created_at",
+        "is_processed",
+        "consultation_actions"
+    )
+    list_filter = ("is_processed", "created_at", "experience_years")
+    search_fields = ("name", "email", "phone", "question")
+    list_editable = ("is_processed",)
+    date_hierarchy = "created_at"
+    readonly_fields = ("created_at", "name", "email", "phone", "question", "experience_years")
+
+    fieldsets = (
+        ("Информация о репетиторе", {
+            "fields": ("name", "email", "phone", "experience_years")
+        }),
+        ("Детали консультации", {
+            "fields": ("question",)
+        }),
+        ("Статус", {
+            "fields": ("is_processed", "processed_at", "notes")
+        }),
+        ("Метаданные", {
+            "fields": ("created_at",),
+            "classes": ("collapse",)
+        })
+    )
+
+    def has_add_permission(self, request):
+        return False  # Запрещаем создание через админку
+
+    def consultation_actions(self, obj):
+        if not obj.is_processed:
+            process_url = f"/admin/main/tutorconsultationrequest/{obj.id}/process/"
+            return format_html(
+                '<a class="button" href="{}">Обработать</a>&nbsp;'
+                '<a class="button" href="mailto:{}">Ответить</a>',
+                process_url,
+                obj.email
+            )
+        return format_html(
+            '<a class="button" href="mailto:{}">Ответить</a>',
+            obj.email
+        )
+
+    consultation_actions.short_description = "Действия"
+
+    class Media:
+        css = {"all": ("admin/css/custom.css",)}
+
+
 # Регистрация моделей в кастомной админке
 custom_admin_site.register(User)
 custom_admin_site.register(Tariff, TariffAdmin)
@@ -529,6 +585,7 @@ custom_admin_site.register(Publication, PublicationAdmin)
 custom_admin_site.register(Article, ArticleAdmin)
 custom_admin_site.register(Tag, TagAdmin)
 custom_admin_site.register(Review, ReviewAdmin)
+custom_admin_site.register(TutorConsultationRequest, TutorConsultationRequestAdmin)
 
 # Настройки заголовков
 custom_admin_site.site_header = "👾 Site Administration"

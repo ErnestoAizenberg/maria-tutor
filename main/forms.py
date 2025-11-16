@@ -149,3 +149,85 @@ class ApplicationForm(forms.Form):
         if len(name.split()) < 2:
             raise ValidationError("Пожалуйста, введите имя и фамилию")
         return name
+
+
+class TutorConsultationForm(forms.Form):
+    """Form for tutor consultation requests"""
+
+    name = forms.CharField(
+        max_length=300,
+        required=True,
+        label="Ваше имя",
+        widget=forms.TextInput(attrs={
+            "placeholder": "Иван Петров",
+            "class": "form-control"
+        }),
+        error_messages={
+            "required": "Пожалуйста, введите ваше имя",
+            "max_length": "Имя слишком длинное (максимум 300 символов)"
+        }
+    )
+
+    email = forms.EmailField(
+        max_length=300,
+        required=True,
+        label="Email для связи",
+        widget=forms.EmailInput(attrs={
+            "placeholder": "email@example.com",
+            "class": "form-control"
+        }),
+        error_messages={
+            "required": "Пожалуйста, укажите email для связи",
+            "invalid": "Пожалуйста, введите корректный email-адрес",
+            "max_length": "Email слишком длинный (максимум 300 символов)"
+        }
+    )
+
+    phone = forms.CharField(
+        max_length=50,
+        required=False,
+        label="Телефон (необязательно)",
+        widget=forms.TextInput(attrs={
+            "placeholder": "+7 (999) 123-45-67",
+            "class": "form-control"
+        })
+    )
+
+    question = forms.CharField(
+        max_length=2000,
+        required=True,
+        label="Опишите ваш вопрос или проблему",
+        widget=forms.Textarea(attrs={
+            "placeholder": "Расскажите, с чем вам нужна помощь...",
+            "rows": 5,
+            "class": "form-control"
+        }),
+        min_length=20,
+        error_messages={
+            "required": "Пожалуйста, опишите ваш вопрос",
+            "min_length": "Описание слишком короткое (минимум 20 символов)"
+        }
+    )
+
+    experience_years = forms.IntegerField(
+        required=False,
+        label="Опыт работы репетитором (лет)",
+        widget=forms.NumberInput(attrs={
+            "placeholder": "5",
+            "min": "0",
+            "max": "50",
+            "class": "form-control"
+        })
+    )
+
+    def clean_name(self):
+        name = self.cleaned_data.get("name", "").strip()
+        if len(name) < 2:
+            raise ValidationError("Пожалуйста, введите корректное имя")
+        return name
+
+    def clean_experience_years(self):
+        years = self.cleaned_data.get("experience_years")
+        if years is not None and (years < 0 or years > 50):
+            raise ValidationError("Пожалуйста, введите корректное количество лет (0-50)")
+        return years
