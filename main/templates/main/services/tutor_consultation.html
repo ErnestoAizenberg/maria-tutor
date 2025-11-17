@@ -1,0 +1,465 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Консультация для репетиторов | {{ teacher.name }}{% endblock %}
+
+{% block meta_description %}Профессиональная консультация для репетиторов. Помогу решить сложные вопросы развития репетиторской практики, повысить стоимость услуг и системат� работу с клиентами.{% endblock %}
+
+{% block meta_keywords %}консультация для репетиторов, развитие репетиторской практики, повышение стоимости услуг, работа с клиентами{% endblock %}
+
+{% block og_title %}Консультация для репетиторов | Профессиональная помощь в развитии{% endblock %}
+{% block og_description %}Помогу решить сложные вопросы развития репетиторской практики. Четкий план действий, инструменты повышения стоимости услуг, система работы с клиентами.{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative py-20 px-4 overflow-hidden" style="background: linear-gradient(135deg, rgba(30, 58, 138, 0.95) 0%, rgba(49, 46, 129, 0.85) 50%, rgba(88, 28, 135, 0.9) 100%);">
+  <div class="max-w-6xl mx-auto relative z-10">
+    <div class="text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">
+        Консультация для репетиторов
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8">
+        Профессиональная помощь в решении сложных вопросов и развитии вашей репетиторской практики
+      </p>
+      <a href="#consultation-form" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 shadow-lg transition-all duration-150 transform hover:-translate-y-1">
+        Записаться на консультацию
+        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Problems Section: "Поможем решить" -->
+<section class="py-16 px-4 bg-[rgb(var(--color-bg))]">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold text-[rgb(var(--color-text))] text-center mb-12">
+      Поможем решить
+    </h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="bg-[rgb(var(--color-bg-card))] p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-[rgb(var(--color-border))]">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-[rgb(var(--color-text))] mb-2">Низкая конверсия в постоянных клиентов</h3>
+            <p class="text-[rgb(var(--color-text-secondary))]">Разработаем систему удержания учеников и увеличения повторных обращений</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-[rgb(var(--color-bg-card))] p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-[rgb(var(--color-border))]">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-[rgb(var(--color-text))] mb-2">Сложности с ценообразованием услуг</h3>
+            <p class="text-[rgb(var(--color-text-secondary))]">Определим оптимальную стоимость с учетом вашего опыта и рынка</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-[rgb(var(--color-bg-card))] p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-[rgb(var(--color-border))]">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-[rgb(var(--color-text))] mb-2">Нехватка времени на развитие</h3>
+            <p class="text-[rgb(var(--color-text-secondary))]">Создадим эффективный план использования времени для роста бизнеса</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-[rgb(var(--color-bg-card))] p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-[rgb(var(--color-border))]">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-[rgb(var(--color-text))] mb-2">Проблемы с мотивацией учеников</h3>
+            <p class="text-[rgb(var(--color-text-secondary))]">Поделюсь методиками вовлечения и поддержания интереса к занятиям</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-[rgb(var(--color-bg-card))] p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-[rgb(var(--color-border))]">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-[rgb(var(--color-text))] mb-2">Отсутствие системы в работе</h3>
+            <p class="text-[rgb(var(--color-text-secondary))]">Построим четкую структуру ведения занятий и взаимодействия с клиентами</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-[rgb(var(--color-bg-card))] p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-[rgb(var(--color-border))]">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-[rgb(var(--color-text))] mb-2">Сложности с позиционированием на рынке</h3>
+            <p class="text-[rgb(var(--color-text-secondary))]">Найдем вашу уникальность и выстроим стратегию продвижения</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Results Section: "Что вы получите" -->
+<section class="py-16 px-4 bg-gradient-to-br from-[rgb(var(--color-bg))] to-[rgba(var(--color-primary),0.05)]">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold text-[rgb(var(--color-text))] text-center mb-12">
+      Что вы получите
+    </h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="bg-[rgb(var(--color-bg-card))] p-8 rounded-xl shadow-lg border border-[rgb(var(--color-border))] hover:transform hover:-translate-y-1 transition-all">
+        <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[rgb(var(--color-text))] mb-3">Четкий план развития на 3 месяца</h3>
+        <p class="text-[rgb(var(--color-text-secondary))]">Пошаговая стратегия с конкретными действиями и KPI для достижения ваших целей</p>
+      </div>
+
+      <div class="bg-[rgb(var(--color-bg-card))] p-8 rounded-xl shadow-lg border border-[rgb(var(--color-border))] hover:transform hover:-translate-y-1 transition-all">
+        <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[rgb(var(--color-text))] mb-3">Инструменты повышения стоимости услуг</h3>
+        <p class="text-[rgb(var(--color-text-secondary))]">Методики обоснования цены и увеличения ценности ваших занятий для клиентов</p>
+      </div>
+
+      <div class="bg-[rgb(var(--color-bg-card))] p-8 rounded-xl shadow-lg border border-[rgb(var(--color-border))] hover:transform hover:-translate-y-1 transition-all">
+        <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[rgb(var(--color-text))] mb-3">Систему работы с клиентами</h3>
+        <p class="text-[rgb(var(--color-text-secondary))]">Готовые алгоритмы от первого контакта до долгосрочного сотрудничества</p>
+      </div>
+
+      <div class="bg-[rgb(var(--color-bg-card))] p-8 rounded-xl shadow-lg border border-[rgb(var(--color-border))] hover:transform hover:-translate-y-1 transition-all">
+        <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[rgb(var(--color-text))] mb-3">Методы удержания учеников</h3>
+        <p class="text-[rgb(var(--color-text-secondary))]">Проверенные техники вовлечения и повышения лояльности студентов</p>
+      </div>
+
+      <div class="bg-[rgb(var(--color-bg-card))] p-8 rounded-xl shadow-lg border border-[rgb(var(--color-border))] hover:transform hover:-translate-y-1 transition-all">
+        <div class="w-16 h-16 bg-gradient-to-r from-indigo-500 to-blue-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[rgb(var(--color-text))] mb-3">Стратегию позиционирования</h3>
+        <p class="text-[rgb(var(--color-text-secondary))]">Персональный бренд и позиционирование, которые выделят вас среди конкурентов</p>
+      </div>
+
+      <div class="bg-[rgb(var(--color-bg-card))] p-8 rounded-xl shadow-lg border border-[rgb(var(--color-border))] hover:transform hover:-translate-y-1 transition-all">
+        <div class="w-16 h-16 bg-gradient-to-r from-teal-500 to-green-600 rounded-lg flex items-center justify-center mb-4">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-[rgb(var(--color-text))] mb-3">Практические кейсы и шаблоны</h3>
+        <p class="text-[rgb(var(--color-text-secondary))]">Готовые решения для типовых ситуаций в работе репетитора</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process Section: "Как проходит консультация" -->
+<section class="py-16 px-4 bg-[rgb(var(--color-bg))]">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold text-[rgb(var(--color-text))] text-center mb-12">
+      Как проходит консультация
+    </h2>
+    <div class="relative">
+      <!-- Timeline line -->
+      <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500"></div>
+
+      <!-- Step 1 -->
+      <div class="relative mb-12 md:grid md:grid-cols-2 md:gap-8 items-center">
+        <div class="md:text-right pr-8">
+          <div class="bg-[rgb(var(--color-bg-card))] p-6 rounded-xl shadow-lg border border-[rgb(var(--color-border))]">
+            <h3 class="text-2xl font-bold text-[rgb(var(--color-text))] mb-2">1. Диагностика</h3>
+            <p class="text-[rgb(var(--color-text-secondary))] mb-2">Анализ текущей ситуации</p>
+            <ul class="text-sm text-[rgb(var(--color-text-secondary))] space-y-1">
+              <li>• Оценка вашего опыта и навыков</li>
+              <li>• Выявление сильных и слабых сторон</li>
+              <li>• Определение целей и задач</li>
+            </ul>
+          </div>
+        </div>
+        <div class="hidden md:flex justify-center items-center">
+          <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg z-10">1</div>
+        </div>
+        <div class="hidden md:block"></div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="relative mb-12 md:grid md:grid-cols-2 md:gap-8 items-center">
+        <div class="hidden md:block"></div>
+        <div class="hidden md:flex justify-center items-center">
+          <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg z-10">2</div>
+        </div>
+        <div class="pl-8">
+          <div class="bg-[rgb(var(--color-bg-card))] p-6 rounded-xl shadow-lg border border-[rgb(var(--color-border))]">
+            <h3 class="text-2xl font-bold text-[rgb(var(--color-text))] mb-2">2. Стратегия</h3>
+            <p class="text-[rgb(var(--color-text-secondary))] mb-2">Разработка плана действий</p>
+            <ul class="text-sm text-[rgb(var(--color-text-secondary))] space-y-1">
+              <li>• Постановка конкретных целей</li>
+              <li>• Выбор оптимальных методов</li>
+              <li>• Создание дорожной карты</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="relative mb-12 md:grid md:grid-cols-2 md:gap-8 items-center">
+        <div class="md:text-right pr-8">
+          <div class="bg-[rgb(var(--color-bg-card))] p-6 rounded-xl shadow-lg border border-[rgb(var(--color-border))]">
+            <h3 class="text-2xl font-bold text-[rgb(var(--color-text))] mb-2">3. Реализация</h3>
+            <p class="text-[rgb(var(--color-text-secondary))] mb-2">Рабочие инструменты и методы</p>
+            <ul class="text-sm text-[rgb(var(--color-text-secondary))] space-y-1">
+              <li>• Практические рекомендации</li>
+              <li>• Готовые шаблоны и скрипты</li>
+              <li>• Проверенные методики</li>
+            </ul>
+          </div>
+        </div>
+        <div class="hidden md:flex justify-center items-center">
+          <div class="w-16 h-16 bg-pink-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg z-10">3</div>
+        </div>
+        <div class="hidden md:block"></div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="relative md:grid md:grid-cols-2 md:gap-8 items-center">
+        <div class="hidden md:block"></div>
+        <div class="hidden md:flex justify-center items-center">
+          <div class="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg z-10">4</div>
+        </div>
+        <div class="pl-8">
+          <div class="bg-[rgb(var(--color-bg-card))] p-6 rounded-xl shadow-lg border border-[rgb(var(--color-border))]">
+            <h3 class="text-2xl font-bold text-[rgb(var(--color-text))] mb-2">4. Результат</h3>
+            <p class="text-[rgb(var(--color-text-secondary))] mb-2">Достижение поставленных целей</p>
+            <ul class="text-sm text-[rgb(var(--color-text-secondary))] space-y-1">
+              <li>• Измеримые результаты</li>
+              <li>• План дальнейшего развития</li>
+              <li>• Поддержка после консультации</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Expertise Section: "Почему я могу помочь" -->
+<section class="py-16 px-4 bg-gradient-to-br from-[rgba(var(--color-primary),0.05)] to-[rgb(var(--color-bg))]">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold text-[rgb(var(--color-text))] text-center mb-12">
+      Почему я могу помочь
+    </h2>
+    <div class="bg-[rgb(var(--color-bg-card))] rounded-2xl shadow-xl p-8 md:p-12 border border-[rgb(var(--color-border))]">
+      <div class="grid md:grid-cols-3 gap-8 mb-8">
+        <div class="text-center">
+          <div class="text-5xl font-bold text-blue-600 dark:text-blue-400 mb-2">{{ teacher.experience_years|default:"5+" }}</div>
+          <div class="text-lg text-[rgb(var(--color-text-secondary))]">лет опыта репетиторства</div>
+        </div>
+        <div class="text-center">
+          <div class="text-5xl font-bold text-purple-600 dark:text-purple-400 mb-2">{{ teacher.students_count|default:"100+" }}</div>
+          <div class="text-lg text-[rgb(var(--color-text-secondary))]">успешных учеников</div>
+        </div>
+        <div class="text-center">
+          <div class="text-5xl font-bold text-green-600 dark:text-green-400 mb-2">{{ teacher.consultation_count|default:"50+" }}</div>
+          <div class="text-lg text-[rgb(var(--color-text-secondary))]">проведенных консультаций</div>
+        </div>
+      </div>
+
+      <div class="prose prose-lg max-w-none text-[rgb(var(--color-text-secondary))]">
+        <p class="mb-4">
+          Я не просто репетитор — я прошла путь от начинающего специалиста до востребованного эксперта.
+          За годы работы я научилась не только эффективно обучать, но и системно развивать свою практику.
+        </p>
+        <p class="mb-4">
+          Мой опыт включает работу с различными форматами: индивидуальные и групповые занятия,
+          онлайн и офлайн обучение, подготовку к ЕГЭ и олимпиадам, работу со студентами с особенностями развития.
+        </p>
+        <p>
+          Я помогу вам избежать моих ошибок и найти кратчайший путь к вашим профессиональным целям.
+          Делюсь только проверенными на практике методами и инструментами.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section (if available) -->
+{% if reviews %}
+<section class="py-16 px-4 bg-[rgb(var(--color-bg))]">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold text-[rgb(var(--color-text))] text-center mb-12">
+      Отзывы коллег
+    </h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for review in reviews|slice:":3" %}
+      <div class="bg-[rgb(var(--color-bg-card))] p-6 rounded-xl shadow-lg border border-[rgb(var(--color-border))]">
+        <div class="flex items-center gap-4 mb-4">
+          {% if review.author_photo_url %}
+          <img src="{{ review.author_photo_url }}" alt="{{ review.author_name }}" class="w-12 h-12 rounded-full object-cover">
+          {% else %}
+          <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold">
+            {{ review.author_name|first }}
+          </div>
+          {% endif %}
+          <div>
+            <div class="font-semibold text-[rgb(var(--color-text))]">{{ review.author_name }}</div>
+            {% if review.achievement %}
+            <div class="text-sm text-[rgb(var(--color-text-secondary))]">{{ review.achievement }}</div>
+            {% endif %}
+          </div>
+        </div>
+        <p class="text-[rgb(var(--color-text-secondary))] mb-4">{{ review.content|truncatewords:30 }}</p>
+        {% if review.rating %}
+        <div class="flex gap-1">
+          {% for i in "12345" %}
+            {% if forloop.counter <= review.rating %}
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            {% else %}
+            <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- CTA Section with Form -->
+<section id="consultation-form" class="py-16 px-4 bg-gradient-to-br from-[rgb(var(--color-bg))] to-[rgba(var(--color-primary),0.1)]">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-[rgb(var(--color-text))] mb-4">
+        Записаться на консультацию
+      </h2>
+      <p class="text-xl text-[rgb(var(--color-text-secondary))]">
+        Заполните форму, и я свяжусь с вами в течение 24 часов
+      </p>
+    </div>
+
+    <div class="bg-[rgb(var(--color-bg-card))] rounded-2xl shadow-xl p-8 md:p-12 border border-[rgb(var(--color-border))]">
+      {% if messages %}
+        {% for message in messages %}
+        <div class="mb-6 p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200{% else %}bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200{% endif %}">
+          {{ message }}
+        </div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" action="{% url 'tutor_consultation_submit' %}" class="space-y-6">
+        {% csrf_token %}
+
+        <div>
+          <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-[rgb(var(--color-text))] mb-2">
+            {{ form.name.label }}
+          </label>
+          {{ form.name }}
+          {% if form.name.errors %}
+            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.name.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-[rgb(var(--color-text))] mb-2">
+              {{ form.email.label }}
+            </label>
+            {{ form.email }}
+            {% if form.email.errors %}
+              <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.email.errors.0 }}</p>
+            {% endif %}
+          </div>
+
+          <div>
+            <label for="{{ form.phone.id_for_label }}" class="block text-sm font-medium text-[rgb(var(--color-text))] mb-2">
+              {{ form.phone.label }}
+            </label>
+            {{ form.phone }}
+            {% if form.phone.errors %}
+              <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.phone.errors.0 }}</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div>
+          <label for="{{ form.experience_years.id_for_label }}" class="block text-sm font-medium text-[rgb(var(--color-text))] mb-2">
+            {{ form.experience_years.label }}
+          </label>
+          {{ form.experience_years }}
+          {% if form.experience_years.errors %}
+            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.experience_years.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <div>
+          <label for="{{ form.question.id_for_label }}" class="block text-sm font-medium text-[rgb(var(--color-text))] mb-2">
+            {{ form.question.label }}
+          </label>
+          {{ form.question }}
+          {% if form.question.errors %}
+            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.question.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <div class="pt-4">
+          <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-lg shadow-lg transition-all duration-150 transform hover:-translate-y-1">
+            Отправить заявку
+          </button>
+        </div>
+
+        <p class="text-sm text-center text-[rgb(var(--color-text-secondary))] mt-4">
+          Отправляя форму, вы соглашаетесь с <a href="{% url 'policy' %}" class="text-blue-600 dark:text-blue-400 hover:underline">политикой конфиденциальности</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

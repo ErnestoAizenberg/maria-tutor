@@ -52,4 +52,6 @@ urlpatterns += [
     path("programs/olympiad-prep/", views.olympiad_prep, name="olympiad-prep"),
     path("programs/one-on-one/", views.one_on_one, name="one-on-one"),
     path("programs/subsized/", views.subsidized, name="subsized"),
+    path("services/tutor-consultation/", views.tutor_consultation, name="tutor_consultation"),
+    path("services/tutor-consultation/submit/", views.tutor_consultation_submit, name="tutor_consultation_submit"),
 ]

@@ -904,3 +904,82 @@ class LessonFeature(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class TutorConsultationRequest(models.Model):
+    """Model for tutor consultation requests from other tutors"""
+
+    # Basic information
+    name = models.CharField(
+        max_length=300,
+        blank=False,
+        verbose_name="Имя репетитора",
+        help_text="Полное имя репетитора"
+    )
+
+    email = models.EmailField(
+        max_length=300,
+        blank=False,
+        verbose_name="Email",
+        help_text="Email для связи",
+        validators=[EmailValidator()]
+    )
+
+    phone = models.CharField(
+        max_length=50,
+        blank=True,
+        verbose_name="Телефон",
+        help_text="Контактный телефон (необязательно)"
+    )
+
+    # Consultation details
+    question = models.TextField(
+        max_length=2000,
+        blank=False,
+        verbose_name="Вопрос/проблема",
+        help_text="Описание вопроса или проблемы, с которой нужна помощь"
+    )
+
+    experience_years = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+        verbose_name="Опыт работы (лет)",
+        help_text="Количество лет работы репетитором"
+    )
+
+    # Status tracking
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата создания"
+    )
+
+    is_processed = models.BooleanField(
+        default=False,
+        verbose_name="Обработано",
+        help_text="Была ли обработана заявка"
+    )
+
+    processed_at = models.DateTimeField(
+        blank=True,
+        null=True,
+        verbose_name="Дата обработки"
+    )
+
+    notes = models.TextField(
+        max_length=1000,
+        blank=True,
+        verbose_name="Заметки",
+        help_text="Внутренние заметки администратора"
+    )
+
+    @property
+    def model_verbose_name(self):
+        return self._meta.verbose_name
+
+    class Meta:
+        verbose_name = "Заявка на консультацию для репетиторов"
+        verbose_name_plural = "Заявки на консультацию для репетиторов"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"Консультация от {self.name} ({self.created_at.strftime('%Y-%m-%d')})"

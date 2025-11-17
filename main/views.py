@@ -9,8 +9,8 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.paginator import Paginator
 
-from .forms import ApplicationForm, ReviewForm
-from .models import Application, Article, Publication, Review, Tag, LessonCard, ConnectMessage, get_teacher
+from .forms import ApplicationForm, ReviewForm, TutorConsultationForm
+from .models import Application, Article, Publication, Review, Tag, LessonCard, ConnectMessage, TutorConsultationRequest, get_teacher
 from .utils import search_models
 
 logger = logging.getLogger('main')
@@ -537,3 +537,120 @@ def application(request):
         "application_form": form,
     }
     return render(request, "main/application.html", context)
+
+
+def tutor_consultation(request):
+    """Display tutor consultation service page"""
+    teacher = get_teacher()
+    reviews = Review.objects.filter(is_published=True).order_by("-created_at")[:6]
+
+    # Initialize form with session data if exists, otherwise create empty form
+    if "consultation_form_data" in request.session:
+        form = TutorConsultationForm(request.session["consultation_form_data"])
+
+        # Add form errors from session if they exist
+        if errors_json := request.session.get("consultation_form_errors"):
+            errors_dict = json.loads(errors_json)
+            for field, error_list in errors_dict.items():
+                for error in error_list:
+                    form.add_error(field, error)
+                    messages.error(request, error)
+
+        # Clean up session data
+        request.session.pop("consultation_form_data", None)
+        request.session.pop("consultation_form_errors", None)
+    else:
+        form = TutorConsultationForm()
+
+    context = {
+        "teacher": teacher,
+        "reviews": reviews,
+        "form": form,
+    }
+    return render(request, "main/services/tutor_consultation.html", context)
+
+
+def tutor_consultation_submit(request):
+    """Handle tutor consultation form submissions"""
+    if request.method != "POST":
+        logger.warning("Tutor consultation form submission attempted with non-POST method")
+        return redirect("tutor_consultation")
+
+    form = TutorConsultationForm(request.POST)
+
+    if not form.is_valid():
+        logger.warning(
+            "Invalid tutor consultation form submission",
+            extra={"errors": form.errors}
+        )
+        request.session["consultation_form_data"] = request.POST.dict()
+        request.session["consultation_form_errors"] = form.errors.as_json()
+        return redirect("tutor_consultation")
+
+    try:
+        name = form.cleaned_data.get("name", "").strip()
+        user_email = form.cleaned_data.get("email", "").strip()
+        phone = form.cleaned_data.get("phone", "").strip()
+        question = form.cleaned_data.get("question", "").strip()
+        experience_years = form.cleaned_data.get("experience_years")
+
+        logger.info(f"Processing tutor consultation request from {name} <{user_email}>")
+
+        # Save to database
+        try:
+            consultation_request = TutorConsultationRequest(
+                name=name,
+                email=user_email,
+                phone=phone,
+                question=question,
+                experience_years=experience_years
+            )
+            consultation_request.save()
+            logger.info(f"Tutor consultation request saved successfully (ID: {consultation_request.id})")
+        except Exception as e:
+            logger.error(f"Failed to save TutorConsultationRequest, error: {str(e)}", exc_info=True)
+            messages.error(request, "Произошла ошибка при отправке заявки. Пожалуйста, попробуйте позже.")
+            return redirect("tutor_consultation")
+
+        # Send email notification
+        subject = f"Заявка на консультацию для репетиторов от {name}"
+        email_body = f"""
+Новая заявка на консультацию для репетиторов:
+
+Имя: {name}
+Email: {user_email}
+Телефон: {phone if phone else 'Не указан'}
+Опыт работы: {experience_years if experience_years else 'Не указан'} лет
+
+Вопрос/проблема:
+{question}
+
+---
+ID заявки: {consultation_request.id}
+Дата: {consultation_request.created_at.strftime('%Y-%m-%d %H:%M')}
+        """
+
+        email = EmailMessage(
+            subject=subject,
+            body=email_body,
+            from_email="noreply@yourdomain.com",
+            to=["sereernest@gmail.com"],
+            reply_to=[user_email]
+        )
+
+        try:
+            email.send(fail_silently=False)
+            logger.info(f"Consultation request email sent successfully to sereernest@gmail.com")
+        except Exception as err:
+            logger.error(f"While sending consultation email an error occurred: {err}")
+
+        messages.success(
+            request,
+            "Спасибо за вашу заявку! Я свяжусь с вами в течение 24 часов."
+        )
+        return redirect("tutor_consultation")
+
+    except Exception as e:
+        logger.error(f"Error processing tutor consultation request: {str(e)}", exc_info=True)
+        messages.error(request, "Произошла ошибка при отправке заявки")
+        return redirect("tutor_consultation")
