@@ -120,100 +120,6 @@
 <!-- Blog Section -->
 {% include 'main/sections/blog_v2.html' with articles=articles %}
 
-<!-- Tutor Consultation Announcement Section -->
-<section class="py-16 px-4 bg-gradient-to-br from-[rgba(var(--color-primary),0.08)] to-[rgb(var(--color-bg))]">
-  <div class="max-w-6xl mx-auto">
-    <div class="bg-[rgb(var(--color-bg-card))] rounded-2xl shadow-xl overflow-hidden border border-[rgb(var(--color-border))]">
-      <div class="md:flex">
-        <!-- Content Section -->
-        <div class="md:w-2/3 p-8 md:p-12">
-          <div class="flex items-center gap-2 mb-4">
-            <span class="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-semibold rounded-full">
-              Для репетиторов
-            </span>
-          </div>
-
-          <h2 class="text-3xl md:text-4xl font-bold text-[rgb(var(--color-text))] mb-4">
-            Консультации для репетиторов
-          </h2>
-
-          <p class="text-lg text-[rgb(var(--color-text-secondary))] mb-6">
-            Профессиональная помощь в развитии вашей репетиторской практики
-          </p>
-
-          <div class="space-y-3 mb-8">
-            <div class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              <div>
-                <p class="text-[rgb(var(--color-text))] font-medium">Повышение стоимости услуг</p>
-                <p class="text-sm text-[rgb(var(--color-text-secondary))]">Научу обосновывать цену и увеличивать ценность ваших занятий</p>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              <div>
-                <p class="text-[rgb(var(--color-text))] font-medium">Система работы с клиентами</p>
-                <p class="text-sm text-[rgb(var(--color-text-secondary))]">Готовые алгоритмы удержания учеников и роста конверсии</p>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-              <div>
-                <p class="text-[rgb(var(--color-text))] font-medium">Четкий план развития</p>
-                <p class="text-sm text-[rgb(var(--color-text-secondary))]">Пошаговая стратегия на 3 месяца с конкретными действиями</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap gap-4">
-            <a href="/services/tutor-consultation/" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-md transition-all duration-150 transform hover:-translate-y-1">
-              Узнать подробнее
-              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Visual Section -->
-        <div class="md:w-1/3 bg-gradient-to-br from-blue-500/10 to-purple-600/10 p-8 md:p-12 flex flex-col justify-center items-center text-center border-l border-[rgb(var(--color-border))]">
-          <div class="w-24 h-24 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center mb-6 shadow-lg">
-            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-            </svg>
-          </div>
-
-          <h3 class="text-2xl font-bold text-[rgb(var(--color-text))] mb-2">
-            Помощь коллегам
-          </h3>
-          <p class="text-[rgb(var(--color-text-secondary))] mb-6">
-            Делюсь опытом и проверенными методиками
-          </p>
-
-          <div class="grid grid-cols-2 gap-4 w-full max-w-xs">
-            <div class="bg-[rgb(var(--color-bg-card))] p-4 rounded-lg border border-[rgb(var(--color-border))]">
-              <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">5+</div>
-              <div class="text-xs text-[rgb(var(--color-text-secondary))]">лет опыта</div>
-            </div>
-            <div class="bg-[rgb(var(--color-bg-card))] p-4 rounded-lg border border-[rgb(var(--color-border))]">
-              <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">50+</div>
-              <div class="text-xs text-[rgb(var(--color-text-secondary))]">консультаций</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- Free first lesson -->
 <section class="py-16 px-4 bg-gradient-to-br from-[rgb(15,15,25)] to-[rgb(30,30,45)]" style="background: linear-gradient(to bottom, rgba(var(--color-primary), 0.05) 0%, rgba(var(--color-bg), 0.8) 100%);">
   <div class="bg-[rgb(var(--color-bg-card))] max-w-4xl mx-auto bg-[rgb(40,40,60)] rounded-[0.75rem] shadow-[0_10px_25px_rgba(0,0,0,0.2),_0_5px_10px_rgba(0,0,0,0.15)] overflow-hidden border border-[rgb(60,60,80)] transition-all duration-300 hover:translate-y-[-5px] hover:shadow-[0_20px_40px_rgba(0,0,0,0.25),_0_10px_20px_rgba(0,0,0,0.2)]">
@@ -329,5 +235,98 @@
 <!-- Contact Section -->
 {% include 'main/sections/contact_v3.html' %}
 
+<!-- Tutor Consultation Announcement Section -->
+<section class="py-16 px-4 bg-gradient-to-br from-[rgba(var(--color-primary),0.08)] to-[rgb(var(--color-bg))]">
+  <div class="max-w-6xl mx-auto">
+    <div class="bg-[rgb(var(--color-bg-card))] rounded-2xl shadow-xl overflow-hidden border border-[rgb(var(--color-border))]">
+      <div class="md:flex">
+        <!-- Content Section -->
+        <div class="md:w-2/3 p-8 md:p-12">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-semibold rounded-full">
+              Для репетиторов
+            </span>
+          </div>
+
+          <h2 class="text-3xl md:text-4xl font-bold text-[rgb(var(--color-text))] mb-4">
+            Консультации для репетиторов
+          </h2>
+
+          <p class="text-lg text-[rgb(var(--color-text-secondary))] mb-6">
+            Профессиональная помощь в развитии вашей репетиторской практики
+          </p>
+
+          <div class="space-y-3 mb-8">
+            <div class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <div>
+                <p class="text-[rgb(var(--color-text))] font-medium">Повышение стоимости услуг</p>
+                <p class="text-sm text-[rgb(var(--color-text-secondary))]">Научу обосновывать цену и увеличивать ценность ваших занятий</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <div>
+                <p class="text-[rgb(var(--color-text))] font-medium">Система работы с клиентами</p>
+                <p class="text-sm text-[rgb(var(--color-text-secondary))]">Готовые алгоритмы удержания учеников и роста конверсии</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <div>
+                <p class="text-[rgb(var(--color-text))] font-medium">Четкий план развития</p>
+                <p class="text-sm text-[rgb(var(--color-text-secondary))]">Пошаговая стратегия на 3 месяца с конкретными действиями</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-4">
+            <a href="/services/tutor-consultation/" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-md transition-all duration-150 transform hover:-translate-y-1">
+              Узнать подробнее
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Visual Section -->
+        <div class="md:w-1/3 bg-gradient-to-br from-blue-500/10 to-purple-600/10 p-8 md:p-12 flex flex-col justify-center items-center text-center border-l border-[rgb(var(--color-border))]">
+          <div class="w-24 h-24 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center mb-6 shadow-lg">
+            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+          </div>
+
+          <h3 class="text-2xl font-bold text-[rgb(var(--color-text))] mb-2">
+            Помощь коллегам
+          </h3>
+          <p class="text-[rgb(var(--color-text-secondary))] mb-6">
+            Делюсь опытом и проверенными методиками
+          </p>
+
+          <div class="grid grid-cols-2 gap-4 w-full max-w-xs">
+            <div class="bg-[rgb(var(--color-bg-card))] p-4 rounded-lg border border-[rgb(var(--color-border))]">
+              <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">5+</div>
+              <div class="text-xs text-[rgb(var(--color-text-secondary))]">лет опыта</div>
+            </div>
+            <div class="bg-[rgb(var(--color-bg-card))] p-4 rounded-lg border border-[rgb(var(--color-border))]">
+              <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">50+</div>
+              <div class="text-xs text-[rgb(var(--color-text-secondary))]">консультаций</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock content %}
