@@ -14,7 +14,7 @@ Personal website for biology/chemistry tutor Maria Seredinskaya
 
 ## Overview
 
-This is a simple Django project that serves as a personal website for Maria Seredinskaya. It includes a basic homepage and is set up for further development.
+This is a complex Django project that serves as a website with dynamic rendering from tutor content templates and personally for chimestry tutor for Maria Seredinskaya. It includes a basic homepage and is set up for further development.
 
 ---
 
@@ -80,6 +80,7 @@ python manage.py runserver
 ## Project Structure
 
 - `manage.py` — Django's command-line utility
+- `run.sh` — custom utility for project management
 - `requirements.txt` — Dependencies
 - `README.md` — Project description
 - `LICENSE` — License info
