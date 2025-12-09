@@ -1,7 +1,11 @@
-# index.md
 ---
-layout: default
-title: Home
-redirect_from: /
-redirect_to: /main/docs/
+layout: home
+title: Главная
+permalink: /
 ---
+
+# Maria Tutor
+
+Добро пожаловать в документацию проекта.
+
+[Перейти к документации](/main/docs/)
