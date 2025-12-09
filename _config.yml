@@ -1,3 +1,23 @@
-title: Maria Tutor
+title: "Maria Tutor"
+description: "Biology & Chemistry Tutoring Services"
+baseurl: "/maria-tutor"  # КРИТИЧЕСКИ ВАЖНО для project pages
+url: "https://ernestoaizenberg.github.io"
+
 theme: jekyll-theme-minimal
-include: ['main/docs']
+
+# Настройки для правильного построения путей
+permalink: pretty
+
+# Включаем папку с документацией как коллекцию
+collections:
+  docs:
+    output: true
+    permalink: /:path/
+
+defaults:
+  - scope:
+      path: "main/docs"
+      type: "docs"
+    values:
+      layout: "default"
+      nav_order: 1
