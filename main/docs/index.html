@@ -1,92 +1,13 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Документация Django проекта</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            color: #333;
-        }
-        h1 {
-            color: #24292e;
-            border-bottom: 1px solid #eaecef;
-            padding-bottom: 10px;
-        }
-        .card {
-            background: #f6f8fa;
-            border: 1px solid #e1e4e8;
-            border-radius: 6px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        a {
-            color: #0366d6;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        code {
-            background: #f6f8fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-        }
-    </style>
-</head>
-<body>
-    <h1>📚 Документация Django проекта</h1>
-    
-    <div class="card">
-        <h2>Быстрый старт</h2>
-        <ol>
-            <li><code>pip install -r requirements.txt</code></li>
-            <li><code>python manage.py migrate</code></li>
-            <li><code>python manage.py runserver</code></li>
-        </ol>
-    </div>
-    
-    <h2>Содержание</h2>
-    <ul id="file-list">
-        <!-- Файлы будут добавлены автоматически -->
-        <li><a href="README.md">README.md</a> (основная документация)</li>
-    </ul>
-    
-    <script>
-        // Динамически показываем доступные файлы
-        fetch('.')
-            .then(response => response.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const links = doc.querySelectorAll('a[href$=".md"], a[href$=".html"]');
-                const list = document.getElementById('file-list');
-                
-                links.forEach(link => {
-                    if (!link.href.includes('index.html') && !link.href.includes('..')) {
-                        const li = document.createElement('li');
-                        const a = document.createElement('a');
-                        a.href = link.href;
-                        a.textContent = link.textContent || link.href;
-                        li.appendChild(a);
-                        list.appendChild(li);
-                    }
-                });
-            })
-            .catch(error => console.log('Не удалось загрузить список файлов:', error));
-    </script>
-    
-    <div class="card">
-        <p><strong>Последнее обновление:</strong> <span id="date"></span></p>
-        <script>
-            document.getElementById('date').textContent = new Date().toLocaleDateString('ru-RU');
-        </script>
-    </div>
-</body>
-</html>
+# main/docs/index.md
+---
+layout: default
+title: Документация
+---
+
+# {{ page.title }}
+
+{% for doc in site.pages %}
+  {% if doc.path contains '.md' and doc.name != 'index.md' %}
+  - [{{ doc.title | default: doc.name }}]({{ doc.url }})
+  {% endif %}
+{% endfor %}
