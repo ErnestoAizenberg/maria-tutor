@@ -200,13 +200,6 @@ else:
 reading_time = f"{word_count // 200} мин чтения"
 ```
 
-See Also
-
-· models.py - Data models and relationships
-· forms.py - Form definitions and validation
-· urls.py - URL routing patterns
-· utils.py - Helper functions including search
-
 ---
 
 Last updated with all views as of current implementation
