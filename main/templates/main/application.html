@@ -24,4 +24,9 @@
   {% include 'main/_application_form.html' with form=application_form %}
 </div>
 </section>
+
+{% if reviews %}
+{% include 'main/sections/reviews_v2_modern.html' with reviews=reviews %}
+{% endif %}
+
 {% endblock %}
