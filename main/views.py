@@ -516,6 +516,9 @@ def lesson_details(request):
 
 
 def application(request):
+    '''Aplication form display'''
+    teacher = get_teacher()
+    
     # Initialize form with session data if exists, otherwise create empty form
     if "application_form_data" in request.session:
         form = ApplicationForm(request.session["application_form_data"])
@@ -533,8 +536,13 @@ def application(request):
     else:
         form = ApplicationForm()
 
+    reviews = teacher.reviews.filter(
+        is_published=True
+    ).order_by('-order', '-created_at')[:3]
+    
     context = {
         "application_form": form,
+        "reviews": reviews,
     }
     return render(request, "main/application.html", context)
 
