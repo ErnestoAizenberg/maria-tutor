@@ -315,8 +315,7 @@ def application_submit(request):
     """Handle tutoring application submissions"""
     if request.method != "POST":
         logger.warning("Application submission attempted with non-POST method")
-        form = ApplicationForm()
-        return render(request, "main/index-purple.html", {"application_form": form})
+        return redirect("application")
 
     form = ApplicationForm(request.POST)
     if not form.is_valid():
@@ -371,11 +370,11 @@ def application_submit(request):
     except ValidationError:
         logger.warning(f"Invalid email address provided: {email}")
         messages.error(request, "Please enter a valid email address")
-        return redirect("index")
+        return redirect("application")
     except Exception as e:
         logger.error(f"Error processing application: {str(e)}", exc_info=True)
         messages.error(request, "An error occurred while processing your application")
-        return redirect("index")
+        return redirect("application")
 
 
 def apply_success(request):
