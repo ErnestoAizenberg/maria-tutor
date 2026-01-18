@@ -1,7 +1,7 @@
 import os
 import json
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Final
 import logging
 import logging.config
 
@@ -11,12 +11,12 @@ from pythonjsonlogger import jsonlogger
 
 dotenv.load_dotenv(".env")
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR: Final[Path] = Path(__file__).resolve().parent.parent
 
-LOG_DIR = BASE_DIR / "logs"
+LOG_DIR: Final[Path] = BASE_DIR / "logs"
 LOG_DIR.mkdir(exist_ok=True, mode=0o755)
 
-LOGGING = {
+LOGGING: Final[dict] = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
@@ -118,17 +118,17 @@ LOGGING = {
 
 logging.config.dictConfig(LOGGING)
 
-DEBUG: bool = os.getenv("DEBUG", "True") == "True"
-SECRET_KEY: str = str(os.getenv("SECRET_KEY"))
+DEBUG: Final[bool] = os.getenv("DEBUG", "True") == "True"
+SECRET_KEY: Final[str] = str(os.getenv("SECRET_KEY", ""))
 
-TELEGRAM_BOT_TOKEN: Optional[str] = os.getenv("TELEGRAM_BOT_TOKEN")
-if TELEGRAM_BOT_TOKEN is None:
+TELEGRAM_BOT_TOKEN: Final[str] = os.getenv("TELEGRAM_BOT_TOKEN", "")
+if not TELEGRAM_BOT_TOKEN:
     raise ValueError("TELEGRAM_BOT_TOKEN не найден в .env!")
 
-MINI_APP_URL: str = "https://mariaseredinskaya.pythonanywhere.com"
-ALLOWED_HOSTS = ["mariaseredinskaya.pythonanywhere.com", "localhost", "127.0.0.1", "*"]
+MINI_APP_URL: Final[str] = "https://mariaseredinskaya.pythonanywhere.com"
+ALLOWED_HOSTS: Final[list[str]] = ["mariaseredinskaya.pythonanywhere.com", "localhost", "127.0.0.1", "*"]
 
-INSTALLED_APPS = [
+INSTALLED_APPS: list[str] = [
     "jazzmin",
     "ckeditor",
     "django.contrib.admin",
@@ -142,7 +142,7 @@ INSTALLED_APPS = [
     "telegram_bot.apps.TelegramBotConfig",
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE: list[str] = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -155,7 +155,7 @@ MIDDLEWARE = [
     "main.logging_middleware.RequestLoggingMiddleware",
 ]
 
-ROOT_URLCONF = "tutorproject.urls"
+ROOT_URLCONF: Final[str] = "tutorproject.urls"
 
 TEMPLATES = [
     {
@@ -175,14 +175,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "tutorproject.wsgi.application"
 
-DATABASES = {
+DATABASES: Final[dict] = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
-AUTH_PASSWORD_VALIDATORS = [
+AUTH_PASSWORD_VALIDATORS: list[dict[str, str]] = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
@@ -209,17 +209,17 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+DEFAULT_AUTO_FIELD: Final[str] = "django.db.models.BigAutoField"
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.getenv("EMAIL_HOST", "")
-EMAIL_PORT = 587
-EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", True)
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
-DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
+EMAIL_BACKEND: str = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST: str = os.getenv("EMAIL_HOST", "")
+EMAIL_PORT: int = 587
+EMAIL_USE_TLS: bool = os.getenv("EMAIL_USE_TLS", True)
+EMAIL_HOST_USER: str = os.getenv("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORDЖ str = os.getenv("EMAIL_HOST_PASSWORD", "")
+DEFAULT_FROM_EMAIL: str = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 
-CKEDITOR_CONFIGS = {
+CKEDITOR_CONFIGS: Final[dict[str, dict]] = {
     "default": {
         "contentsCss": "/static/css/ckeditor-content.css",
         "bodyClass": "article-content",
@@ -234,6 +234,6 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-HTML_MINIFY = True
-EXCLUDE_FROM_MINIFYING = ("/admin/", "/api/")
+HTML_MINIFY: Final[bool] = True
+EXCLUDE_FROM_MINIFYING: tuple[str, ...] = ("/admin/", "/api/")
 KEEP_COMMENTS_ON_MINIFYING = False
