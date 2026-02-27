@@ -335,7 +335,7 @@ def application_submit(request):
 
         logger.info(f"Processing application from {name} <{user_email}> for {subject}")
 
-        subject = (f"Запрос на обучение по <{subject}> от {name}",)
+        subject = f"Запрос на обучение по <{subject}> от {name}"
         message = goal
 
         email = EmailMessage(
