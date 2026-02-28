@@ -1,5 +1,6 @@
-from django.db.models import Q
 from django.apps import apps
+from django.db.models import Q
+
 
 def search_models(query, model_names):
     results = []

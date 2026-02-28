@@ -1,4 +1,5 @@
-from .models import Teacher, Page
+from .models import Page, Teacher
+
 
 def create_default_pages(teacher_slug):
     """

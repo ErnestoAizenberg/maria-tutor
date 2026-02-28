@@ -1,6 +1,6 @@
-from django.dispatch import Signal, receiver
-from django.conf import settings
 import requests
+from django.conf import settings
+from django.dispatch import Signal, receiver
 
 BOT_TOKEN = settings.TELEGRAM_BOT_TOKEN
 API_URL = f"https://api.telegram.org/bot/{BOT_TOKEN}"

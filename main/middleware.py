@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.template import TemplateDoesNotExist
 from django.template.response import TemplateResponse
 
+
 class CustomErrorMiddleware:
     def __init__(self, get_response):
         self.logger = logging.getLogger("django.request")

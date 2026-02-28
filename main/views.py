@@ -4,13 +4,23 @@ import logging
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage, send_mail
+from django.core.paginator import Paginator
 from django.core.validators import validate_email
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.core.paginator import Paginator
 
 from .forms import ApplicationForm, ReviewForm, TutorConsultationForm
-from .models import Application, Article, Publication, Review, Tag, LessonCard, ConnectMessage, TutorConsultationRequest, get_teacher
+from .models import (
+    Application,
+    Article,
+    ConnectMessage,
+    LessonCard,
+    Publication,
+    Review,
+    Tag,
+    TutorConsultationRequest,
+    get_teacher,
+)
 from .utils import search_models
 
 logger = logging.getLogger('main')
