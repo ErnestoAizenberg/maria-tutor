@@ -1,5 +1,3 @@
-import time
-
 from django.db import migrations, transaction
 from django.utils.text import slugify
 

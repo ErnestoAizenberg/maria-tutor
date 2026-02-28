@@ -1,13 +1,10 @@
-import json
 import logging
 import logging.config
 import os
 from pathlib import Path
-from typing import Final, Optional
+from typing import Final
 
 import dotenv
-from django.utils.timezone import now
-from pythonjsonlogger import jsonlogger
 
 dotenv.load_dotenv(".env")
 
