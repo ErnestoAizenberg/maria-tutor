@@ -1,5 +1,6 @@
 from .signals import command_received, webapp_data_received
 
+
 def process_telegram_update(update: dict) -> None:
     """Основной обработчик входящих обновлений"""
     message = update.get("message", {})

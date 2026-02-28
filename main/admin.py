@@ -5,13 +5,26 @@ from django import forms
 from django.contrib import admin, messages
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils.html import format_html
 from django.http import HttpResponseRedirect
+from django.utils.html import format_html
 
 from .custom_admin import custom_admin_site
-from .models import Application, Article, Tag, ConnectMessage, Publication, Review, Teacher, LessonCard, LessonFeature, Tariff, Page, TutorConsultationRequest
 from .defaults import create_default_pages
 from .forms import PageAdminForm
+from .models import (
+    Application,
+    Article,
+    ConnectMessage,
+    LessonCard,
+    LessonFeature,
+    Page,
+    Publication,
+    Review,
+    Tag,
+    Tariff,
+    Teacher,
+    TutorConsultationRequest,
+)
 
 User = get_user_model()
 

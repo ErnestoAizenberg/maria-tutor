@@ -1,6 +1,8 @@
+import time
+
 from django.db import migrations, transaction
 from django.utils.text import slugify
-import time
+
 
 def create_initial_tariffs(apps, schema_editor):
     Tariff = apps.get_model('main', 'Tariff')

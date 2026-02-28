@@ -1,4 +1,5 @@
 import logging
+
 from .models import Teacher
 
 logger = logging.getLogger('__name__')

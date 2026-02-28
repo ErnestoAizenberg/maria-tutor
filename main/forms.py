@@ -1,9 +1,10 @@
+import yaml
 from django import forms
 from django.core.exceptions import ValidationError
-import yaml
 
-from .models import Review, Page
+from .models import Page, Review
 from .widgets import YAMLEditorWidget
+
 
 class PageAdminForm(forms.ModelForm):
     class Meta:

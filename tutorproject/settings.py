@@ -1,9 +1,9 @@
-import os
 import json
-from pathlib import Path
-from typing import Optional, Final
 import logging
 import logging.config
+import os
+from pathlib import Path
+from typing import Final, Optional
 
 import dotenv
 from django.utils.timezone import now

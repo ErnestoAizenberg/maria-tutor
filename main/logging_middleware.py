@@ -1,6 +1,6 @@
 # core/middleware/logging_middleware.py
-import time
 import logging
+import time
 
 logger = logging.getLogger('access')
 

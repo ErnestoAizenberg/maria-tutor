@@ -1,9 +1,10 @@
 import json
 
-from django.http import JsonResponse, HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .webhooks import process_telegram_update
+
 
 @csrf_exempt
 def webhook(request):

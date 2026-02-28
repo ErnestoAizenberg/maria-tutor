@@ -2,6 +2,7 @@ import yaml
 from django import forms
 from django.utils.safestring import mark_safe
 
+
 class YAMLEditorWidget(forms.Textarea):
     def __init__(self, attrs=None):
         default_attrs = {
