@@ -2,8 +2,8 @@ import os
 import yaml
 
 from django.contrib.auth import get_user_model
-from django.core.validators import EmailValidator, FileExtensionValidator, URLValidator, MinValueValidator, MaxValueValidator, ValidationError
-
+from django.core.exceptions import ValidationError
+from django.core.validators import EmailValidator, FileExtensionValidator, URLValidator, MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
