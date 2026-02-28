@@ -18,11 +18,14 @@ from django.utils.text import slugify
 User = get_user_model()
 
 LANGUAGE_CHOICES = [
-    ('ru', 'Russian'),
-    ('en', 'English'),
+    ("ru", "Russian"),
+    ("en", "English"),
 ]
+
+
 def get_teacher():
-    return Teacher.objects.filter(lang='ru').first()
+    return Teacher.objects.filter(lang="ru").first()
+
 
 class Teacher(models.Model):
     def upload_avatar(self, filename):
@@ -166,21 +169,24 @@ class Teacher(models.Model):
         help_text="Ключевые слова для поиска",
     )
 
-    education = models.JSONField(null=True, blank=True, verbose_name='Образование')
-    scientific_work = models.JSONField(null=True, blank=True, verbose_name='Научная работа')
-    tutoring = models.JSONField(null=True, blank=True, verbose_name='Репетиторство')
+    education = models.JSONField(null=True, blank=True, verbose_name="Образование")
+    scientific_work = models.JSONField(
+        null=True, blank=True, verbose_name="Научная работа"
+    )
+    tutoring = models.JSONField(null=True, blank=True, verbose_name="Репетиторство")
 
     @property
     def aggregate_rating(self):
         from django.db.models import Avg
-        avg = self.reviews.aggregate(avg_rating=Avg('rating'))['avg_rating']
+
+        avg = self.reviews.aggregate(avg_rating=Avg("rating"))["avg_rating"]
 
         return round(avg, 1) if avg is not None else 0
 
     class Meta:
         verbose_name = "Учитель"
         verbose_name_plural = "Учителя"
-        ordering = ['name']
+        ordering = ["name"]
 
     def __str__(self):
         return f"{self.name} - {self.status}"
@@ -188,7 +194,9 @@ class Teacher(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             if not self.name:
-                raise ValueError("Нельзя сгенерировать slug: необходимо указать имя учителя")
+                raise ValueError(
+                    "Нельзя сгенерировать slug: необходимо указать имя учителя"
+                )
 
             base_slug = slugify(self.name)
             self.slug = base_slug
@@ -215,29 +223,32 @@ class Teacher(models.Model):
         """Возвращает словарь с ссылками на социальные сети учителя."""
         socials = {}
         if self.telegram:
-            socials['telegram'] = f"https://t.me/{self.telegram}"
+            socials["telegram"] = f"https://t.me/{self.telegram}"
         if self.vk:
-            socials['vk'] = f"https://vk.com/{self.vk}"
+            socials["vk"] = f"https://vk.com/{self.vk}"
         if self.instagram:
-            socials['instagram'] = f"https://instagram.com/{self.instagram}"
+            socials["instagram"] = f"https://instagram.com/{self.instagram}"
         if self.twitter:
-            socials['twitter'] = f"https://twitter.com/{self.twitter}"
+            socials["twitter"] = f"https://twitter.com/{self.twitter}"
         if self.linkedin:
-            socials['linkedin'] = self.linkedin if self.linkedin.startswith('http') else f"https://linkedin.com/in/{self.linkedin}"
+            socials["linkedin"] = (
+                self.linkedin
+                if self.linkedin.startswith("http")
+                else f"https://linkedin.com/in/{self.linkedin}"
+            )
         return socials
 
 
 class Page(models.Model):
     teacher = models.ForeignKey(
-        'teacher',
+        "teacher",
         on_delete=models.SET_NULL,
-        related_name='pages',
+        related_name="pages",
         null=True,
         blank=True,
     )
     name = models.CharField(
-        max_length=200,
-        help_text="Page name, displayed in footer and navbar"
+        max_length=200, help_text="Page name, displayed in footer and navbar"
     )
     show_in_navbar = models.BooleanField(default=False)
     is_navbar_button = models.BooleanField(default=False)
@@ -250,7 +261,7 @@ class Page(models.Model):
     meta_keywords = models.CharField(max_length=300, blank=True)
 
     # OpenGraph fields
-    og_type = models.CharField(max_length=50, default='website', blank=True)
+    og_type = models.CharField(max_length=50, default="website", blank=True)
     og_site_name = models.CharField(max_length=100, blank=True)
     og_title = models.CharField(max_length=300, blank=True)
     og_description = models.CharField(max_length=500, blank=True)
@@ -258,10 +269,12 @@ class Page(models.Model):
     og_image = models.URLField(max_length=500, blank=True)
     og_image_width = models.PositiveIntegerField(blank=True, null=True)
     og_image_height = models.PositiveIntegerField(blank=True, null=True)
-    og_locale = models.CharField(max_length=10, default='en_US', blank=True)
+    og_locale = models.CharField(max_length=10, default="en_US", blank=True)
 
     # Twitter fields
-    twitter_card = models.CharField(max_length=50, default='summary_large_image', blank=True)
+    twitter_card = models.CharField(
+        max_length=50, default="summary_large_image", blank=True
+    )
     twitter_title = models.CharField(max_length=300, blank=True)
     twitter_description = models.CharField(max_length=500, blank=True)
     twitter_image = models.URLField(max_length=500, blank=True)
@@ -275,14 +288,16 @@ class Page(models.Model):
         max_length=200,
         unique=False,
         help_text="URL part after /, can be not unique",
-        blank=True
+        blank=True,
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     views = models.PositiveIntegerField(default=0)
 
-    config_yaml = models.TextField(blank=True, help_text="Конфигурация страницы в формате YAML")
-    #_config_data = None
+    config_yaml = models.TextField(
+        blank=True, help_text="Конфигурация страницы в формате YAML"
+    )
+    # _config_data = None
 
     @property
     def config(self):
@@ -293,7 +308,9 @@ class Page(models.Model):
         try:
             if self.config_yaml.strip():
                 parsed_config = yaml.safe_load(self.config_yaml) or {}
-                print(f"DEBUG: Successfully parsed config for {self.slug}: {parsed_config}")  # ОТЛАДКА
+                print(
+                    f"DEBUG: Successfully parsed config for {self.slug}: {parsed_config}"
+                )  # ОТЛАДКА
                 return parsed_config
             print(f"DEBUG: Empty config for {self.slug}")  # ОТЛАДКА
             return {}
@@ -307,21 +324,21 @@ class Page(models.Model):
 
     @property
     def sections(self):
-        return self.config.get('sections', [])
+        return self.config.get("sections", [])
 
     @property
     def cta(self):
-        return self.config.get('cta', {})
+        return self.config.get("cta", {})
 
     def __str__(self):
         return self.name
 
     def view(self):
         self.views += 1
-        self.save(update_fields=['views'])
+        self.save(update_fields=["views"])
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
 
 class TariffQuerySet(models.QuerySet):
@@ -329,10 +346,11 @@ class TariffQuerySet(models.QuerySet):
         return self.filter(is_active=True)
 
     def with_format_groups(self):
-        return self.order_by('format_type', 'program_name')
+        return self.order_by("format_type", "program_name")
 
     def for_teacher(self, teacher):
         return self.active().filter(teacher=teacher)
+
 
 class TariffManager(models.Manager):
     def get_queryset(self):
@@ -352,34 +370,29 @@ class Tariff(models.Model):
     teacher = models.ForeignKey(
         Teacher,
         on_delete=models.CASCADE,
-        related_name='tariffs',
+        related_name="tariffs",
         null=True,
         blank=True,
     )
     format_type = models.CharField(
         max_length=50,
-        verbose_name='Тип формата',
-        help_text='Основной тип формата (Индивидуально/Парные/Групповые/Асинхронное)'
+        verbose_name="Тип формата",
+        help_text="Основной тип формата (Индивидуально/Парные/Групповые/Асинхронное)",
     )
     format_display = models.CharField(
         max_length=50,
-        verbose_name='Отображаемое название формата',
-        help_text='Как будет показано в таблице'
+        verbose_name="Отображаемое название формата",
+        help_text="Как будет показано в таблице",
     )
-    program_name = models.CharField(
-        max_length=100,
-        verbose_name='Название программы'
-    )
-    price = models.PositiveIntegerField(verbose_name='Стоимость')
+    program_name = models.CharField(max_length=100, verbose_name="Название программы")
+    price = models.PositiveIntegerField(verbose_name="Стоимость")
     price_unit = models.CharField(
-        max_length=20,
-        default='₽/час',
-        verbose_name='Единица стоимости'
+        max_length=20, default="₽/час", verbose_name="Единица стоимости"
     )
     is_group_format = models.BooleanField(
         default=False,
-        verbose_name='Групповой формат?',
-        help_text='Для стилизации групповых форматов'
+        verbose_name="Групповой формат?",
+        help_text="Для стилизации групповых форматов",
     )
 
     # Метаданные
@@ -391,17 +404,19 @@ class Tariff(models.Model):
     objects = TariffManager()
 
     class Meta:
-        ordering = ['format_type', 'program_name']
-        verbose_name = 'Тариф'
-        verbose_name_plural = 'Тарифы'
+        ordering = ["format_type", "program_name"]
+        verbose_name = "Тариф"
+        verbose_name_plural = "Тарифы"
         indexes = [
-            models.Index(fields=['format_type']),
-            models.Index(fields=['is_active']),
+            models.Index(fields=["format_type"]),
+            models.Index(fields=["is_active"]),
         ]
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            base_slug = slugify(f"{self.teacher.name}-{self.format_type}-{self.program_name}")
+            base_slug = slugify(
+                f"{self.teacher.name}-{self.format_type}-{self.program_name}"
+            )
             self.slug = base_slug
             counter = 1
             while Tariff.objects.filter(slug=self.slug).exists():
@@ -410,7 +425,10 @@ class Tariff(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.format_display} {self.program_name}: {self.price}{self.price_unit}"
+        return (
+            f"{self.format_display} {self.program_name}: {self.price}{self.price_unit}"
+        )
+
 
 class Review(models.Model):
     SOURCE_UNKNOWN = "unknown"
@@ -525,7 +543,6 @@ class Review(models.Model):
         verbose_name="Порядок сортировки",
         help_text="Чем больше число, тем выше отзыв в списке",
     )
-
 
     @property
     def model_verbose_name(self):
@@ -765,27 +782,18 @@ class Tag(models.Model):
         max_length=100,
         unique=True,
         verbose_name="Название тега",
-        help_text="Максимум 100 символов"
+        help_text="Максимум 100 символов",
     )
     slug = models.SlugField(
-        max_length=100,
-        unique=True,
-        verbose_name="URL-имя",
-        allow_unicode=True
+        max_length=100, unique=True, verbose_name="URL-имя", allow_unicode=True
     )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name="Дата создания"
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        verbose_name="Дата обновления"
-    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
 
     class Meta:
         verbose_name = "Тег"
         verbose_name_plural = "Теги"
-        ordering = ['name']
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
@@ -796,12 +804,13 @@ class Tag(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('articles_by_tag', kwargs={'slug': self.slug})
+        return reverse("articles_by_tag", kwargs={"slug": self.slug})
 
     def clean(self):
         # Запрещаем теги с одинаковым slug
         if Tag.objects.filter(slug=slugify(self.name)).exclude(id=self.id).exists():
             raise ValidationError("Тег с таким URL-именем уже существует")
+
 
 class Article(models.Model):
     def upload_preview(self, filename):
@@ -874,7 +883,6 @@ class Article(models.Model):
     def get_absolute_url(self):
         return reverse("article", kwargs={"slug": self.slug})
 
-
     @property
     def model_verbose_name(self):
         return self._meta.verbose_name
@@ -888,10 +896,16 @@ class Article(models.Model):
 class LessonCard(models.Model):
     # Основные поля
     title = models.CharField("Название", max_length=100)  # "Индивидуальные занятия"
-    icon_class = models.CharField("Иконка (Font Awesome)", max_length=50, default="fas fa-star")  # "fas fa-user-graduate"
+    icon_class = models.CharField(
+        "Иконка (Font Awesome)", max_length=50, default="fas fa-star"
+    )  # "fas fa-user-graduate"
     price = models.CharField("Цена", max_length=50)  # "от 1600 ₽/час"
-    button_text = models.CharField("Текст кнопки", max_length=50, default="Подробнее")  # "Подробнее о тарифах"
-    button_link = models.CharField("Ссылка кнопки", max_length=100, blank=True)  # "/programs/one-on-one"
+    button_text = models.CharField(
+        "Текст кнопки", max_length=50, default="Подробнее"
+    )  # "Подробнее о тарифах"
+    button_link = models.CharField(
+        "Ссылка кнопки", max_length=100, blank=True
+    )  # "/programs/one-on-one"
     is_featured = models.BooleanField("Пометка 'ВЫГОДНО'", default=False)
 
     # Для удобного администрирования (необязательно)
@@ -905,7 +919,9 @@ class LessonCard(models.Model):
 
 
 class LessonFeature(models.Model):
-    card = models.ForeignKey(LessonCard, on_delete=models.CASCADE, related_name="features")
+    card = models.ForeignKey(
+        LessonCard, on_delete=models.CASCADE, related_name="features"
+    )
     text = models.CharField("Текст пункта", max_length=200)  # "Гибкое расписание"
 
     def __str__(self):
@@ -920,7 +936,7 @@ class TutorConsultationRequest(models.Model):
         max_length=300,
         blank=False,
         verbose_name="Имя репетитора",
-        help_text="Полное имя репетитора"
+        help_text="Полное имя репетитора",
     )
 
     email = models.EmailField(
@@ -928,14 +944,14 @@ class TutorConsultationRequest(models.Model):
         blank=False,
         verbose_name="Email",
         help_text="Email для связи",
-        validators=[EmailValidator()]
+        validators=[EmailValidator()],
     )
 
     phone = models.CharField(
         max_length=50,
         blank=True,
         verbose_name="Телефон",
-        help_text="Контактный телефон (необязательно)"
+        help_text="Контактный телефон (необязательно)",
     )
 
     # Consultation details
@@ -943,39 +959,32 @@ class TutorConsultationRequest(models.Model):
         max_length=2000,
         blank=False,
         verbose_name="Вопрос/проблема",
-        help_text="Описание вопроса или проблемы, с которой нужна помощь"
+        help_text="Описание вопроса или проблемы, с которой нужна помощь",
     )
 
     experience_years = models.PositiveIntegerField(
         blank=True,
         null=True,
         verbose_name="Опыт работы (лет)",
-        help_text="Количество лет работы репетитором"
+        help_text="Количество лет работы репетитором",
     )
 
     # Status tracking
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name="Дата создания"
-    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
 
     is_processed = models.BooleanField(
-        default=False,
-        verbose_name="Обработано",
-        help_text="Была ли обработана заявка"
+        default=False, verbose_name="Обработано", help_text="Была ли обработана заявка"
     )
 
     processed_at = models.DateTimeField(
-        blank=True,
-        null=True,
-        verbose_name="Дата обработки"
+        blank=True, null=True, verbose_name="Дата обработки"
     )
 
     notes = models.TextField(
         max_length=1000,
         blank=True,
         verbose_name="Заметки",
-        help_text="Внутренние заметки администратора"
+        help_text="Внутренние заметки администратора",
     )
 
     @property
