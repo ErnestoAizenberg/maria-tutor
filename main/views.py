@@ -23,7 +23,8 @@ from .models import (
 )
 from .utils import search_models
 
-logger = logging.getLogger('main')
+logger = logging.getLogger("main")
+
 
 def robots_txt(request):
     content = """User-agent: *
@@ -48,11 +49,11 @@ def policy(request):
 
 
 def search_view(request):
-    query = request.GET.get('q', '').strip()
-    model_names = request.GET.getlist('models')
+    query = request.GET.get("q", "").strip()
+    model_names = request.GET.getlist("models")
 
     if not model_names:
-        model_names = ['main.Ativle', 'main.Review']
+        model_names = ["main.Ativle", "main.Review"]
 
     results = []
     if query:
@@ -60,25 +61,28 @@ def search_view(request):
 
     # Пагинация
     paginator = Paginator(results, 10)
-    page_number = request.GET.get('page')
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
     context = {
-        'results': page_obj,
-        'page_obj': page_obj,
-        'query': query,
-        'model_names': model_names,
-        'results_count': len(results),
+        "results": page_obj,
+        "page_obj": page_obj,
+        "query": query,
+        "model_names": model_names,
+        "results_count": len(results),
     }
     logger.debug(f"Search page context: {context}")
-    return render(request, 'main/search_results.html', context)
+    return render(request, "main/search_results.html", context)
+
 
 def index(request):
     """Display the homepage with published articles and application form."""
 
     try:
         # Get published articles ordered by creation date (newest first)
-        articles = Article.objects.filter(status="published").order_by("-created_at")[:6]
+        articles = Article.objects.filter(status="published").order_by("-created_at")[
+            :6
+        ]
         reviews = Review.objects.filter(is_published=True).order_by("-created_at")[:6]
         publications = Publication.objects.all()[:6]
 
@@ -157,6 +161,7 @@ def science(request):
 
     return render(request, "main/science.html", context)
 
+
 def articles_by_tag(request, slug):
     """Display list of articles by given slug of a tag"""
     logger.debug(f"loading articles by teg slug: {slug}")
@@ -166,30 +171,35 @@ def articles_by_tag(request, slug):
     except Exception as e:
         logger.error(f"Unexpexted error ocured while searching for tag: {str(e)}")
     try:
-        articles_list = Article.objects.filter(
-           tags=tag,
-           status="published",
-        ).select_related('author').prefetch_related('tags').order_by('-created_at')
+        articles_list = (
+            Article.objects.filter(
+                tags=tag,
+                status="published",
+            )
+            .select_related("author")
+            .prefetch_related("tags")
+            .order_by("-created_at")
+        )
         logger.debug(f"loaded list of articles for the tag: {articles_list}")
     except Exception as e:
         logger.error(f"An error occured while retring articles_list {str(e)}")
 
     try:
         paginator = Paginator(articles_list, 10)
-        page_number = request.GET.get('page')
+        page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
     except Exception as e:
         logger.error(f"while trying to paginate: {str(e)}")
 
     context = {
-        'tag': tag,
-        'articles': page_obj,
-        'page_title': f'Статьи на тему {tag.name}'
+        "tag": tag,
+        "articles": page_obj,
+        "page_title": f"Статьи на тему {tag.name}",
     }
     logger.debug(f"request context at articles_by_tag: {context}")
 
     try:
-        page = render(request, 'main/articles_by_tag.html', context)
+        page = render(request, "main/articles_by_tag.html", context)
     except Exception as e:
         logger.error(f"While rendering articles_by_tag page an error occured: {str(e)}")
         raise
@@ -241,7 +251,9 @@ def articles(request):
             "-created_at"
         )
         logger.debug(f"Found {len(list_articles)} published articles")
-        return render(request, "main/articles.html", {"articles": list_articles, "page": page})
+        return render(
+            request, "main/articles.html", {"articles": list_articles, "page": page}
+        )
     except Exception as e:
         logger.error(f"Error loading articles list: {str(e)}", exc_info=True)
         messages.error(request, "Could not load articles")
@@ -293,7 +305,6 @@ def reviews(request):
 def add_review(request):
     if request.method != "POST":
         logger.error(f"Invalid HTTP method recieved in add_review: {request.method}")
-
 
     form = ReviewForm(
         request.POST,
@@ -361,7 +372,9 @@ def application_submit(request):
             logger.error(f"While sending APPLICATION /email an error occured: {err}")
 
         try:
-            application = Application(name=name, email=email, subject=subject, goal=goal)
+            application = Application(
+                name=name, email=email, subject=subject, goal=goal
+            )
             application.save()
         except Exception as e:
             logger.error(f"Failed to save Application, error: {str(e)}", exc_info=True)
@@ -371,7 +384,9 @@ def application_submit(request):
                 "Вы можете:<ul>"
                 "<li>Попробовать отправить заявку ещё раз через 5-10 минут</li>"
                 "<li>Позвонить нам по телефону: +79213301390</li>"
-                "<li>Написать на почту: sereernest@gmail.com</li></ul>", status=500)
+                "<li>Написать на почту: sereernest@gmail.com</li></ul>",
+                status=500,
+            )
 
         logger.info(f"Application saved successfully (ID: {application.id})")
 
@@ -426,8 +441,9 @@ def connect_request(request):
             "Вы можете:<ul>"
             "<li>Попробовать отправить заявку ещё раз через 5-10 минут</li>"
             "<li>Позвонить нам по телефону: +79213301390</li>"
-            "<li>Написать на почту: sereernest@gmail.com</li></ul>", status=500)
-
+            "<li>Написать на почту: sereernest@gmail.com</li></ul>",
+            status=500,
+        )
 
     subject = f"Вопрос от {name}"
     email = EmailMessage(
@@ -520,9 +536,9 @@ def lesson_details(request):
 
 
 def application(request):
-    '''Aplication form display'''
+    """Aplication form display"""
     teacher = get_teacher()
-    
+
     # Initialize form with session data if exists, otherwise create empty form
     if "application_form_data" in request.session:
         form = ApplicationForm(request.session["application_form_data"])
@@ -540,10 +556,10 @@ def application(request):
     else:
         form = ApplicationForm()
 
-    reviews = teacher.reviews.filter(
-        is_published=True
-    ).order_by('-order', '-created_at')[:3]
-    
+    reviews = teacher.reviews.filter(is_published=True).order_by(
+        "-order", "-created_at"
+    )[:3]
+
     context = {
         "application_form": form,
         "reviews": reviews,
@@ -585,15 +601,16 @@ def tutor_consultation(request):
 def tutor_consultation_submit(request):
     """Handle tutor consultation form submissions"""
     if request.method != "POST":
-        logger.warning("Tutor consultation form submission attempted with non-POST method")
+        logger.warning(
+            "Tutor consultation form submission attempted with non-POST method"
+        )
         return redirect("tutor_consultation")
 
     form = TutorConsultationForm(request.POST)
 
     if not form.is_valid():
         logger.warning(
-            "Invalid tutor consultation form submission",
-            extra={"errors": form.errors}
+            "Invalid tutor consultation form submission", extra={"errors": form.errors}
         )
         request.session["consultation_form_data"] = request.POST.dict()
         request.session["consultation_form_errors"] = form.errors.as_json()
@@ -615,13 +632,21 @@ def tutor_consultation_submit(request):
                 email=user_email,
                 phone=phone,
                 question=question,
-                experience_years=experience_years
+                experience_years=experience_years,
             )
             consultation_request.save()
-            logger.info(f"Tutor consultation request saved successfully (ID: {consultation_request.id})")
+            logger.info(
+                f"Tutor consultation request saved successfully (ID: {consultation_request.id})"
+            )
         except Exception as e:
-            logger.error(f"Failed to save TutorConsultationRequest, error: {str(e)}", exc_info=True)
-            messages.error(request, "Произошла ошибка при отправке заявки. Пожалуйста, попробуйте позже.")
+            logger.error(
+                f"Failed to save TutorConsultationRequest, error: {str(e)}",
+                exc_info=True,
+            )
+            messages.error(
+                request,
+                "Произошла ошибка при отправке заявки. Пожалуйста, попробуйте позже.",
+            )
             return redirect("tutor_consultation")
 
         # Send email notification
@@ -631,15 +656,15 @@ def tutor_consultation_submit(request):
 
 Имя: {name}
 Email: {user_email}
-Телефон: {phone if phone else 'Не указан'}
-Опыт работы: {experience_years if experience_years else 'Не указан'} лет
+Телефон: {phone if phone else "Не указан"}
+Опыт работы: {experience_years if experience_years else "Не указан"} лет
 
 Вопрос/проблема:
 {question}
 
 ---
 ID заявки: {consultation_request.id}
-Дата: {consultation_request.created_at.strftime('%Y-%m-%d %H:%M')}
+Дата: {consultation_request.created_at.strftime("%Y-%m-%d %H:%M")}
         """
 
         email = EmailMessage(
@@ -647,22 +672,25 @@ ID заявки: {consultation_request.id}
             body=email_body,
             from_email="noreply@yourdomain.com",
             to=["sereernest@gmail.com"],
-            reply_to=[user_email]
+            reply_to=[user_email],
         )
 
         try:
             email.send(fail_silently=False)
-            logger.info(f"Consultation request email sent successfully to sereernest@gmail.com")
+            logger.info(
+                f"Consultation request email sent successfully to sereernest@gmail.com"
+            )
         except Exception as err:
             logger.error(f"While sending consultation email an error occurred: {err}")
 
         messages.success(
-            request,
-            "Спасибо за вашу заявку! Я свяжусь с вами в течение 24 часов."
+            request, "Спасибо за вашу заявку! Я свяжусь с вами в течение 24 часов."
         )
         return redirect("tutor_consultation")
 
     except Exception as e:
-        logger.error(f"Error processing tutor consultation request: {str(e)}", exc_info=True)
+        logger.error(
+            f"Error processing tutor consultation request: {str(e)}", exc_info=True
+        )
         messages.error(request, "Произошла ошибка при отправке заявки")
         return redirect("tutor_consultation")

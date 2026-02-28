@@ -7,7 +7,6 @@ import main.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("main", "0021_rename_config_yml_page_config_yaml_alter_page_og_url"),
     ]

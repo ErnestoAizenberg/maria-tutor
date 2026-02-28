@@ -4,12 +4,13 @@ from django.db import migrations
 
 
 def assign_reviews_to_teacher(apps, schema_editor):  # Fixed function name and parameter
-    Review = apps.get_model('main', 'Review')
-    Teacher = apps.get_model('main', 'Teacher')
+    Review = apps.get_model("main", "Review")
+    Teacher = apps.get_model("main", "Teacher")
 
     teacher = Teacher.objects.first()  # Fixed typo: "obhects" → "objects"
     if teacher:
         Review.objects.update(teacher=teacher)
+
 
 class Migration(migrations.Migration):
     dependencies = [

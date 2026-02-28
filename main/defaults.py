@@ -47,9 +47,9 @@ def create_default_pages(teacher_slug):
             "title": f"Обо мне | {teacher.name} - {teacher.status}",
             "meta_description": f"Подробная информация о {teacher.name}. {teacher.status}",
             "hero_title": teacher.name,
-            "hero_sub_title": getattr(teacher, 'description', ''),
+            "hero_sub_title": getattr(teacher, "description", ""),
             "og_type": "profile",
-            "og_title": f"Обо мне - {teacher.name} | {teacher.status}"
+            "og_title": f"Обо мне - {teacher.name} | {teacher.status}",
         },
         "reviews": {
             "name": "Отзывы",
@@ -100,7 +100,9 @@ def create_default_pages(teacher_slug):
                 created_pages.append(page)
             except Exception as e:
                 # Log error and continue with other pages
-                print(f"Error creating page {slug} for teacher {teacher.name}: {str(e)}")
+                print(
+                    f"Error creating page {slug} for teacher {teacher.name}: {str(e)}"
+                )
 
     return {
         "teacher": teacher.name,
