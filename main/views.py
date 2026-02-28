@@ -366,11 +366,6 @@ def application_submit(request):
         logger.info(f"Application saved successfully (ID: {application.id})")
 
         return redirect("apply_success")
-
-    except ValidationError:
-        logger.warning(f"Invalid email address provided: {email}")
-        messages.error(request, "Please enter a valid email address")
-        return redirect("application")
     except Exception as e:
         logger.error(f"Error processing application: {str(e)}", exc_info=True)
         messages.error(request, "An error occurred while processing your application")
