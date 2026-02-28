@@ -1,4 +1,3 @@
-import yaml
 from django import forms
 from django.utils.safestring import mark_safe
 
@@ -6,10 +5,10 @@ from django.utils.safestring import mark_safe
 class YAMLEditorWidget(forms.Textarea):
     def __init__(self, attrs=None):
         default_attrs = {
-            'class': 'yaml-editor',
-            'rows': 20,
-            'cols': 80,
-            'style': 'font-family: monospace;'
+            "class": "yaml-editor",
+            "rows": 20,
+            "cols": 80,
+            "style": "font-family: monospace;",
         }
         if attrs:
             default_attrs.update(attrs)
@@ -17,14 +16,14 @@ class YAMLEditorWidget(forms.Textarea):
 
     class Media:
         css = {
-            'all': (
-                'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css',
-                'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css',
+            "all": (
+                "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css",
+                "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/monokai.min.css",
             )
         }
         js = (
-            'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js',
-            'https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/yaml/yaml.min.js',
+            "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/yaml/yaml.min.js",
         )
 
     def render(self, name, value, attrs=None, renderer=None):

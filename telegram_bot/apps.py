@@ -4,7 +4,7 @@ from django.db.models import BigAutoField
 
 class TelegramBotConfig(AppConfig):
     default_auto_field = BigAutoField
-    name = 'telegram_bot'
+    name = "telegram_bot"
 
     def ready(self):
-        from . import signals #noqa
+        from . import signals  # noqa

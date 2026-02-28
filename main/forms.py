@@ -9,13 +9,13 @@ from .widgets import YAMLEditorWidget
 class PageAdminForm(forms.ModelForm):
     class Meta:
         model = Page
-        fields = '__all__'
+        fields = "__all__"
         widgets = {
-            'config_yaml': YAMLEditorWidget(),
+            "config_yaml": YAMLEditorWidget(),
         }
 
     def clean_config_yaml(self):
-        yaml_content = self.cleaned_data.get('config_yaml', '')
+        yaml_content = self.cleaned_data.get("config_yaml", "")
 
         if yaml_content:
             try:
@@ -23,11 +23,13 @@ class PageAdminForm(forms.ModelForm):
                 parsed = yaml.safe_load(yaml_content)
 
                 # Optional: Re-dump to standardize formatting
-                standardized = yaml.dump(parsed,
-                                       default_flow_style=False,
-                                       allow_unicode=True,
-                                       indent=2,
-                                       sort_keys=False)
+                standardized = yaml.dump(
+                    parsed,
+                    default_flow_style=False,
+                    allow_unicode=True,
+                    indent=2,
+                    sort_keys=False,
+                )
                 return standardized
 
             except yaml.YAMLError as e:
@@ -38,13 +40,15 @@ class PageAdminForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     query = forms.CharField(
-        label='Поиск',
-        widget=forms.TextInput(attrs={
-            'placeholder': 'Введите поисковый запрос...',
-            'class': 'search-input'
-        }),
+        label="Поиск",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Введите поисковый запрос...",
+                "class": "search-input",
+            }
+        ),
         max_length=100,
-        required=True
+        required=True,
     )
 
 
@@ -72,9 +76,7 @@ class ReviewForm(forms.ModelForm):
                     "rows": 5,
                 }
             ),
-            "author_photo_url": forms.URLInput(
-                attrs={"class": "url-field"}
-            ),
+            "author_photo_url": forms.URLInput(attrs={"class": "url-field"}),
         }
         labels = {
             "author_name": "Ваше имя",
@@ -159,66 +161,62 @@ class TutorConsultationForm(forms.Form):
         max_length=300,
         required=True,
         label="Ваше имя",
-        widget=forms.TextInput(attrs={
-            "placeholder": "Иван Петров",
-            "class": "form-control"
-        }),
+        widget=forms.TextInput(
+            attrs={"placeholder": "Иван Петров", "class": "form-control"}
+        ),
         error_messages={
             "required": "Пожалуйста, введите ваше имя",
-            "max_length": "Имя слишком длинное (максимум 300 символов)"
-        }
+            "max_length": "Имя слишком длинное (максимум 300 символов)",
+        },
     )
 
     email = forms.EmailField(
         max_length=300,
         required=True,
         label="Email для связи",
-        widget=forms.EmailInput(attrs={
-            "placeholder": "email@example.com",
-            "class": "form-control"
-        }),
+        widget=forms.EmailInput(
+            attrs={"placeholder": "email@example.com", "class": "form-control"}
+        ),
         error_messages={
             "required": "Пожалуйста, укажите email для связи",
             "invalid": "Пожалуйста, введите корректный email-адрес",
-            "max_length": "Email слишком длинный (максимум 300 символов)"
-        }
+            "max_length": "Email слишком длинный (максимум 300 символов)",
+        },
     )
 
     phone = forms.CharField(
         max_length=50,
         required=False,
         label="Телефон (необязательно)",
-        widget=forms.TextInput(attrs={
-            "placeholder": "+7 (999) 123-45-67",
-            "class": "form-control"
-        })
+        widget=forms.TextInput(
+            attrs={"placeholder": "+7 (999) 123-45-67", "class": "form-control"}
+        ),
     )
 
     question = forms.CharField(
         max_length=2000,
         required=True,
         label="Опишите ваш вопрос или проблему",
-        widget=forms.Textarea(attrs={
-            "placeholder": "Расскажите, с чем вам нужна помощь...",
-            "rows": 5,
-            "class": "form-control"
-        }),
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Расскажите, с чем вам нужна помощь...",
+                "rows": 5,
+                "class": "form-control",
+            }
+        ),
         min_length=20,
         error_messages={
             "required": "Пожалуйста, опишите ваш вопрос",
-            "min_length": "Описание слишком короткое (минимум 20 символов)"
-        }
+            "min_length": "Описание слишком короткое (минимум 20 символов)",
+        },
     )
 
     experience_years = forms.IntegerField(
         required=False,
         label="Опыт работы репетитором (лет)",
-        widget=forms.NumberInput(attrs={
-            "placeholder": "5",
-            "min": "0",
-            "max": "50",
-            "class": "form-control"
-        })
+        widget=forms.NumberInput(
+            attrs={"placeholder": "5", "min": "0", "max": "50", "class": "form-control"}
+        ),
     )
 
     def clean_name(self):
@@ -230,5 +228,7 @@ class TutorConsultationForm(forms.Form):
     def clean_experience_years(self):
         years = self.cleaned_data.get("experience_years")
         if years is not None and (years < 0 or years > 50):
-            raise ValidationError("Пожалуйста, введите корректное количество лет (0-50)")
+            raise ValidationError(
+                "Пожалуйста, введите корректное количество лет (0-50)"
+            )
         return years
