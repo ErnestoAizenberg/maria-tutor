@@ -34,7 +34,7 @@ LOGGING: Final[dict] = {
                 %(asctime)s %(levelname)s %(module)s
                 %(message)s %(pathname)s %(lineno)d
             """,
-        }
+        },
     },
     "handlers": {
         "console": {
@@ -84,10 +84,10 @@ LOGGING: Final[dict] = {
             "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
             "propagate": False,
         },
-        'django.server': {
-            'handlers': ['console'],
-            'level': 'ERROR',
-            'propagate': False,
+        "django.server": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
         },
         "django.request": {
             "handlers": ["file_errors", "console"],
@@ -99,7 +99,7 @@ LOGGING: Final[dict] = {
             "level": os.getenv("DB_LOG_LEVEL", "WARNING"),
             "propagate": False,
         },
-        "access" : {
+        "access": {
             "handlers": ["file_access"],
             "level": os.getenv("ACCESS_LOG_LEVEL", "INFO"),
             "propagate": False,
@@ -126,7 +126,12 @@ if not TELEGRAM_BOT_TOKEN:
     raise ValueError("TELEGRAM_BOT_TOKEN не найден в .env!")
 
 MINI_APP_URL: Final[str] = "https://mariaseredinskaya.pythonanywhere.com"
-ALLOWED_HOSTS: Final[list[str]] = ["mariaseredinskaya.pythonanywhere.com", "localhost", "127.0.0.1", "*"]
+ALLOWED_HOSTS: Final[list[str]] = [
+    "mariaseredinskaya.pythonanywhere.com",
+    "localhost",
+    "127.0.0.1",
+    "*",
+]
 
 INSTALLED_APPS: list[str] = [
     "jazzmin",

@@ -5,19 +5,19 @@ from django.utils.text import slugify
 
 
 def create_initial_tariffs(apps, schema_editor):
-    Tariff = apps.get_model('main', 'Tariff')
-    Teacher = apps.get_model('main', 'Teacher')
+    Tariff = apps.get_model("main", "Tariff")
+    Teacher = apps.get_model("main", "Teacher")
 
     TARIFFS_DATA = [
         # (format_type, format_display, program_name, price, price_unit, is_group_format)
-        ('individual', 'Индивидуально', 'ОГЭ', 1600, '₽/час', False),
-        ('individual', 'Индивидуально', 'ЕГЭ', 1800, '₽/час', False),
-        ('individual', 'Индивидуально', 'Олимпиады', 2000, '₽/час', False),
-        ('pair', 'Парные', 'ОГЭ/школьная программа', 1200, '₽/час', True),
-        ('pair', 'Парные', 'ЕГЭ', 1400, '₽/час', True),
-        ('group', 'Групповые', 'ОГЭ (3-5 чел)', 700, '₽/час', True),
-        ('async', 'Асинхронное', 'ОГЭ', 600, '₽/неделя', False),
-        ('async', 'Асинхронное', 'ЕГЭ', 800, '₽/неделя', False),
+        ("individual", "Индивидуально", "ОГЭ", 1600, "₽/час", False),
+        ("individual", "Индивидуально", "ЕГЭ", 1800, "₽/час", False),
+        ("individual", "Индивидуально", "Олимпиады", 2000, "₽/час", False),
+        ("pair", "Парные", "ОГЭ/школьная программа", 1200, "₽/час", True),
+        ("pair", "Парные", "ЕГЭ", 1400, "₽/час", True),
+        ("group", "Групповые", "ОГЭ (3-5 чел)", 700, "₽/час", True),
+        ("async", "Асинхронное", "ОГЭ", 600, "₽/неделя", False),
+        ("async", "Асинхронное", "ЕГЭ", 800, "₽/неделя", False),
     ]
 
     try:
@@ -41,15 +41,17 @@ def create_initial_tariffs(apps, schema_editor):
                         price=data[3],
                         price_unit=data[4],
                         is_group_format=data[5],
-                        slug=unique_slug  # Уникальный slug для каждой записи
+                        slug=unique_slug,  # Уникальный slug для каждой записи
                     )
     except Exception as e:
         print(f"Ошибка при создании тарифов: {e}")
         raise
 
+
 def reverse_tariffs(apps, schema_editor):
-    Tariff = apps.get_model('main', 'Tariff')
+    Tariff = apps.get_model("main", "Tariff")
     Tariff.objects.all().delete()
+
 
 class Migration(migrations.Migration):
     dependencies = [
@@ -57,9 +59,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(
-            create_initial_tariffs,
-            reverse_tariffs,
-            atomic=True
-        )
+        migrations.RunPython(create_initial_tariffs, reverse_tariffs, atomic=True)
     ]

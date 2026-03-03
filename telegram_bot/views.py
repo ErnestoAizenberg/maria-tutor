@@ -8,8 +8,8 @@ from .webhooks import process_telegram_update
 
 @csrf_exempt
 def webhook(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         update = json.loads(request.body)
         process_telegram_update(update)
         return HttpResponse(status=200)
-    return JsonResponse({'status': 'error'}, status=400)
+    return JsonResponse({"status": "error"}, status=400)

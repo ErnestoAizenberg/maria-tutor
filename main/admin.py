@@ -28,72 +28,109 @@ from .models import (
 
 User = get_user_model()
 
+
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('author_name', 'truncated_content', 'rating', 'source', 'author_photo_url', 'is_published', 'created_at', 'order', 'preview_photo')
-    list_editable = ('rating', 'is_published', 'order', 'author_photo_url', 'created_at')
-    list_filter = ('is_published', 'rating', 'created_at', 'source')
-    search_fields = ('author_name', 'content', 'achievement')
+    list_display = (
+        "author_name",
+        "truncated_content",
+        "rating",
+        "source",
+        "author_photo_url",
+        "is_published",
+        "created_at",
+        "order",
+        "preview_photo",
+    )
+    list_editable = (
+        "rating",
+        "is_published",
+        "order",
+        "author_photo_url",
+        "created_at",
+    )
+    list_filter = ("is_published", "rating", "created_at", "source")
+    search_fields = ("author_name", "content", "achievement")
     actions = [
-        'publish_selected',
-        'unpublish_selected',
-        'set_source_avito',
-        'set_source_profi',
-        'set_source_repetitor_ru',
-        ]
+        "publish_selected",
+        "unpublish_selected",
+        "set_source_avito",
+        "set_source_profi",
+        "set_source_repetitor_ru",
+    ]
 
     save_on_top = True
 
     fieldsets = (
-        ('Основная информация', {
-            'fields': ('author_name', 'author_photo_url', 'source', 'source_url', 'achievement', 'content', 'rating', 'created_at')
-        }),
-        ('Настройки публикации', {
-            'fields': ('is_published', 'order', 'slug'),
-            'classes': ('collapse',)
-        }),
+        (
+            "Основная информация",
+            {
+                "fields": (
+                    "author_name",
+                    "author_photo_url",
+                    "source",
+                    "source_url",
+                    "achievement",
+                    "content",
+                    "rating",
+                    "created_at",
+                )
+            },
+        ),
+        (
+            "Настройки публикации",
+            {"fields": ("is_published", "order", "slug"), "classes": ("collapse",)},
+        ),
     )
 
     def truncated_content(self, obj):
-        return obj.content[:100] + '...' if len(obj.content) > 100 else obj.content
-    truncated_content.short_description = 'Текст отзыва'
+        return obj.content[:100] + "..." if len(obj.content) > 100 else obj.content
+
+    truncated_content.short_description = "Текст отзыва"
 
     def preview_photo(self, obj):
         if obj.author_photo_url:
-            return format_html('<img src="{}" style="max-height: 50px;" />', obj.author_photo_url)
+            return format_html(
+                '<img src="{}" style="max-height: 50px;" />', obj.author_photo_url
+            )
         return "-"
-    preview_photo.short_description = 'Фото'
+
+    preview_photo.short_description = "Фото"
 
     def publish_selected(self, request, queryset):
         queryset.update(is_published=True)
+
     publish_selected.short_description = "Опубликовать выбранные отзывы"
 
     def unpublish_selected(self, request, queryset):
         queryset.update(is_published=False)
+
     unpublish_selected.short_description = "Снять с публикации выбранные отзывы"
 
     def get_readonly_fields(self, request, obj=None):
         if obj:
-            return ('created_at', 'slug')
+            return ("created_at", "slug")
         return ()
 
-
     def set_source_profi(self, request, queryset):
-        queryset.update(source='profi_ru')
+        queryset.update(source="profi_ru")
+
     set_source_profi.short_description = "Установить Profi.ru"
 
     def set_source_avito(self, request, queryset):
-        queryset.update(source='avito')
+        queryset.update(source="avito")
+
     set_source_avito.short_description = "Установить Авито"
 
     def set_source_repetitor_ru(self, request, queryset):
-        queryset.update(source='repetitor_ru')
+        queryset.update(source="repetitor_ru")
 
     set_source_repetitor_ru.short_description = "Установить Repetitor.ru"
 
-
     class Media:
         css = {
-            'all': ('css/admin_reviews.css',) if os.path.exists('static/css/admin_reviews.css') else {}
+            "all": ("css/admin_reviews.css",)
+            if os.path.exists("static/css/admin_reviews.css")
+            else {}
         }
 
 
@@ -219,7 +256,8 @@ class ArticleAdminForm(forms.ModelForm):
 
     class Meta:
         model = Article
-        fields = '__all__'
+        fields = "__all__"
+
 
 class ArticleAdmin(admin.ModelAdmin):
     form = ArticleAdminForm
@@ -246,160 +284,181 @@ class ArticleAdmin(admin.ModelAdmin):
     )
     prepopulated_fields = {"slug": ("title",)}
     readonly_fields = ("created_at", "updated_at", "image_preview_display")
-    filter_horizontal = ('tags',)  # Горизонтальный фильтр для тегов
+    filter_horizontal = ("tags",)  # Горизонтальный фильтр для тегов
 
     fieldsets = (
         (None, {"fields": ("title", "slug", "status", "author")}),
-        ("Content", {"fields": ("abstract", "content", "image_preview", "tags")}),  # Добавили tags
+        (
+            "Content",
+            {"fields": ("abstract", "content", "image_preview", "tags")},
+        ),  # Добавили tags
         ("Dates", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
     )
 
     def display_tags(self, obj):
         """Кастомное отображение тегов в списке статей"""
         return ", ".join([tag.name for tag in obj.tags.all()])
+
     display_tags.short_description = "Теги"
 
     def get_queryset(self, request):
-        return super().get_queryset(request).prefetch_related('tags')
+        return super().get_queryset(request).prefetch_related("tags")
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "tags":
-            kwargs["queryset"] = Tag.objects.order_by('name')
+            kwargs["queryset"] = Tag.objects.order_by("name")
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 
     def image_preview_display(self, obj):
         if obj.image_preview:
             return format_html(
-                '<img src="{}" style="max-height: 100px;"/>',
-                obj.image_preview.url
+                '<img src="{}" style="max-height: 100px;"/>', obj.image_preview.url
             )
         return "-"
+
     image_preview_display.short_description = "Preview"
 
 
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'article_count', 'created_at')
-    search_fields = ('name', 'slug')
-    list_filter = ('created_at',)
-    prepopulated_fields = {'slug': ('name',)}
-    readonly_fields = ('created_at', 'updated_at')
+    list_display = ("name", "slug", "article_count", "created_at")
+    search_fields = ("name", "slug")
+    list_filter = ("created_at",)
+    prepopulated_fields = {"slug": ("name",)}
+    readonly_fields = ("created_at", "updated_at")
     fieldsets = (
-        (None, {
-            'fields': ('name', 'slug')
-        }),
-        ('Метаданные', {
-            'fields': ('created_at', 'updated_at'),
-            'classes': ('collapse',)
-        }),
+        (None, {"fields": ("name", "slug")}),
+        (
+            "Метаданные",
+            {"fields": ("created_at", "updated_at"), "classes": ("collapse",)},
+        ),
     )
 
     def article_count(self, obj):
         return obj.article_set.count()
+
     article_count.short_description = "Кол-во статей"
 
 
 class TeacherAdmin(admin.ModelAdmin):
     # Поля для отображения в списке
     list_display = (
-        'name',
-        'status',
-        'email',
-        'phone',
-        'is_active',
-        'avatar_preview',
-        'created_at',
+        "name",
+        "status",
+        "email",
+        "phone",
+        "is_active",
+        "avatar_preview",
+        "created_at",
     )
 
     # Поля для поиска
     search_fields = (
-        'name',
-        'email',
-        'phone',
-        'status',
-        'slug',
+        "name",
+        "email",
+        "phone",
+        "status",
+        "slug",
     )
 
     # Фильтры справа
     list_filter = (
-        'is_active',
-        'created_at',
+        "is_active",
+        "created_at",
     )
 
     # Поля только для чтения
     readonly_fields = (
-        'slug',
-        'created_at',
-        'updated_at',
-        'avatar_preview',
-        'social_links',
+        "slug",
+        "created_at",
+        "updated_at",
+        "avatar_preview",
+        "social_links",
     )
 
     # Группировка полей в форме редактирования
     fieldsets = (
-        ('Основная информация', {
-            'fields': (
-                'name',
-                'status',
-                'description',
-                'is_active',
-            )
-        }),
-        ('Контактная информация', {
-            'fields': (
-                'email',
-                'phone',
-            )
-        }),
-        ('Социальные сети', {
-            'fields': (
-                'telegram',
-                'vk',
-                'instagram',
-                'twitter',
-                'linkedin',
-                'social_links',
-            )
-        }),
-        ('Медиа', {
-            'fields': (
-                'avatar',
-                'avatar_preview',
-                'avatar2',
-            )
-        }),
-        ('JSON', {
-            'fields': (
-                'education',
-                'scientific_work',
-                'tutoring',
-            )
-        }),
-        ('Мета', {
-            'fields': (
-                'lang',
-                'keywords',
-            ),
-        }),
-        #('Служебная информация', {
+        (
+            "Основная информация",
+            {
+                "fields": (
+                    "name",
+                    "status",
+                    "description",
+                    "is_active",
+                )
+            },
+        ),
+        (
+            "Контактная информация",
+            {
+                "fields": (
+                    "email",
+                    "phone",
+                )
+            },
+        ),
+        (
+            "Социальные сети",
+            {
+                "fields": (
+                    "telegram",
+                    "vk",
+                    "instagram",
+                    "twitter",
+                    "linkedin",
+                    "social_links",
+                )
+            },
+        ),
+        (
+            "Медиа",
+            {
+                "fields": (
+                    "avatar",
+                    "avatar_preview",
+                    "avatar2",
+                )
+            },
+        ),
+        (
+            "JSON",
+            {
+                "fields": (
+                    "education",
+                    "scientific_work",
+                    "tutoring",
+                )
+            },
+        ),
+        (
+            "Мета",
+            {
+                "fields": (
+                    "lang",
+                    "keywords",
+                ),
+            },
+        ),
+        # ('Служебная информация', {
         #    'fields': (
         #        'slug',
         #        'created_at',
         #        'updated_at',
         #    )
-        #}),"""
+        # }),"""
     )
 
     # Автоматическое заполнение slug при добавлении
-    #prepopulated_fields = {'slug': ('name',)}
+    # prepopulated_fields = {'slug': ('name',)}
 
     # Сортировка по умолчанию
-    ordering = ('-is_active', 'name')
+    ordering = ("-is_active", "name")
 
     # Действия для списка
-    actions = ['make_active', 'make_inactive', 'create_default_pages_action']
+    actions = ["make_active", "make_inactive", "create_default_pages_action"]
 
     # Поля, которые можно редактировать прямо в списке
-    list_editable = ('is_active',)
+    list_editable = ("is_active",)
 
     # Пагинация
     list_per_page = 25
@@ -409,40 +468,51 @@ class TeacherAdmin(admin.ModelAdmin):
         if obj.avatar:
             return format_html(
                 '<img src="{}" width="50" height="50" style="object-fit: cover;" />',
-                obj.avatar.url
+                obj.avatar.url,
             )
         return "-"
-    avatar_preview.short_description = 'Превью'
+
+    avatar_preview.short_description = "Превью"
 
     def social_links(self, obj):
         links = []
         if obj.telegram:
-            links.append(f'<a href="https://t.me/{obj.telegram}" target="_blank">Telegram</a>')
+            links.append(
+                f'<a href="https://t.me/{obj.telegram}" target="_blank">Telegram</a>'
+            )
         if obj.vk:
             links.append(f'<a href="https://vk.com/{obj.vk}" target="_blank">VK</a>')
         if obj.instagram:
-            links.append(f'<a href="https://instagram.com/{obj.instagram}" target="_blank">Instagram</a>')
+            links.append(
+                f'<a href="https://instagram.com/{obj.instagram}" target="_blank">Instagram</a>'
+            )
         if obj.twitter:
-            links.append(f'<a href="https://twitter.com/{obj.twitter}" target="_blank">Twitter</a>')
+            links.append(
+                f'<a href="https://twitter.com/{obj.twitter}" target="_blank">Twitter</a>'
+            )
         if obj.linkedin:
-            if obj.linkedin.startswith('http'):
+            if obj.linkedin.startswith("http"):
                 links.append(f'<a href="{obj.linkedin}" target="_blank">LinkedIn</a>')
             else:
-                links.append(f'<a href="https://linkedin.com/in/{obj.linkedin}" target="_blank">LinkedIn</a>')
+                links.append(
+                    f'<a href="https://linkedin.com/in/{obj.linkedin}" target="_blank">LinkedIn</a>'
+                )
 
-        return format_html(' | '.join(links)) if links else "-"
-    social_links.short_description = 'Ссылки на соцсети'
+        return format_html(" | ".join(links)) if links else "-"
+
+    social_links.short_description = "Ссылки на соцсети"
     social_links.allow_tags = True
 
     # Кастомные действия
     def make_active(self, request, queryset):
         queryset.update(is_active=True)
+
     make_active.short_description = "Активировать выбранных учителей"
 
     def make_inactive(self, request, queryset):
         queryset.update(is_active=False)
-    make_inactive.short_description = "Деактивировать выбранных учителей"
 
+    make_inactive.short_description = "Деактивировать выбранных учителей"
 
     def create_default_pages_action(self, request, queryset):
         PageAdmin.create_default_pages_action(self, request, queryset)
@@ -454,49 +524,69 @@ class LessonFeatureInline(admin.TabularInline):
     model = LessonFeature
     extra = 1
 
+
 class LessonCardAdmin(admin.ModelAdmin):
     list_display = ["title", "price", "order"]
     inlines = [LessonFeatureInline]
     list_editable = ["order"]
 
 
-
 class TariffAdmin(admin.ModelAdmin):
-    list_display = ('format_display', 'program_name', 'teacher', 'price', 'price_unit', 'is_active')
-    list_filter = ('format_type', 'is_active', 'is_group_format')
-    search_fields = ('program_name', 'format_display', 'teacher__name')
-    list_editable = ('is_active', 'price')
+    list_display = (
+        "format_display",
+        "program_name",
+        "teacher",
+        "price",
+        "price_unit",
+        "is_active",
+    )
+    list_filter = ("format_type", "is_active", "is_group_format")
+    search_fields = ("program_name", "format_display", "teacher__name")
+    list_editable = ("is_active", "price")
     list_per_page = 20
-    ordering = ('format_type', 'program_name')
+    ordering = ("format_type", "program_name")
     fieldsets = (
-        (None, {
-            'fields': ('teacher', 'is_active')
-        }),
-        ('Формат обучения', {
-            'fields': ('format_type', 'format_display', 'is_group_format')
-        }),
-        ('Программа и стоимость', {
-            'fields': ('program_name', 'price', 'price_unit')
-        }),
+        (None, {"fields": ("teacher", "is_active")}),
+        (
+            "Формат обучения",
+            {"fields": ("format_type", "format_display", "is_group_format")},
+        ),
+        ("Программа и стоимость", {"fields": ("program_name", "price", "price_unit")}),
     )
 
     def get_queryset(self, request):
-        return super().get_queryset(request).select_related('teacher')
+        return super().get_queryset(request).select_related("teacher")
 
 
 class PageAdmin(admin.ModelAdmin):
     form = PageAdminForm
-    list_display = ('name', 'teacher', 'slug', 'is_published', 'show_in_navbar', 'show_in_footer', 'config_yaml')
-    list_filter = ('teacher', 'is_published', 'show_in_navbar', 'show_in_footer', 'is_navbar_button')
-    search_fields = ('name', 'slug', 'teacher__name')
-    actions = ['create_default_pages_action']
+    list_display = (
+        "name",
+        "teacher",
+        "slug",
+        "is_published",
+        "show_in_navbar",
+        "show_in_footer",
+        "config_yaml",
+    )
+    list_filter = (
+        "teacher",
+        "is_published",
+        "show_in_navbar",
+        "show_in_footer",
+        "is_navbar_button",
+    )
+    search_fields = ("name", "slug", "teacher__name")
+    actions = ["create_default_pages_action"]
 
     # Add a custom button to the change form
-    change_form_template = 'admin/custom_page_change_form.html'
+    change_form_template = "admin/custom_page_change_form.html"
 
     def response_change(self, request, obj):
         if "_create_default_pages" in request.POST:
-            self.create_default_pages_action(request, Teacher.objects.filter(pk=obj.teacher_id))
+            self.create_default_pages_action(
+                request, Teacher.objects.filter(pk=obj.teacher_id)
+            )
             return HttpResponseRedirect(".")
         return super().response_change(request, obj)
 
@@ -518,17 +608,21 @@ class PageAdmin(admin.ModelAdmin):
         created_count = 0
         for teacher in teachers:
             result = create_default_pages(teacher.slug)
-            created_count += result['total_created']
+            created_count += result["total_created"]
             self.message_user(
                 request,
                 f"Created {result['total_created']} pages for {teacher.name}: {', '.join(result['created_pages'])}",
-                messages.SUCCESS
+                messages.SUCCESS,
             )
 
         if created_count == 0:
-            self.message_user(request, "All default pages already exist", messages.WARNING)
+            self.message_user(
+                request, "All default pages already exist", messages.WARNING
+            )
 
-    create_default_pages_action.short_description = "★ Create default pages for selected teachers"
+    create_default_pages_action.short_description = (
+        "★ Create default pages for selected teachers"
+    )
 
 
 class TutorConsultationRequestAdmin(admin.ModelAdmin):
@@ -539,28 +633,29 @@ class TutorConsultationRequestAdmin(admin.ModelAdmin):
         "experience_years",
         "created_at",
         "is_processed",
-        "consultation_actions"
+        "consultation_actions",
     )
     list_filter = ("is_processed", "created_at", "experience_years")
     search_fields = ("name", "email", "phone", "question")
     list_editable = ("is_processed",)
     date_hierarchy = "created_at"
-    readonly_fields = ("created_at", "name", "email", "phone", "question", "experience_years")
+    readonly_fields = (
+        "created_at",
+        "name",
+        "email",
+        "phone",
+        "question",
+        "experience_years",
+    )
 
     fieldsets = (
-        ("Информация о репетиторе", {
-            "fields": ("name", "email", "phone", "experience_years")
-        }),
-        ("Детали консультации", {
-            "fields": ("question",)
-        }),
-        ("Статус", {
-            "fields": ("is_processed", "processed_at", "notes")
-        }),
-        ("Метаданные", {
-            "fields": ("created_at",),
-            "classes": ("collapse",)
-        })
+        (
+            "Информация о репетиторе",
+            {"fields": ("name", "email", "phone", "experience_years")},
+        ),
+        ("Детали консультации", {"fields": ("question",)}),
+        ("Статус", {"fields": ("is_processed", "processed_at", "notes")}),
+        ("Метаданные", {"fields": ("created_at",), "classes": ("collapse",)}),
     )
 
     def has_add_permission(self, request):
@@ -573,12 +668,9 @@ class TutorConsultationRequestAdmin(admin.ModelAdmin):
                 '<a class="button" href="{}">Обработать</a>&nbsp;'
                 '<a class="button" href="mailto:{}">Ответить</a>',
                 process_url,
-                obj.email
+                obj.email,
             )
-        return format_html(
-            '<a class="button" href="mailto:{}">Ответить</a>',
-            obj.email
-        )
+        return format_html('<a class="button" href="mailto:{}">Ответить</a>', obj.email)
 
     consultation_actions.short_description = "Действия"
 

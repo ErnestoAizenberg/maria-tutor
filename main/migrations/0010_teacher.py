@@ -7,7 +7,6 @@ import main.models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("main", "0009_tag_article_tags"),
     ]

@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("main", "0008_alter_article_options_remove_review_author_photo_and_more"),
     ]

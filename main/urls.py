@@ -13,7 +13,7 @@ sitemaps = {
 urlpatterns = [
     path("", views.index, name="index"),
     path("robots.txt", views.robots_txt),
-    path('search/', views.search_view, name='search_view'),
+    path("search/", views.search_view, name="search_view"),
     path("article/<slug:slug>/", views.article, name="article"),  # SEO-friendly URL
     path("tag/<slug:slug>/", views.articles_by_tag, name="articles_by_tag"),
     path("articles/", views.articles, name="articles"),
@@ -42,7 +42,8 @@ urlpatterns = [
         {"sitemaps": sitemaps},
         name="django.contrib.sitemaps.views.sitemap",
     ),
-    path("lessons-details/", views.lesson_details, name="lessons_details")]
+    path("lessons-details/", views.lesson_details, name="lessons_details"),
+]
 urlpatterns += [
     path("policy/", views.policy, name="policy"),
     path("terms/", views.terms, name="terms"),
@@ -52,6 +53,14 @@ urlpatterns += [
     path("programs/olympiad-prep/", views.olympiad_prep, name="olympiad-prep"),
     path("programs/one-on-one/", views.one_on_one, name="one-on-one"),
     path("programs/subsized/", views.subsidized, name="subsized"),
-    path("services/tutor-consultation/", views.tutor_consultation, name="tutor_consultation"),
-    path("services/tutor-consultation/submit/", views.tutor_consultation_submit, name="tutor_consultation_submit"),
+    path(
+        "services/tutor-consultation/",
+        views.tutor_consultation,
+        name="tutor_consultation",
+    ),
+    path(
+        "services/tutor-consultation/submit/",
+        views.tutor_consultation_submit,
+        name="tutor_consultation_submit",
+    ),
 ]
