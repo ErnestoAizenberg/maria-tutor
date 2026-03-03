@@ -2,7 +2,7 @@ import logging
 
 from .models import Teacher
 
-logger = logging.getLogger("__name__")
+logger = logging.getLogger(__name__)
 
 
 def teacher_context(request):
