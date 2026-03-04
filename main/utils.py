@@ -1,13 +1,29 @@
+from typing import List
+
 from django.apps import apps
-from django.db.models import CharField, Q, TextField
+from django.db.models import CharField, Q, TextField, Model
 
 
-def search_models(query, model_names):
+def search_models(query: str, model_names: List[str]) -> List[Model]:
+    """
+    Search through multiple Django models for a given query string.
+
+    Args:
+        query: The search string to look for
+        model_names: List of model names in 'app_label.ModelName' format
+
+    Returns:
+        List of model instances that match the search query
+    """
     results = []
 
     for model_name in model_names:
         try:
             model = apps.get_model(model_name)
+            if model is None:
+                print(f"Warning: Model {model_name} not found")
+                continue
+
             text_fields = [
                 field.name
                 for field in model._meta.get_fields()
@@ -21,8 +37,8 @@ def search_models(query, model_names):
 
                 search_results = model.objects.filter(q_objects)
                 results.extend(list(search_results))
-        except Exception as e:
-            print(f"Error searching {model_name}: {str(e)}")
+        except LookupError as e:
+            print(f"Error: Model {model_name} not found: {str(e)}")
             continue
 
     return results
