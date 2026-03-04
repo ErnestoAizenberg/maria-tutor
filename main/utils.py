@@ -1,5 +1,5 @@
 from django.apps import apps
-from django.db.models import Q
+from django.db.models import CharField, Q, TextField
 
 
 def search_models(query, model_names):
@@ -11,7 +11,7 @@ def search_models(query, model_names):
             text_fields = [
                 field.name
                 for field in model._meta.get_fields()
-                if field.get_internal_type() in ["CharField", "TextField"]
+                if isinstance(field, (CharField, TextField))
             ]
 
             if text_fields:
