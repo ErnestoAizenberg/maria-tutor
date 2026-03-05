@@ -1,7 +1,10 @@
+import logging
 from typing import List
 
 from django.apps import apps
 from django.db.models import CharField, Q, TextField, Model
+
+logger = logging.getLogger(__name__)
 
 
 def search_models(query: str, model_names: List[str]) -> List[Model]:
@@ -20,22 +23,22 @@ def search_models(query: str, model_names: List[str]) -> List[Model]:
     for model_name in model_names:
         try:
             model = apps.get_model(model_name)
-
-            text_fields = [
-                field.name
-                for field in model._meta.get_fields()
-                if isinstance(field, (CharField, TextField))
-            ]
-
-            if text_fields:
-                q_objects = Q()
-                for field in text_fields:
-                    q_objects |= Q(**{f"{field}__icontains": query})
-
-                search_results = model.objects.filter(q_objects)
-                results.extend(list(search_results))
         except (LookupError, ValueError) as e:
-            print(f"Error: Invalid model reference '{model_name}': {str(e)}")
+            logger.warning("Invalid model reference '%s': %s", model_name, e)
             continue
+
+        text_fields = [
+            field.name
+            for field in model._meta.get_fields()
+            if isinstance(field, (CharField, TextField))
+        ]
+
+        if text_fields:
+            q_objects = Q()
+            for field in text_fields:
+                q_objects |= Q(**{f"{field}__icontains": query})
+
+            search_results = model.objects.filter(q_objects)
+            results.extend(list(search_results))
 
     return results
