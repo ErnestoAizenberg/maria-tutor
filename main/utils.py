@@ -39,6 +39,6 @@ def search_models(query: str, model_names: List[str]) -> List[Model]:
                 q_objects |= Q(**{f"{field}__icontains": query})
 
             search_results = model.objects.filter(q_objects)
-            results.extend(list(search_results))
+            results.extend(search_results)
 
     return results
