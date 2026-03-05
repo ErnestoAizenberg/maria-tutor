@@ -53,13 +53,13 @@ def search_view(request: HttpRequest) -> HttpResponse:
 
     query = request.GET.get("q", "").strip()
     model_names = request.GET.getlist("models")
-    allowed_models = [
+    allowed_models = {
         "main.Article",
         "main.Review",
         "main.Tariff",
         "main.Publication",
         "main.LessonCard",
-    ]
+    }
     logger.debug(
         f"Allowed models: {allowed_models}\n Model names from request: {model_names}"
     )
