@@ -20,9 +20,6 @@ def search_models(query: str, model_names: List[str]) -> List[Model]:
     for model_name in model_names:
         try:
             model = apps.get_model(model_name)
-            if model is None:
-                print(f"Warning: Model {model_name} not found")
-                continue
 
             text_fields = [
                 field.name
@@ -37,8 +34,8 @@ def search_models(query: str, model_names: List[str]) -> List[Model]:
 
                 search_results = model.objects.filter(q_objects)
                 results.extend(list(search_results))
-        except LookupError as e:
-            print(f"Error: Model {model_name} not found: {str(e)}")
+        except (LookupError, ValueError) as e:
+            print(f"Error: Invalid model reference '{model_name}': {str(e)}")
             continue
 
     return results
