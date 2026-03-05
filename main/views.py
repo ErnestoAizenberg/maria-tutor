@@ -334,7 +334,7 @@ def review_success(request):
     return render(request, "reviews/review_success.html")
 
 
-def application_submit(request):
+def application_submit(request: HttpRequest) -> HttpResponse:
     """Handle tutoring application submissions"""
     if request.method != "POST":
         logger.warning("Application submission attempted with non-POST method")
@@ -375,7 +375,7 @@ def application_submit(request):
 
         try:
             application = Application(
-                name=name, email=email, subject=subject, goal=goal
+                name=name, email=user_email, subject=subject, goal=goal
             )
             application.save()
         except Exception as e:
