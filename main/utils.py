@@ -1,13 +1,17 @@
 import logging
-from typing import List
+from typing import List, Optional, Set
 
 from django.apps import apps
-from django.db.models import CharField, Q, TextField, Model
+from django.db.models import CharField, Model, Q, TextField
 
 logger = logging.getLogger(__name__)
 
 
-def search_models(query: str, model_names: List[str]) -> List[Model]:
+def search_models(
+    query: str,
+    model_names: List[str],
+    allowed_models: Optional[Set[str]] = None,
+) -> List[Model]:
     """
     Search through multiple Django models for a given query string.
 
@@ -21,6 +25,10 @@ def search_models(query: str, model_names: List[str]) -> List[Model]:
     results = []
 
     for model_name in model_names:
+        if allowed_models is not None and model_name not in allowed_models:
+            logger.warning("Blocked model reference '%s' (not allowlisted)", model_name)
+            continue
+
         try:
             model = apps.get_model(model_name)
         except (LookupError, ValueError) as e:

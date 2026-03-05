@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage, send_mail
 from django.core.paginator import Paginator
 from django.core.validators import validate_email
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import ApplicationForm, ReviewForm, TutorConsultationForm
@@ -48,16 +48,28 @@ def policy(request):
     return render(request, "main/policy.html", context)
 
 
-def search_view(request):
+def search_view(request: HttpRequest) -> HttpResponse:
+    """Search view that handles searching across multiple models."""
+
     query = request.GET.get("q", "").strip()
     model_names = request.GET.getlist("models")
+    allowed_models = [
+        "main.Aricle",
+        "main.Review",
+        "main.Tariff",
+        "main.Publication",
+        "main.LessonCard",
+    ]
+    logger.debug(
+        f"Allowed models: {allowed_models}\n Model names from request: {model_names}"
+    )
 
     if not model_names:
-        model_names = ["main.Ativle", "main.Review"]
+        model_names = ["main.Article", "main.Review"]
 
     results = []
     if query:
-        results = search_models(query, model_names)
+        results = search_models(query, model_names, allowed_models=allowed_models)
 
     # Пагинация
     paginator = Paginator(results, 10)
