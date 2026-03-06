@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from django.core.validators import validate_email
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST, require_GET, require_http_methods
 
 from .forms import ApplicationForm, ReviewForm, TutorConsultationForm
 from .models import (
@@ -26,6 +27,7 @@ from .utils import search_models
 logger = logging.getLogger("main")
 
 
+@require_GET
 def robots_txt(request):
     content = """User-agent: *
     Allow: /$
@@ -38,16 +40,19 @@ def robots_txt(request):
     return HttpResponse(content, content_type="text/plain")
 
 
+@require_GET
 def terms(request):
     context = {}
     return render(request, "main/terms.html", context)
 
 
+@require_GET
 def policy(request):
     context = {}
     return render(request, "main/policy.html", context)
 
 
+@require_GET
 def search_view(request: HttpRequest) -> HttpResponse:
     """Search view that handles searching across multiple models."""
 
@@ -87,6 +92,7 @@ def search_view(request: HttpRequest) -> HttpResponse:
     return render(request, "main/search_results.html", context)
 
 
+@require_http_methods(["GET", "POST"])
 def index(request):
     """Display the homepage with published articles and application form."""
 
@@ -142,6 +148,7 @@ def index(request):
         )
 
 
+@require_GET
 def lessons(request):
     """Display lessons page"""
     teacher = get_teacher()
@@ -154,6 +161,7 @@ def lessons(request):
     return render(request, "main/lessons.html", context)
 
 
+@require_GET
 def about_me(request):
     """Display about me page"""
 
@@ -166,6 +174,7 @@ def about_me(request):
     return render(request, "main/about_me.html", context)
 
 
+@require_GET
 def science(request):
     """Display science page"""
     publications = Publication.objects.all()
@@ -174,6 +183,7 @@ def science(request):
     return render(request, "main/science.html", context)
 
 
+@require_GET
 def articles_by_tag(request: HttpRequest, slug: str) -> HttpResponse:
     """Display list of articles by given slug of a tag"""
 
@@ -209,6 +219,7 @@ def articles_by_tag(request: HttpRequest, slug: str) -> HttpResponse:
     return render(request, "main/articles_by_tag.html", context)
 
 
+@require_GET
 def article(request, slug):
     """Display a single article with reading time and related articles"""
     logger.info(f"Attempting to load article with slug: {slug}")
@@ -242,6 +253,7 @@ def article(request, slug):
         return redirect("index")
 
 
+@require_GET
 def articles(request):
     """Display a list of all published articles"""
 
@@ -262,11 +274,13 @@ def articles(request):
         return render(request, "main/articles.html", {"articles": [], "page": page})
 
 
+@require_GET
 def test(request):
     """Route for testing templates"""
     return render(request, "main/article0.html")
 
 
+@require_GET
 def contacts(request):
     teacher = get_teacher()
     page = teacher.get_page("contacts")
@@ -274,6 +288,7 @@ def contacts(request):
     return render(request, "main/contacts.html", context)
 
 
+@require_http_methods(["GET", "POST"])
 def reviews(request):
     """Display a list of all published articles"""
     teacher = get_teacher()
@@ -304,9 +319,8 @@ def reviews(request):
     return render(request, "main/reviews.html", context)
 
 
+@require_POST
 def add_review(request):
-    if request.method != "POST":
-        logger.error(f"Invalid HTTP method recieved in add_review: {request.method}")
 
     form = ReviewForm(
         request.POST,
@@ -330,14 +344,14 @@ def add_review(request):
     return redirect("/reviews#review-form")
 
 
+@require_GET
 def review_success(request):
     return render(request, "reviews/review_success.html")
 
 
+@require_POST
 def application_submit(request: HttpRequest) -> HttpResponse:
     """Handle tutoring application submissions"""
-    if request.method != "POST":
-        return redirect("application")
 
     form = ApplicationForm(request.POST)
     if not form.is_valid():
@@ -395,16 +409,15 @@ def application_submit(request: HttpRequest) -> HttpResponse:
         return redirect("application")
 
 
+@require_GET
 def apply_success(request):
     """Display success page after application submission"""
     return render(request, "main/apply_success.html")
 
 
+@require_POST
 def connect_request(request: HttpRequest) -> HttpResponse:
     """Handle contact form submissions"""
-    if request.method != "POST":
-        logger.warning("Contact form submission attempted with non-POST method")
-        return redirect("index")
 
     name = request.POST.get("name", "").strip()
     user_email = request.POST.get("email", "").strip()
@@ -456,17 +469,15 @@ def connect_request(request: HttpRequest) -> HttpResponse:
     return redirect("connect_success")
 
 
+@require_GET
 def connect_success(request):
     """Display success page after contact form submission"""
     return render(request, "main/connect_success.html")
 
 
+@require_POST
 def subscribe_email(request):
     """Handle email newsletter subscriptions"""
-    if request.method != "POST":
-        logger.warning("Email subscription attempted with non-POST method")
-        return redirect("index")
-
     email = request.POST.get("email", "").strip()
 
     if not email:
@@ -492,39 +503,48 @@ def subscribe_email(request):
     return redirect("email_subscribe_success")
 
 
+@require_GET
 def email_subscribe_success(request):
     """Display success page after email subscription"""
     return render(request, "main/email_subscribe_success.html")
 
 
+@require_GET
 def async_program(request):
     return render(request, "main/programs/async.html")
 
 
+@require_GET
 def bio_in_english(request):
     return render(request, "main/programs/bio_on_english.html")
 
 
+@require_GET
 def group_programs(request):
     return render(request, "main/programs/grops.html")
 
 
+@require_GET
 def olympiad_prep(request):
     return render(request, "main/programs/olimp.html")
 
 
+@require_GET
 def one_on_one(request):
     return render(request, "main/programs/one_on_one.html")
 
 
+@require_GET
 def subsidized(request):
     return render(request, "main/programs/subsized.html")
 
 
+@require_GET
 def lesson_details(request):
     return render(request, "main/lessons_details.html")
 
 
+@require_http_methods(["GET", "POST"])
 def application(request):
     """Aplication form display"""
     teacher = get_teacher()
@@ -557,6 +577,7 @@ def application(request):
     return render(request, "main/application.html", context)
 
 
+@require_http_methods(["GET", "POST"])
 def tutor_consultation(request):
     """Display tutor consultation service page"""
     teacher = get_teacher()
@@ -588,13 +609,9 @@ def tutor_consultation(request):
     return render(request, "main/services/tutor_consultation.html", context)
 
 
+@require_POST
 def tutor_consultation_submit(request):
     """Handle tutor consultation form submissions"""
-    if request.method != "POST":
-        logger.warning(
-            "Tutor consultation form submission attempted with non-POST method"
-        )
-        return redirect("tutor_consultation")
 
     form = TutorConsultationForm(request.POST)
 
