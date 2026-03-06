@@ -316,7 +316,7 @@ def add_review(request):
         logger.warning(
             "Invalid application form submission", extra={"errors": form.errors}
         )
-        request.session["review_form_data"] = request.POST.dict()
+        request.session["review_form_data"] = form.data
         request.session["review_form_errors"] = form.errors.as_json()
 
         return redirect("/reviews#review-form")
@@ -344,7 +344,7 @@ def application_submit(request: HttpRequest) -> HttpResponse:
         logger.debug(
             "Invalid application form submission", extra={"errors": form.errors}
         )
-        request.session["application_form_data"] = request.POST.dict()
+        request.session["application_form_data"] = form.data
         request.session["application_form_errors"] = form.errors.as_json()
 
         return redirect("application")
@@ -602,7 +602,7 @@ def tutor_consultation_submit(request):
         logger.warning(
             "Invalid tutor consultation form submission", extra={"errors": form.errors}
         )
-        request.session["consultation_form_data"] = request.POST.dict()
+        request.session["consultation_form_data"] = form.data
         request.session["consultation_form_errors"] = form.errors.as_json()
         return redirect("tutor_consultation")
 
