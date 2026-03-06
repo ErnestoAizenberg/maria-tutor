@@ -357,19 +357,6 @@ def application_submit(request: HttpRequest) -> HttpResponse:
 
         email_subject = f"Запрос на обучение по <{subject}> от {name}"
         message = goal
-
-        email = EmailMessage(
-            subject=email_subject,
-            body=message,
-            from_email="noreply@yourdomain.com",  # Your verified sender
-            to=["sereernest@gmail.com"],  # Recipient list
-            reply_to=[user_email],  # Replies go to applicant
-        )
-        try:
-            email.send(fail_silently=False)
-        except Exception as err:
-            logger.error(f"While sending APPLICATION /email an error occured: {err}")
-
         try:
             application = Application(
                 name=name, email=user_email, subject=subject, goal=goal
@@ -386,6 +373,18 @@ def application_submit(request: HttpRequest) -> HttpResponse:
                 "<li>Написать на почту: sereernest@gmail.com</li></ul>",
                 status=500,
             )
+
+        email = EmailMessage(
+            subject=email_subject,
+            body=message,
+            from_email="noreply@yourdomain.com",  # Your verified sender
+            to=["sereernest@gmail.com"],  # Recipient list
+            reply_to=[user_email],  # Replies go to applicant
+        )
+        try:
+            email.send(fail_silently=False)
+        except Exception as err:
+            logger.error(f"While sending APPLICATION /email an error occured: {err}")
 
         logger.debug(f"Application saved successfully (ID: {application.id})")
 
