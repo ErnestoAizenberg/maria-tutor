@@ -131,7 +131,7 @@ def index(request):
         logger.debug(f"Main page context: {context}")
 
         if form.errors:
-            logger.debug(f"form.erros: {form.errors}")
+            logger.debug(f"form.errors: {form.errors}")
 
         logger.debug(f"Loaded {len(articles)} published articles for homepage")
         return render(request, "main/index-purple.html", context)
@@ -398,7 +398,7 @@ def application_submit(request: HttpRequest) -> HttpResponse:
         try:
             email.send(fail_silently=False)
         except Exception as err:
-            logger.error(f"While sending APPLICATION /email an error occured: {err}")
+            logger.error(f"While sending APPLICATION /email an error occurred: {err}")
 
         logger.debug(f"Application saved successfully (ID: {application.id})")
 
@@ -464,7 +464,7 @@ def connect_request(request: HttpRequest) -> HttpResponse:
     try:
         email.send(fail_silently=False)
     except Exception as err:
-        logger.error(f"While CONTACT email an error occured: {err}")
+        logger.error(f"While CONTACT email an error occurred: {err}")
 
     return redirect("connect_success")
 
@@ -546,7 +546,7 @@ def lesson_details(request):
 
 @require_http_methods(["GET", "POST"])
 def application(request):
-    """Aplication form display"""
+    """Application form display"""
     teacher = get_teacher()
 
     # Initialize form with session data if exists, otherwise create empty form
