@@ -337,12 +337,11 @@ def review_success(request):
 def application_submit(request: HttpRequest) -> HttpResponse:
     """Handle tutoring application submissions"""
     if request.method != "POST":
-        logger.warning("Application submission attempted with non-POST method")
         return redirect("application")
 
     form = ApplicationForm(request.POST)
     if not form.is_valid():
-        logger.warning(
+        logger.debug(
             "Invalid application form submission", extra={"errors": form.errors}
         )
         request.session["application_form_data"] = request.POST
@@ -355,8 +354,6 @@ def application_submit(request: HttpRequest) -> HttpResponse:
         user_email = form.cleaned_data.get("email", "").strip()
         subject = form.cleaned_data.get("subject", "").strip()
         goal = form.cleaned_data.get("goal", "").strip()
-
-        logger.info(f"Processing application from {name} <{user_email}> for {subject}")
 
         email_subject = f"Запрос на обучение по <{subject}> от {name}"
         message = goal
@@ -390,7 +387,7 @@ def application_submit(request: HttpRequest) -> HttpResponse:
                 status=500,
             )
 
-        logger.info(f"Application saved successfully (ID: {application.id})")
+        logger.debug(f"Application saved successfully (ID: {application.id})")
 
         return redirect("apply_success")
     except Exception as e:
@@ -414,8 +411,6 @@ def connect_request(request: HttpRequest) -> HttpResponse:
     user_email = request.POST.get("email", "").strip()
     message = request.POST.get("message", "").strip()
 
-    logger.debug(f"Contact request from {name} <{user_email}>")
-
     if not all([name, user_email, message]):
         logger.warning("Incomplete contact form submission")
         messages.error(request, "Please fill all form fields")
@@ -424,7 +419,6 @@ def connect_request(request: HttpRequest) -> HttpResponse:
     try:
         validate_email(user_email)
     except ValidationError:
-        logger.warning(f"Invalid email in contact form: {user_email}")
         messages.error(request, "Please enter a valid email address")
         return redirect("index")
 
@@ -475,7 +469,6 @@ def subscribe_email(request):
         return redirect("index")
 
     email = request.POST.get("email", "").strip()
-    logger.info(f"Email subscription attempt for: {email}")
 
     if not email:
         logger.warning("Empty email submission")
@@ -485,7 +478,6 @@ def subscribe_email(request):
     try:
         validate_email(email)
     except ValidationError:
-        logger.warning(f"Invalid email in subscription: {email}")
         messages.error(request, "Please enter a valid email address")
         return redirect("index")
 
@@ -498,7 +490,6 @@ def subscribe_email(request):
         [email],
         fail_silently=False,
     )
-    logger.info(f"Email subscription successful for: {email}")
     return redirect("email_subscribe_success")
 
 
@@ -622,8 +613,6 @@ def tutor_consultation_submit(request):
         phone = form.cleaned_data.get("phone", "").strip()
         question = form.cleaned_data.get("question", "").strip()
         experience_years = form.cleaned_data.get("experience_years")
-
-        logger.info(f"Processing tutor consultation request from {name} <{user_email}>")
 
         # Save to database
         try:
