@@ -358,11 +358,11 @@ def application_submit(request: HttpRequest) -> HttpResponse:
 
         logger.info(f"Processing application from {name} <{user_email}> for {subject}")
 
-        subject = f"Запрос на обучение по <{subject}> от {name}"
+        email_subject = f"Запрос на обучение по <{subject}> от {name}"
         message = goal
 
         email = EmailMessage(
-            subject=subject,
+            subject=email_subject,
             body=message,
             from_email="noreply@yourdomain.com",  # Your verified sender
             to=["sereernest@gmail.com"],  # Recipient list
