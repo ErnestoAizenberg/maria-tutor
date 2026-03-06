@@ -404,34 +404,34 @@ def apply_success(request):
     return render(request, "main/apply_success.html")
 
 
-def connect_request(request):
+def connect_request(request: HttpRequest) -> HttpResponse:
     """Handle contact form submissions"""
     if request.method != "POST":
         logger.warning("Contact form submission attempted with non-POST method")
         return redirect("index")
 
     name = request.POST.get("name", "").strip()
-    email = request.POST.get("email", "").strip()
+    user_email = request.POST.get("email", "").strip()
     message = request.POST.get("message", "").strip()
 
-    logger.info(f"Contact request from {name} <{email}>")
+    logger.debug(f"Contact request from {name} <{user_email}>")
 
-    if not all([name, email, message]):
+    if not all([name, user_email, message]):
         logger.warning("Incomplete contact form submission")
         messages.error(request, "Please fill all form fields")
         return redirect("index")
 
     try:
-        validate_email(email)
+        validate_email(user_email)
     except ValidationError:
-        logger.warning(f"Invalid email in contact form: {email}")
+        logger.warning(f"Invalid email in contact form: {user_email}")
         messages.error(request, "Please enter a valid email address")
         return redirect("index")
 
     try:
         new_connect_msg = ConnectMessage(
             name=name,
-            email=email,
+            email=user_email,
             message=message,
         )
         new_connect_msg.save()
@@ -453,15 +453,13 @@ def connect_request(request):
         body=message,
         from_email="noreply@yourdomain.com",  # Your verified sender
         to=["sereernest@gmail.com"],  # Recipient list
-        reply_to=[email],  # Replies go to applicant
+        reply_to=[user_email],  # Replies go to applicant
     )
     try:
         email.send(fail_silently=False)
     except Exception as err:
         logger.error(f"While CONTACT email an error occured: {err}")
 
-    # Here you would typically save the message or send email
-    logger.info("Contact form processed successfully")
     return redirect("connect_success")
 
 
