@@ -112,7 +112,7 @@ def index(request):
             if errors_json := request.session.get("application_form_errors"):
                 errors_dict = json.loads(errors_json)
                 for field, error_list in errors_dict.items():
-                    for error in errors_dict:
+                    for error in error_list:
                         form.add_error(field, error)
 
             # Clean up session data
@@ -301,7 +301,7 @@ def reviews(request):
         if errors_json := request.session.get("review_form_errors"):
             errors_dict = json.loads(errors_json)
             for field, error_list in errors_dict.items():
-                for error in errors_dict:
+                for error in error_list:
                     form.add_error(field, error)
                     messages.error(request, error)
         # Clean up session data
@@ -557,7 +557,7 @@ def application(request):
         if errors_json := request.session.get("application_form_errors"):
             errors_dict = json.loads(errors_json)
             for field, error_list in errors_dict.items():
-                for error in errors_dict:
+                for error in error_list:
                     form.add_error(field, error)
 
         # Clean up session data
