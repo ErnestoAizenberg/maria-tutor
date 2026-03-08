@@ -1,4 +1,5 @@
 import os
+import logging
 
 import yaml
 from django.contrib.auth import get_user_model
@@ -15,6 +16,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 
+logger = logging.getLogger(__name__)
 User = get_user_model()
 
 LANGUAGE_CHOICES = [
@@ -308,18 +310,18 @@ class Page(models.Model):
         try:
             if self.config_yaml.strip():
                 parsed_config = yaml.safe_load(self.config_yaml) or {}
-                print(
-                    f"DEBUG: Successfully parsed config for {self.slug}: {parsed_config}"
-                )  # ОТЛАДКА
+                logger.debug(
+                    f"Successfully parsed config for {self.slug}: {parsed_config}"
+                )
                 return parsed_config
-            print(f"DEBUG: Empty config for {self.slug}")  # ОТЛАДКА
+            logger.debug(f"Empty config for {self.slug}")
             return {}
         except yaml.YAMLError as e:
-            print(f"DEBUG: YAML ERROR for {self.slug}: {e}")  # ОТЛАДКА
-            print(f"DEBUG: Config content: {self.config_yaml}")  # ОТЛАДКА
+            logger.error(f"YAML ERROR for {self.slug}: {e}")
+            logger.debug(f"Config content: {self.config_yaml}")
             return {}
         except Exception as e:
-            print(f"DEBUG: UNEXPECTED ERROR for {self.slug}: {e}")  # ОТЛАДКА
+            logger.error(f"UNEXPECTED ERROR for {self.slug}: {e}")  # ОТЛАДКА
             return {}
 
     @property

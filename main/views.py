@@ -196,7 +196,7 @@ def about_me(request):
     teacher = get_teacher()
     publications = Publication.objects.all()
     page = teacher.get_page("about_me")
-    print(f"{page.name} sections: {page.sections}, page.config: {page.config}")
+    logger.debug(f"{page.name} sections: {page.sections}, page.config: {page.config}")
 
     context = {"page": page, "publications": publications}
     return render(request, "main/about_me.html", context)
