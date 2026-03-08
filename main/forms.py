@@ -148,7 +148,7 @@ class ApplicationForm(forms.Form):
             self.fields["subject"].choices = subject_options
 
     def clean_name(self):
-        name = self.cleaned_data.get("name").strip()
+        name = self.cleaned_data.get("name", "").strip()
         if len(name.split()) < 2:
             raise ValidationError("Пожалуйста, введите имя и фамилию")
         return name
