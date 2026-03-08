@@ -8,7 +8,7 @@ register = template.Library()
 
 @register.filter(is_safe=True)
 def markdown_to_html(text: str) -> str:
-    """Convert makdown to safe HTML"""
+    """Convert markdown to safe HTML"""
     if not text:
         return ""
 
