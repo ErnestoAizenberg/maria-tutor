@@ -1,6 +1,7 @@
 import json
 import logging
 
+from django import forms
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage, send_mail
@@ -25,6 +26,42 @@ from .models import (
 from .utils import search_models
 
 logger = logging.getLogger("main")
+
+
+def init_form(
+    request: HttpRequest,
+    form_class: type[forms.BaseForm],
+    form_name: str,
+) -> forms.BaseForm:
+    """
+    Initialize a form from session data and restore errors if they exist.
+    """
+    session_key = f"{form_name}_form_data"
+    errors_key = f"{form_name}_form_errors"
+
+    # Check if we have saved form data in session
+    if session_data := request.session.get(session_key):
+        form = form_class(session_data)
+        
+        # Restore any errors from previous submission
+        if errors_json := request.session.get(errors_key):
+            for field, error_list in json.loads(errors_json).items():
+                for error in error_list:
+                    error_message = (
+                        error.get("message", str(error))
+                        if isinstance(error, dict)
+                        else str(error)
+                    )
+                    form.add_error(field, error_message)
+                    messages.error(request, error_message)
+
+        # Clean up session data
+        request.session.pop(session_key, None)
+        request.session.pop(errors_key, None)
+    else:
+        form = form_class()  # Fresh empty form
+
+    return form
 
 
 @require_GET
@@ -104,24 +141,9 @@ def index(request):
         reviews = Review.objects.filter(is_published=True).order_by("-created_at")[:6]
         publications = Publication.objects.all()[:6]
 
-        # Initialize form with session data if exists, otherwise create empty form
-        if "application_form_data" in request.session:
-            form = ApplicationForm(request.session["application_form_data"])
-
-            # Add form errors from session if they exist
-            if errors_json := request.session.get("application_form_errors"):
-                errors_dict = json.loads(errors_json)
-                for field, error_list in errors_dict.items():
-                    for error in error_list:
-                        error_message = error.get("message", str(error))
-                        form.add_error(field, error_message)
-                        messages.error(request, error_message)
-
-            # Clean up session data
-            request.session.pop("application_form_data", None)
-            request.session.pop("application_form_errors", None)
-        else:
-            form = ApplicationForm()
+        form = init_form(
+            request=request, form_class=ApplicationForm, form_name="application"
+        )
 
         context = {
             "articles": articles,
@@ -296,23 +318,7 @@ def reviews(request):
     teacher = get_teacher()
     page = teacher.get_page("reviews")
     reviews = Review.objects.filter(is_published=True).order_by("-created_at")
-    if "review_form_data" in request.session:
-        form = ReviewForm(request.session["review_form_data"])
-
-        # Add form errors from session if they exist
-        if errors_json := request.session.get("review_form_errors"):
-            errors_dict = json.loads(errors_json)
-            for field, error_list in errors_dict.items():
-                for error in error_list:
-                    error_message = error.get("message", str(error))
-                    form.add_error(field, error_message)
-                    messages.error(request, error_message)
-
-        # Clean up session data
-        request.session.pop("review_form_data", None)
-        request.session.pop("review_form_errors", None)
-    else:
-        form = ReviewForm()
+    form = init_form(request, ReviewForm, "review")
 
     context = {
         "reviews": reviews,
@@ -331,9 +337,6 @@ def add_review(request):
         request.FILES,
     )
     if not form.is_valid():
-        logger.warning(
-            "Invalid application form submission", extra={"errors": form.errors}
-        )
         request.session["review_form_data"] = form.data
         request.session["review_form_errors"] = form.errors.as_json()
 
@@ -552,25 +555,7 @@ def lesson_details(request):
 def application(request):
     """Application form display"""
     teacher = get_teacher()
-
-    # Initialize form with session data if exists, otherwise create empty form
-    if "application_form_data" in request.session:
-        form = ApplicationForm(request.session["application_form_data"])
-
-        # Add form errors from session if they exist
-        if errors_json := request.session.get("application_form_errors"):
-            errors_dict = json.loads(errors_json)
-            for field, error_list in errors_dict.items():
-                for error in error_list:
-                    error_message = error.get("message", str(error))
-                    form.add_error(field, error_message)
-                    messages.error(request, error_message)
-
-        # Clean up session data
-        request.session.pop("application_form_data", None)
-        request.session.pop("application_form_errors", None)
-    else:
-        form = ApplicationForm()
+    form = init_form(request, ApplicationForm, "application")
 
     reviews = teacher.reviews.filter(is_published=True).order_by(
         "-order", "-created_at"
@@ -588,25 +573,7 @@ def tutor_consultation(request):
     """Display tutor consultation service page"""
     teacher = get_teacher()
     reviews = Review.objects.filter(is_published=True).order_by("-created_at")[:6]
-
-    # Initialize form with session data if exists, otherwise create empty form
-    if "consultation_form_data" in request.session:
-        form = TutorConsultationForm(request.session["consultation_form_data"])
-
-        # Add form errors from session if they exist
-        if errors_json := request.session.get("consultation_form_errors"):
-            errors_dict = json.loads(errors_json)
-            for field, error_list in errors_dict.items():
-                for error in error_list:
-                    error_message = error.get("message", str(error))
-                    form.add_error(field, error_message)
-                    messages.error(request, error_message)
-
-        # Clean up session data
-        request.session.pop("consultation_form_data", None)
-        request.session.pop("consultation_form_errors", None)
-    else:
-        form = TutorConsultationForm()
+    form = init_form(request, TutorConsultationForm, "consultation")
 
     context = {
         "teacher": teacher,
