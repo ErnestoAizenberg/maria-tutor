@@ -12,6 +12,7 @@ from django.core.validators import (
     URLValidator,
 )
 from django.db import models
+from django.db.models.manager import RelatedManager
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
@@ -29,13 +30,27 @@ def get_teacher():
     return Teacher.objects.filter(lang="ru").first()
 
 
-class Teacher(models.Model):
-    def upload_avatar(self, filename):
-        """Генерирует путь для загрузки аватара учителя."""
-        ext = filename.split(".")[-1].lower()
-        return f"teacher/avatars/{self.name}.{ext}"
+def upload_teacher_avatar_main(instance, filename):
+    """Генерирует путь для загрузки аватара учителя."""
+    ext = filename.split(".")[-1].lower()
+    return f"teacher/avatars/{instance.name}.{ext}"
 
-    # Основная информация
+
+def upload_teacher_avatar_about(instance, filename):
+    """Генерирует путь для загрузки аватара учителя."""
+    ext = filename.split(".")[-1].lower()
+    return f"teacher/avatars/{instance.name}.{ext}"
+
+
+def upload_preview(instance, filename):
+    ext = filename.split(".")[-1]
+    return f"articles/previews/{instance.slug}.{ext}"
+
+
+class Teacher(models.Model):
+    reviews: RelatedManager["Review"]
+    pages: RelatedManager["Page"]
+
     name = models.CharField(
         max_length=100,
         blank=False,
@@ -58,7 +73,7 @@ class Teacher(models.Model):
     )
 
     avatar = models.ImageField(
-        upload_to=upload_avatar,
+        upload_to=upload_teacher_avatar_main,
         blank=True,
         null=True,
         verbose_name="Аватар",
@@ -69,7 +84,7 @@ class Teacher(models.Model):
     )
 
     avatar2 = models.ImageField(
-        upload_to=upload_avatar,
+        upload_to=upload_teacher_avatar_about,
         blank=True,
         null=True,
         verbose_name="Второй аватар",
@@ -415,10 +430,12 @@ class Tariff(models.Model):
         ]
 
     def save(self, *args, **kwargs):
+        name = ""
+        if self.teacher:
+            name = self.teacher.name
+
         if not self.slug:
-            base_slug = slugify(
-                f"{self.teacher.name}-{self.format_type}-{self.program_name}"
-            )
+            base_slug = slugify(f"{name}-{self.format_type}-{self.program_name}")
             self.slug = base_slug
             counter = 1
             while Tariff.objects.filter(slug=self.slug).exists():
@@ -810,16 +827,11 @@ class Tag(models.Model):
 
     def clean(self):
         # Запрещаем теги с одинаковым slug
-        if Tag.objects.filter(slug=slugify(self.name)).exclude(id=self.id).exists():
+        if Tag.objects.filter(slug=slugify(self.name)).exclude(id=self.pk).exists():
             raise ValidationError("Тег с таким URL-именем уже существует")
 
 
 class Article(models.Model):
-    def upload_preview(self, filename):
-        ext = filename.split(".")[-1]
-        return f"articles/previews/{self.slug}.{ext}"
-
-    # Basic fields
     title = models.CharField(max_length=200)
     abstract = models.CharField(
         max_length=300,
@@ -880,7 +892,7 @@ class Article(models.Model):
         if self.image_preview:
             if os.path.isfile(self.image_preview.path):
                 os.remove(self.image_preview.path)
-        super().delete(*args, **kwargs)
+        return super().delete(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("article", kwargs={"slug": self.slug})

@@ -180,7 +180,10 @@ def index(request):
 def lessons(request):
     """Display lessons page"""
     teacher = get_teacher()
-    page = teacher.get_page("lessons")
+    page = None
+    if teacher:
+        page = teacher.get_page("reviews")
+
     context = {
         "lesson_cards": LessonCard.objects.all(),
         "page": page,
@@ -195,8 +198,9 @@ def about_me(request):
 
     teacher = get_teacher()
     publications = Publication.objects.all()
-    page = teacher.get_page("about_me")
-    logger.debug(f"{page.name} sections: {page.sections}, page.config: {page.config}")
+    page = None
+    if teacher:
+        page = teacher.get_page("reviews")
 
     context = {"page": page, "publications": publications}
     return render(request, "main/about_me.html", context)
@@ -264,7 +268,7 @@ def article(request, slug):
         # Get related articles
         related_articles = (
             Article.objects.filter(status="published")
-            .exclude(id=article.id)
+            .exclude(id=article.pk)
             .order_by("-created_at")[:5]
         )
         logger.debug(f"Found {len(related_articles)} related articles")
@@ -286,7 +290,9 @@ def articles(request):
     """Display a list of all published articles"""
 
     teacher = get_teacher()
-    page = teacher.get_page("articles")
+    page = None
+    if teacher:
+        page = teacher.get_page("reviews")
 
     try:
         list_articles = Article.objects.filter(status="published").order_by(
@@ -311,7 +317,10 @@ def test(request):
 @require_GET
 def contacts(request):
     teacher = get_teacher()
-    page = teacher.get_page("contacts")
+    page = None
+    if teacher:
+        page = teacher.get_page("reviews")
+
     context = {"page": page}
     return render(request, "main/contacts.html", context)
 
@@ -320,11 +329,15 @@ def contacts(request):
 def reviews(request):
     """Display a list of all published articles"""
     teacher = get_teacher()
-    page = teacher.get_page("reviews")
+    page = None
+    if teacher:
+        page = teacher.get_page("reviews")
+
     reviews = Review.objects.filter(is_published=True).order_by("-created_at")
     form = init_form(request, ReviewForm, "review")
 
     context = {
+        "page": page,
         "reviews": reviews,
         "form": form,
         # "review_form": form,
@@ -411,7 +424,7 @@ def application_submit(request: HttpRequest) -> HttpResponse:
         except Exception as err:
             logger.error(f"While sending APPLICATION /email an error occurred: {err}")
 
-        logger.debug(f"Application saved successfully (ID: {application.id})")
+        logger.debug(f"Application saved successfully (ID: {application.pk})")
 
         return redirect("apply_success")
     except Exception as e:
@@ -561,9 +574,11 @@ def application(request):
     teacher = get_teacher()
     form = init_form(request, ApplicationForm, "application")
 
-    reviews = teacher.reviews.filter(is_published=True).order_by(
-        "-order", "-created_at"
-    )[:3]
+    reviews = []
+    if teacher:
+        reviews = teacher.reviews.filter(is_published=True).order_by(
+            "-order", "-created_at"
+        )[:3]
 
     context = {
         "application_form": form,
@@ -619,7 +634,7 @@ def tutor_consultation_submit(request):
             )
             consultation_request.save()
             logger.info(
-                f"Tutor consultation request saved successfully (ID: {consultation_request.id})"
+                f"Tutor consultation request saved successfully (ID: {consultation_request.pk})"
             )
         except Exception as e:
             logger.error(
@@ -646,7 +661,7 @@ Email: {user_email}
 {question}
 
 ---
-ID заявки: {consultation_request.id}
+ID заявки: {consultation_request.pk}
 Дата: {consultation_request.created_at.strftime("%Y-%m-%d %H:%M")}
         """
 
