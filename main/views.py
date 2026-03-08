@@ -2,6 +2,7 @@ import json
 import logging
 
 from django import forms
+from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage, send_mail
@@ -82,13 +83,13 @@ def robots_txt(request: HttpRequest) -> HttpResponse:
 
 
 @require_GET
-def terms(request):
+def terms(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, "main/terms.html", context)
 
 
 @require_GET
-def policy(request):
+def policy(request: HttpRequest) -> HttpResponse:
     context = {}
     return render(request, "main/policy.html", context)
 
@@ -134,7 +135,7 @@ def search_view(request: HttpRequest) -> HttpResponse:
 
 
 @require_http_methods(["GET", "POST"])
-def index(request):
+def index(request: HttpRequest) -> HttpResponse:
     """Display the homepage with published articles and application form."""
 
     try:
@@ -177,7 +178,7 @@ def index(request):
 
 
 @require_GET
-def lessons(request):
+def lessons(request: HttpRequest) -> HttpResponse:
     """Display lessons page"""
     teacher = get_teacher()
     page = None
@@ -193,7 +194,7 @@ def lessons(request):
 
 
 @require_GET
-def about_me(request):
+def about_me(request: HttpRequest) -> HttpResponse:
     """Display about me page"""
 
     teacher = get_teacher()
@@ -207,7 +208,7 @@ def about_me(request):
 
 
 @require_GET
-def science(request):
+def science(request: HttpRequest) -> HttpResponse:
     """Display science page"""
     publications = Publication.objects.all()
     context = {"publications": publications}
@@ -252,7 +253,7 @@ def articles_by_tag(request: HttpRequest, slug: str) -> HttpResponse:
 
 
 @require_GET
-def article(request, slug):
+def article(request: HttpRequest, slug: str) -> HttpResponse:
     """Display a single article with reading time and related articles"""
     logger.info(f"Attempting to load article with slug: {slug}")
     try:
@@ -286,7 +287,7 @@ def article(request, slug):
 
 
 @require_GET
-def articles(request):
+def articles(request: HttpRequest) -> HttpResponse:
     """Display a list of all published articles"""
 
     teacher = get_teacher()
@@ -309,13 +310,13 @@ def articles(request):
 
 
 @require_GET
-def test(request):
+def test(request: HttpRequest) -> HttpResponse:
     """Route for testing templates"""
     return render(request, "main/article0.html")
 
 
 @require_GET
-def contacts(request):
+def contacts(request: HttpRequest) -> HttpResponse:
     teacher = get_teacher()
     page = None
     if teacher:
@@ -326,7 +327,7 @@ def contacts(request):
 
 
 @require_http_methods(["GET", "POST"])
-def reviews(request):
+def reviews(request: HttpRequest) -> HttpResponse:
     """Display a list of all published articles"""
     teacher = get_teacher()
     page = None
@@ -347,7 +348,7 @@ def reviews(request):
 
 
 @require_POST
-def add_review(request):
+def add_review(request: HttpRequest) -> HttpResponse:
 
     form = ReviewForm(
         request.POST,
@@ -369,7 +370,7 @@ def add_review(request):
 
 
 @require_GET
-def review_success(request):
+def review_success(request: HttpRequest) -> HttpResponse:
     return render(request, "reviews/review_success.html")
 
 
@@ -415,9 +416,9 @@ def application_submit(request: HttpRequest) -> HttpResponse:
         email = EmailMessage(
             subject=email_subject,
             body=message,
-            from_email="noreply@yourdomain.com",  # Your verified sender
-            to=["sereernest@gmail.com"],  # Recipient list
-            reply_to=[user_email],  # Replies go to applicant
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[settings.DEFAULT_FROM_EMAIL],
+            reply_to=[user_email],
         )
         try:
             email.send(fail_silently=False)
@@ -481,9 +482,9 @@ def connect_request(request: HttpRequest) -> HttpResponse:
     email = EmailMessage(
         subject=subject,
         body=message,
-        from_email="noreply@yourdomain.com",  # Your verified sender
-        to=["sereernest@gmail.com"],  # Recipient list
-        reply_to=[user_email],  # Replies go to applicant
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[settings.DEFAULT_TO_EMAIL],
+        reply_to=[user_email],
     )
     try:
         email.send(fail_silently=False)
@@ -494,13 +495,13 @@ def connect_request(request: HttpRequest) -> HttpResponse:
 
 
 @require_GET
-def connect_success(request):
+def connect_success(request: HttpRequest) -> HttpResponse:
     """Display success page after contact form submission"""
     return render(request, "main/connect_success.html")
 
 
 @require_POST
-def subscribe_email(request):
+def subscribe_email(request: HttpRequest) -> HttpResponse:
     """Handle email newsletter subscriptions"""
     email = request.POST.get("email", "").strip()
 
@@ -518,58 +519,58 @@ def subscribe_email(request):
     # Here you would typically add to mailing list
 
     send_mail(
-        "Subscription on Maria Tutor",
-        "You have been subscribed.",
-        "sereernest@gmail.com",
-        [email],
+        subject="Subscription on Maria Tutor",
+        message="You have been subscribed.",
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[email],
         fail_silently=False,
     )
     return redirect("email_subscribe_success")
 
 
 @require_GET
-def email_subscribe_success(request):
+def email_subscribe_success(request: HttpRequest) -> HttpResponse:
     """Display success page after email subscription"""
     return render(request, "main/email_subscribe_success.html")
 
 
 @require_GET
-def async_program(request):
+def async_program(request: HttpRequest) -> HttpResponse:
     return render(request, "main/programs/async.html")
 
 
 @require_GET
-def bio_in_english(request):
+def bio_in_english(request: HttpRequest) -> HttpResponse:
     return render(request, "main/programs/bio_on_english.html")
 
 
 @require_GET
-def group_programs(request):
+def group_programs(request: HttpRequest) -> HttpResponse:
     return render(request, "main/programs/grops.html")
 
 
 @require_GET
-def olympiad_prep(request):
+def olympiad_prep(request: HttpRequest) -> HttpResponse:
     return render(request, "main/programs/olimp.html")
 
 
 @require_GET
-def one_on_one(request):
+def one_on_one(request: HttpRequest) -> HttpResponse:
     return render(request, "main/programs/one_on_one.html")
 
 
 @require_GET
-def subsidized(request):
+def subsidized(request: HttpRequest) -> HttpResponse:
     return render(request, "main/programs/subsized.html")
 
 
 @require_GET
-def lesson_details(request):
+def lesson_details(request: HttpRequest) -> HttpResponse:
     return render(request, "main/lessons_details.html")
 
 
 @require_http_methods(["GET", "POST"])
-def application(request):
+def application(request: HttpRequest) -> HttpResponse:
     """Application form display"""
     teacher = get_teacher()
     form = init_form(request, ApplicationForm, "application")
@@ -588,7 +589,7 @@ def application(request):
 
 
 @require_http_methods(["GET", "POST"])
-def tutor_consultation(request):
+def tutor_consultation(request: HttpRequest) -> HttpResponse:
     """Display tutor consultation service page"""
     teacher = get_teacher()
     reviews = Review.objects.filter(is_published=True).order_by("-created_at")[:6]
@@ -603,7 +604,7 @@ def tutor_consultation(request):
 
 
 @require_POST
-def tutor_consultation_submit(request):
+def tutor_consultation_submit(request: HttpRequest):
     """Handle tutor consultation form submissions"""
 
     form = TutorConsultationForm(request.POST)
@@ -668,15 +669,15 @@ ID заявки: {consultation_request.pk}
         email = EmailMessage(
             subject=subject,
             body=email_body,
-            from_email="noreply@yourdomain.com",
-            to=["sereernest@gmail.com"],
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[settings.DEFAULT_TO_EMAIL],
             reply_to=[user_email],
         )
 
         try:
             email.send(fail_silently=False)
             logger.info(
-                f"Consultation request email sent successfully to sereernest@gmail.com"
+                f"Consultation request email sent successfully to {settings.DEFAULT_FROM_EMAIL}"
             )
         except Exception as err:
             logger.error(f"While sending consultation email an error occurred: {err}")
