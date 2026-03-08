@@ -1,5 +1,10 @@
+import logging
+
 from django.db import migrations, transaction
 from django.utils.text import slugify
+
+
+logger = logging.getLogger(__name__)
 
 
 def create_initial_tariffs(apps, schema_editor):
@@ -42,7 +47,7 @@ def create_initial_tariffs(apps, schema_editor):
                         slug=unique_slug,  # Уникальный slug для каждой записи
                     )
     except Exception as e:
-        print(f"Ошибка при создании тарифов: {e}")
+        logger.error(f"Ошибка при создании тарифов: {e}")
         raise
 
 

@@ -1,4 +1,8 @@
+import logging
+
 from .models import Page, Teacher
+
+logger = logging.getLogger(__name__)
 
 
 def create_default_pages(teacher_slug):
@@ -100,7 +104,7 @@ def create_default_pages(teacher_slug):
                 created_pages.append(page)
             except Exception as e:
                 # Log error and continue with other pages
-                print(
+                logger.error(
                     f"Error creating page {slug} for teacher {teacher.name}: {str(e)}"
                 )
 
