@@ -65,16 +65,20 @@ def init_form(
 
 
 @require_GET
-def robots_txt(request):
-    content = """User-agent: *
-    Allow: /$
-    Allow: /about_me/
-    Allow: /lessons/
-    Allow: /science/
-    Disallow: /admin/
-    Disallow: /static/
-    Sitemap: https://mariaseredinskaya.pythonanywhere.com/sitemap.xml"""
-    return HttpResponse(content, content_type="text/plain")
+def robots_txt(request: HttpRequest) -> HttpResponse:
+    '''robots.txt content'''
+    lines = [
+        "User-agent: *",
+        "Allow: /$",
+        "Allow: /about_me/",
+        "Allow: /lessons/",
+        "Allow: /science/",
+        "Disallow: /admin/",
+        "Disallow: /static/",
+        "",
+        f"Sitemap: https://{request.get_host()}/sitemap.xml"
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
 
 
 @require_GET
