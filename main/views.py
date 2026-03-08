@@ -42,7 +42,7 @@ def init_form(
     # Check if we have saved form data in session
     if session_data := request.session.get(session_key):
         form = form_class(session_data)
-        
+
         # Restore any errors from previous submission
         if errors_json := request.session.get(errors_key):
             for field, error_list in json.loads(errors_json).items():
