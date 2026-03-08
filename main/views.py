@@ -66,7 +66,7 @@ def init_form(
 
 @require_GET
 def robots_txt(request: HttpRequest) -> HttpResponse:
-    '''robots.txt content'''
+    """robots.txt content"""
     lines = [
         "User-agent: *",
         "Allow: /$",
@@ -76,7 +76,7 @@ def robots_txt(request: HttpRequest) -> HttpResponse:
         "Disallow: /admin/",
         "Disallow: /static/",
         "",
-        f"Sitemap: https://{request.get_host()}/sitemap.xml"
+        f"Sitemap: https://{request.get_host()}/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
 
