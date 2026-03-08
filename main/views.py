@@ -112,8 +112,10 @@ def index(request):
             if errors_json := request.session.get("application_form_errors"):
                 errors_dict = json.loads(errors_json)
                 for field, error_list in errors_dict.items():
-                    for error in errors_dict:
-                        form.add_error(field, error)
+                    for error in error_list:
+                        error_message = error.get("message", str(error))
+                        form.add_error(field, error_message)
+                        messages.error(request, error_message)
 
             # Clean up session data
             request.session.pop("application_form_data", None)
@@ -301,9 +303,11 @@ def reviews(request):
         if errors_json := request.session.get("review_form_errors"):
             errors_dict = json.loads(errors_json)
             for field, error_list in errors_dict.items():
-                for error in errors_dict:
-                    form.add_error(field, error)
-                    messages.error(request, error)
+                for error in error_list:
+                    error_message = error.get("message", str(error))
+                    form.add_error(field, error_message)
+                    messages.error(request, error_message)
+
         # Clean up session data
         request.session.pop("review_form_data", None)
         request.session.pop("review_form_errors", None)
@@ -557,8 +561,10 @@ def application(request):
         if errors_json := request.session.get("application_form_errors"):
             errors_dict = json.loads(errors_json)
             for field, error_list in errors_dict.items():
-                for error in errors_dict:
-                    form.add_error(field, error)
+                for error in error_list:
+                    error_message = error.get("message", str(error))
+                    form.add_error(field, error_message)
+                    messages.error(request, error_message)
 
         # Clean up session data
         request.session.pop("application_form_data", None)
@@ -592,8 +598,9 @@ def tutor_consultation(request):
             errors_dict = json.loads(errors_json)
             for field, error_list in errors_dict.items():
                 for error in error_list:
-                    form.add_error(field, error)
-                    messages.error(request, error)
+                    error_message = error.get("message", str(error))
+                    form.add_error(field, error_message)
+                    messages.error(request, error_message)
 
         # Clean up session data
         request.session.pop("consultation_form_data", None)
