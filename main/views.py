@@ -417,7 +417,7 @@ def application_submit(request: HttpRequest) -> HttpResponse:
             subject=email_subject,
             body=message,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[settings.DEFAULT_FROM_EMAIL],
+            to=[settings.DEFAULT_TO_EMAIL],
             reply_to=[user_email],
         )
         try:
@@ -677,7 +677,7 @@ ID заявки: {consultation_request.pk}
         try:
             email.send(fail_silently=False)
             logger.info(
-                f"Consultation request email sent successfully to {settings.DEFAULT_FROM_EMAIL}"
+                f"Consultation request email sent successfully to {settings.DEFAULT_TO_EMAIL}"
             )
         except Exception as err:
             logger.error(f"While sending consultation email an error occurred: {err}")
