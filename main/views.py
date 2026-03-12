@@ -183,7 +183,7 @@ def lessons(request: HttpRequest) -> HttpResponse:
     teacher = get_teacher()
     page = None
     if teacher:
-        page = teacher.get_page("reviews")
+        page = teacher.get_page("lessons")
 
     context = {
         "lesson_cards": LessonCard.objects.all(),
@@ -201,7 +201,7 @@ def about_me(request: HttpRequest) -> HttpResponse:
     publications = Publication.objects.all()
     page = None
     if teacher:
-        page = teacher.get_page("reviews")
+        page = teacher.get_page("about_me")
 
     context = {"page": page, "publications": publications}
     return render(request, "main/about_me.html", context)
@@ -293,7 +293,7 @@ def articles(request: HttpRequest) -> HttpResponse:
     teacher = get_teacher()
     page = None
     if teacher:
-        page = teacher.get_page("reviews")
+        page = teacher.get_page("articles")
 
     try:
         list_articles = Article.objects.filter(status="published").order_by(
@@ -320,7 +320,7 @@ def contacts(request: HttpRequest) -> HttpResponse:
     teacher = get_teacher()
     page = None
     if teacher:
-        page = teacher.get_page("reviews")
+        page = teacher.get_page("contacts")
 
     context = {"page": page}
     return render(request, "main/contacts.html", context)

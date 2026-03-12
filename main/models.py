@@ -12,7 +12,6 @@ from django.core.validators import (
     URLValidator,
 )
 from django.db import models
-from django.db.models.manager import RelatedManager
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
@@ -33,13 +32,15 @@ def get_teacher():
 def upload_teacher_avatar_main(instance, filename):
     """Генерирует путь для загрузки аватара учителя."""
     ext = filename.split(".")[-1].lower()
-    return f"teacher/avatars/{instance.name}.{ext}"
+    base = instance.slug or slugify(instance.name)
+    return f"teacher/avatars/{base}.{ext}"
 
 
 def upload_teacher_avatar_about(instance, filename):
     """Генерирует путь для загрузки аватара учителя."""
     ext = filename.split(".")[-1].lower()
-    return f"teacher/avatars/{instance.name}.{ext}"
+    base = instance.slug or slugify(instance.name)
+    return f"teacher/avatars/{base}-about.{ext}"
 
 
 def upload_preview(instance, filename):
@@ -48,8 +49,8 @@ def upload_preview(instance, filename):
 
 
 class Teacher(models.Model):
-    reviews: RelatedManager["Review"]
-    pages: RelatedManager["Page"]
+    reviews: "models.Manager['Review']"
+    pages: "models.Manager['Page']"
 
     name = models.CharField(
         max_length=100,
