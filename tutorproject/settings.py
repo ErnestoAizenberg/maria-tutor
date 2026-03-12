@@ -222,6 +222,11 @@ EMAIL_HOST_PASSWORD: Final[str] = os.getenv("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL: Final[str] = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 DEFAULT_TO_EMAIL: Final[str] = os.getenv("DEFAULT_TO_EMAIL", EMAIL_HOST_USER)
 
+if not DEFAULT_FROM_EMAIL:
+    raise ValueError("DEFAULT_FROM_EMAIL не найден в .env!")
+if not DEFAULT_TO_EMAIL:
+    raise ValueError("DEFAULT_TO_EMAIL не найден в .env!")
+
 CKEDITOR_CONFIGS: Final[dict[str, dict]] = {
     "default": {
         "contentsCss": "/static/css/ckeditor-content.css",
