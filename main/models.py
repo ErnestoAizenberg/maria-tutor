@@ -12,7 +12,6 @@ from django.core.validators import (
     URLValidator,
 )
 from django.db import models
-from django.db.models.manager import RelatedManager
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
@@ -48,8 +47,8 @@ def upload_preview(instance, filename):
 
 
 class Teacher(models.Model):
-    reviews: RelatedManager["Review"]
-    pages: RelatedManager["Page"]
+    reviews: "models.Manager['Review']"
+    pages: "models.Manager['Page']"
 
     name = models.CharField(
         max_length=100,
