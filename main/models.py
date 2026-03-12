@@ -33,13 +33,13 @@ def get_teacher():
 def upload_teacher_avatar_main(instance, filename):
     """Генерирует путь для загрузки аватара учителя."""
     ext = filename.split(".")[-1].lower()
-    return f"teacher/avatars/{instance.name}.{ext}"
+    return f"teacher/avatars/{instance.slug}.{ext}"
 
 
 def upload_teacher_avatar_about(instance, filename):
     """Генерирует путь для загрузки аватара учителя."""
     ext = filename.split(".")[-1].lower()
-    return f"teacher/avatars/{instance.name}.{ext}"
+    return f"teacher/avatars/{instance.slug}2.{ext}"
 
 
 def upload_preview(instance, filename):
