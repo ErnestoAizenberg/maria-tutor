@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
                         blank=True,
                         help_text="Изображение должно быть в формате JPG, PNG или WEBP. Рекомендуемый размер: 300x300px.",
                         null=True,
-                        upload_to=main.models.Teacher.upload_avatar,
+                        upload_to=main.models.upload_teacher_avatar_main,
                         validators=[
                             django.core.validators.FileExtensionValidator(
                                 allowed_extensions=["jpg", "jpeg", "png", "webp"]
