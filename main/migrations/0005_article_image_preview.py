@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 blank=True,
                 help_text="Изображение должно быть в формате JPG, PNG или WEBP.",
                 null=True,
-                upload_to=main.models.Article.upload_preview,
+                upload_to=main.models.upload_preview,
                 validators=[
                     django.core.validators.FileExtensionValidator(
                         allowed_extensions=["jpg", "jpeg", "png", "webp"]
