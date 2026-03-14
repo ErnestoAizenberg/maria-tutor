@@ -60,7 +60,7 @@ class ViewTests(TestCase):
             {
                 "name": "Test User",
                 "email": "test@example.com",
-                "subject": "Math",
+                "subject": "biology",
                 "goal": "Learn basics",
             },
         )
