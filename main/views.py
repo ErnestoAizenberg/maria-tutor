@@ -252,38 +252,42 @@ def articles_by_tag(request: HttpRequest, slug: str) -> HttpResponse:
     return render(request, "main/articles_by_tag.html", context)
 
 
+def calculate_reading_time(content: str, words_per_minute: int = 200) -> str:
+    """Calculate reading time from article content"""
+    word_count = len(content.split())
+    minutes = max(1, round(word_count / words_per_minute))
+    return f"{minutes} мин чтения"
+
+
+def get_related_articles(article, limit: int = 5):
+    """Get related articles excluding current one"""
+    return (
+        Article.objects.filter(status="published")
+        .exclude(id=article.pk)
+        .order_by("-created_at")[:limit]
+    )
+
+
 @require_GET
 def article(request: HttpRequest, slug: str) -> HttpResponse:
     """Display a single article with reading time and related articles"""
     logger.info(f"Attempting to load article with slug: {slug}")
     try:
         article = get_object_or_404(Article, slug=slug, status="published")
-        logger.debug(f"Found article: {article.title}")
 
-        # Calculate reading time
-        READING_SPEED = 200  # words per minute
-        word_count = len(article.content.split())
-        reading_time_minutes = max(1, round(word_count / READING_SPEED))
-        reading_time = f"{reading_time_minutes} мин чтения"
-
-        # Get related articles
-        related_articles = (
-            Article.objects.filter(status="published")
-            .exclude(id=article.pk)
-            .order_by("-created_at")[:5]
+        return render(
+            request,
+            "main/article-purple.html",
+            context={
+                "article": article,
+                "reading_time": calculate_reading_time(article.content),
+                "related_articles": get_related_articles(article),
+            },
         )
-        logger.debug(f"Found {len(related_articles)} related articles")
-
-        context = {
-            "article": article,
-            "reading_time": reading_time,
-            "related_articles": related_articles,
-        }
-        return render(request, "main/article-purple.html", context)
     except Exception as e:
         logger.error(f"Error loading article {slug}: {str(e)}")
         messages.error(request, "Article could not be loaded")
-        return redirect("index")
+        raise
 
 
 @require_GET
