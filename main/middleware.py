@@ -1,6 +1,6 @@
 import logging
 
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template import TemplateDoesNotExist
 from django.template.response import TemplateResponse
 
@@ -37,6 +37,9 @@ class CustomErrorMiddleware:
             raise
 
     def process_exception(self, request, exception):
+        if isinstance(exception, Http404):
+            return self.render_error_page(request, 404, exception)
+
         # Получаем код статуса из исключения или используем 500 по умолчанию
         status_code = getattr(exception, "status_code", 500)
         self.logger.error(
