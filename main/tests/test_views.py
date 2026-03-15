@@ -2,6 +2,7 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from main.models import Article
+import main.views as views
 
 
 class ViewTests(TestCase):
@@ -113,4 +114,84 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
         response = self.client.get(reverse("email_subscribe_success"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_robots_txt(self):
+        response = self.client.get(reverse(views.robots_txt))
+        self.assertEqual(response.status_code, 200)
+
+    def test_policy(self):
+        response = self.client.get(reverse(views.policy))
+        self.assertEqual(response.status_code, 200)
+
+    def test_search_view(self):
+        response = self.client.get(reverse(views.search_view))
+        self.assertEqual(response.status_code, 200)
+
+    def test_lessons(self):
+        response = self.client.get(reverse(views.lessons))
+        self.assertEqual(response.status_code, 200)
+
+    def test_about_me(self):
+        response = self.client.get(reverse(views.about_me))
+        self.assertEqual(response.status_code, 200)
+
+    def test_science(self):
+        response = self.client.get(reverse(views.science))
+        self.assertEqual(response.status_code, 200)
+
+    def test_articles_by_tag(self):
+        response = self.client.get(reverse(views.articles_by_tag, kwargs={"slug": "non-existent-tag-slug"}))
+        self.assertEqual(response.status_code, 404)
+
+    def test_articles(self):
+        response = self.client.get(reverse(views.articles))
+        self.assertEqual(response.status_code, 200)
+
+    def test_test(self):
+        response = self.client.get(reverse(views.test))
+        self.assertEqual(response.status_code, 200)
+
+    def test_contacts(self):
+        response = self.client.get(reverse(views.contacts))
+        self.assertEqual(response.status_code, 200)
+
+    def test_reviews(self):
+        response = self.client.get(reverse(views.reviews))
+        self.assertEqual(response.status_code, 200)
+
+    def test_async_program(self):
+        response = self.client.get(reverse(views.async_program))
+        self.assertEqual(response.status_code, 200)
+
+    def test_bio_in_english(self):
+        response = self.client.get(reverse(views.bio_in_english))
+        self.assertEqual(response.status_code, 200)
+
+    def test_group_programs(self):
+        response = self.client.get(reverse(views.group_programs))
+        self.assertEqual(response.status_code, 200)
+
+    def test_olympiad_prep(self):
+        response = self.client.get(reverse(views.olympiad_prep))
+        self.assertEqual(response.status_code, 200)
+
+    def test_one_on_one(self):
+        response = self.client.get(reverse(views.one_on_one))
+        self.assertEqual(response.status_code, 200)
+
+    def test_subsidized(self):
+        response = self.client.get(reverse(views.subsidized))
+        self.assertEqual(response.status_code, 200)
+
+    def test_lesson_details(self):
+        response = self.client.get(reverse(views.lesson_details))
+        self.assertEqual(response.status_code, 200)
+
+    def test_application(self):
+        response = self.client.get(reverse(views.application))
+        self.assertEqual(response.status_code, 200)
+
+    def test_tutor_consultation(self):
+        response = self.client.get(reverse(views.tutor_consultation))
         self.assertEqual(response.status_code, 200)
