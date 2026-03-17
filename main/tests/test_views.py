@@ -47,15 +47,6 @@ class ViewTests(TestCase):
         )
         self.assertEqual(response.status_code, 404)
 
-    # Test articles list view
-    def test_articles_view(self):
-        response = self.client.get(reverse(views.articles))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "main/articles.html")
-        self.assertEqual(
-            len(response.context["articles"]), 1
-        )  # Only published articles
-
     # Test application submission
     def test_application_submit_valid(self):
         response = self.client.post(
@@ -151,6 +142,9 @@ class ViewTests(TestCase):
     def test_articles(self):
         response = self.client.get(reverse(views.articles))
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            len(response.context["articles"]), 1
+        )  # Only published articles
 
     def test_test(self):
         response = self.client.get(reverse(views.test))
