@@ -141,7 +141,9 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_articles_by_tag(self):
-        response = self.client.get(reverse(views.articles_by_tag, kwargs={"slug": "non-existent-tag-slug"}))
+        response = self.client.get(
+            reverse(views.articles_by_tag, kwargs={"slug": "non-existent-tag-slug"})
+        )
         self.assertEqual(response.status_code, 404)
 
     def test_articles(self):
