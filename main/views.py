@@ -316,7 +316,7 @@ def articles(request: HttpRequest) -> HttpResponse:
 @require_GET
 def test(request: HttpRequest) -> HttpResponse:
     """Route for testing templates"""
-    return render(request, "main/article0.html")
+    return render(request, "main/footer.html")
 
 
 @require_GET
