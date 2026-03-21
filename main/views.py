@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 
 from django import forms
 from django.conf import settings
@@ -252,11 +253,26 @@ def articles_by_tag(request: HttpRequest, slug: str) -> HttpResponse:
     return render(request, "main/articles_by_tag.html", context)
 
 
-def calculate_reading_time(content: str, words_per_minute: int = 200) -> str:
+def calculate_reading_time(content: str, words_per_minute: int = 200) -> int:
     """Calculate reading time from article content"""
-    word_count = len(content.split())
-    minutes = max(1, round(word_count / words_per_minute))
-    return f"{minutes} мин чтения"
+    if words_per_minute <= 0:
+        raise ValueError(
+            f"words_per_minute param should be positive integer, received {words_per_minute}"
+        )
+
+    # Find all sequences of word characters (letters, numbers, and underscores)
+    # This pattern matches: letters, numbers, and apostrophes for contractions
+    words = re.findall(r"[\w']+", content)
+    word_count = len(words)
+
+    # Return 0 for empty or punctuation-only content
+    if word_count == 0:
+        return 0
+
+    # Calculate minutes with ceiling rounding
+    minutes = (word_count + words_per_minute - 1) // words_per_minute
+
+    return minutes
 
 
 def get_related_articles(article, limit: int = 5):
@@ -274,13 +290,14 @@ def article(request: HttpRequest, slug: str) -> HttpResponse:
     logger.info(f"Attempting to load article with slug: {slug}")
     try:
         article = get_object_or_404(Article, slug=slug, status="published")
+        minutes = calculate_reading_time(article.content)
 
         return render(
             request,
             "main/article-purple.html",
             context={
                 "article": article,
-                "reading_time": calculate_reading_time(article.content),
+                "reading_time": f"{minutes} мин чтения",
                 "related_articles": get_related_articles(article),
             },
         )
