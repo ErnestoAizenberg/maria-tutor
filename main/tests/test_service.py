@@ -14,7 +14,7 @@ class TestCalculateReadingTime(TestCase):
 
     def test_exactly_words_per_minute_returns_one_minute(self):
         """Should return 1 minute when word count equals words_per_minute."""
-        # Create string with exactly 200 words
+        # Create string with exactly 11 words
         content = "word " * 11
         self.assertEqual(calculate_reading_time(content, words_per_minute=11), 1)
 
