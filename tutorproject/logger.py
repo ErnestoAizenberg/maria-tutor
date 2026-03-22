@@ -1,7 +1,7 @@
 import logging
 import sys
 from logging.handlers import RotatingFileHandler
-from typing import Dict
+from typing import Dict, Optional
 
 # Color codes
 COLORS: Dict[str, str] = {
@@ -28,7 +28,7 @@ LOG_LEVEL_COLORS: Dict[str, str] = {
 class ColoredFormatter(logging.Formatter):
     """Enhanced log formatter with colors and additional context information."""
 
-    def __init__(self, fmt: str, datefmt: str = None):
+    def __init__(self, fmt: str, datefmt: Optional[str] = None):
         super().__init__(fmt, datefmt)
         self._fmt = fmt
 
@@ -48,7 +48,7 @@ class ColoredFormatter(logging.Formatter):
 def setup_logger(
     name: str = __name__,
     level: int = logging.DEBUG,
-    log_file: str = None,
+    log_file: Optional[str] = None,
     max_bytes: int = 10 * 1024 * 1024,  # 10MB
     backup_count: int = 5,
 ) -> logging.Logger:
@@ -102,8 +102,3 @@ if __name__ == "__main__":
     logger.warning("Potential issue detected")
     logger.error("Failed to process request", extra={"user_id": 123})
     logger.critical("System crash imminent!")
-
-    try:
-        1 / 0
-    except Exception as e:
-        logger.exception("An error occurred: %s", str(e))
